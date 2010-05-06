@@ -1,0 +1,98 @@
+\documentclass[10pt,a4paper]{amsbook}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[italian]{babel}
+\usepackage{fontenc}
+\usepackage[all]{xy}
+\usepackage{graphicx}
+
+\usepackage{hyperref}
+\hypersetup{%
+    colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
+    breaklinks=true, pdfpagemode=UseNone, pageanchor=true,
+    pdfpagemode=UseOutlines, plainpages=false, bookmarksnumbered,
+    bookmarksopen=true, bookmarksopenlevel=1, hypertexnames=true,
+    pdfhighlight=/O,%hyperfootnotes=true,%nesting=true,%frenchlinks,%
+    %urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen,
+    %pagecolor=RoyalBlue,%
+    % uncomment the following line if you want to have black links (e.g., for
+    % printing)
+    %urlcolor=Black, linkcolor=Black, citecolor=Black, pagecolor=Black,%
+    pdftitle={Dispense di Logica 2},%
+    pdfauthor={},%
+    pdfsubject={},%
+    pdfkeywords={},%
+    pdfcreator={pdfLaTeX},%
+    pdfproducer={LaTeX with hyperref and classicthesis}%
+}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=white, 
+    text width=3.5em, text badly centered, node distance=2cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=white, 
+    text width=5em, text centered, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{noblock}=[rectangle,
+    text width=5em, text centered, minimum height=2em]
+
+\newcommand{\roundentry}[1]{*++[o][F-] {#1}} 
+\newtheorem{esempio}{Esempio}[chapter]
+\newtheorem{osservazione}{Osservazione}[chapter]
+\newtheorem{proposizione}{Proposizione}[chapter]
+\newtheorem{definizione}{Definizione}[chapter]
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{extra}{Esercizio}
+\newtheorem{nota}{Nota}
+\newtheorem{programmi}{Definizione}[section]
+\newtheorem{progabaco}[programmi]{Teorema}
+
+
+\newenvironment{mylisting}
+{\begin{list}{}{\setlength{\leftmargin}{1em}}\item\bfseries}
+{\end{list}}
+
+\newenvironment{mytinylisting}
+{\begin{list}{}{\setlength{\leftmargin}{1em}}\item\tiny\bfseries}
+{\end{list}}
+
+\title{Dispense di Logica 2}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\include{01_turing_registri}
+\include{02_programmi_ricorsive}
+
+\begin{thebibliography} {}
+\bibitem{Tur} \textsc{Turing}, \textsl{On computable numbers, with an
+application to the entscheidungproblem}, 1936: abelard.org.
+
+\bibitem{Stnfrd} \textsc{Online Stanford Enciclopedia}: plato.stanford.edu.
+
+\bibitem{CompNr} \textsl{Computable Numbers and the Turing Machine}, 1936:
+turing.org.uk.
+
+\bibitem{WTM} \textsc{Jack Copeland}, \textsl{What is a Turing Machine?}, 2000:
+alanturing.net.
+
+\bibitem{Cut} \textsc{N. Cutland}, \textsl{Computability. An
+  Introduction to Recursive Function Theory}, 1980.
+
+\bibitem{Dis} \textsc{Unipd}, \textsl{Dispense del corso di Logica 2},
+  2009.
+\bibitem{Wik} \textsc{Wikipedia}, \url{http://en.wikipedia.org}.
+\end{thebibliography}
+
+\end{document}

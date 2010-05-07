@@ -118,25 +118,25 @@ Noi tratteremo, in accordo col fatto che il nostro ``uomo anonim\`o''
 non pu\`o scegliere cosa fare ma solo eseguire regole date. Diamo
 quindi la seguente definizione:
 
-\begin{definizione}
+\begin{defi}
 Una Macchina di Turing si dice \underline{deterministica} se dato uno
 stato $q_{i}$ e un simbolo $S_{j}$ c'\`e \textsl{al pi\`u} una
 quintupla che inizi per $<q_{i},S_{j}...>$ cio\`e la testina
 trovandosi in $q_{i}$ e leggendo $S_{j}$ non pu\`o scegliere cosa fare
 ma solo eseguire l'unica istruzione corrispondente, \textsl{se c'\`e},
 altrimenti significa che la macchina si arresta.
-\end{definizione}
+\end{defi}
 
 Inoltre \`e possibile descrivere il nastro in ogni fase della
 computazione che fa la macchina. Introduciamo quindi la seguente
 definizione:
 
-\begin{definizione}
+\begin{defi}
 Una \underline{descrizione istantanea} $\alpha$ di una macchina di
 Turing $\tau$ \`e un'espressione contenente esattamente un $q_{i}$ (lo
 stato), i simboli sul nastro, e la cella in cui si trova la testina al
 momento.
-\end{definizione}
+\end{defi}
 
 Quindi una descrizione istantanea (ID) $\alpha$ \`e una stringa della
 forma $$S_1S_2S_3.....S_{i-1}qS_{i}S_{i+1}......S_{n}$$ dove
@@ -437,9 +437,9 @@ macchine di Turing. Dando un definizione formale di non banale per una
 propriet\`a, H.G. Rice riusc\`i, addirittura, a dimostrare il seguente
 teorema:
 
-\begin{teorema}
+\begin{thm}
 Ogni propriet\`a non banale dei programmi \`e indecidibile.
-\end{teorema}
+\end{thm}
 
 E' da notare che dimostrando che un problema \`e non decidibile, non
 significa che non pu\`o essere deciso solo in alcuni casi, bens\`i che
@@ -536,7 +536,7 @@ Diagramma:
   \ar@(dr,dl)[]^{1|1 \ R} \ar@<2pt>[r]^{B|1 \ L} & q_{1}\ar@(dr,dl)
       []^{1|1 \ L} \ar@<2pt>[r]^{B|B \ R} & q_{2}}\\
 \end{figure}
-\begin{osservazione}
+\begin{oss}
 Per calcolare il successore, invece di aggiungere un uno alla fine
 della sequenza di uni data in input, si poteva aggiungerlo nella cella
 precedente alla prima cella significativa del nastro. In tal caso le
@@ -545,7 +545,7 @@ quintuple si sarebbero ridotte a due e precisamente:
 &<q_0,1,1,L,q_1>&\mbox{(scorre tutti gli uni della sequenza)}\\
 &<q_1,B,1,R,q_2>&\mbox{(sostituisce il primo B trovato a destra della sequenza con un 1)}\\
 \end{eqnarray*}
-\end{osservazione}
+\end{oss}
 \item Sia $\Sigma=\left\{1,B\right\}$ l'alfabeto di simboli in
   input.\\\underline{Scopo della macchina:} data in input una sequenza
   (anche di pi\`u input basta siano separati al pi\`u da un B) sposta
@@ -859,9 +859,9 @@ macchine di Turing (elementare, ma niente affatto banale, perch\'e
 questo resta quello che sapremo fare), e adesso diamo delle istruzioni
 di pi\`u alto livello che si possono leggere come abbreviazioni di
 istruzioni di linguaggio. Possiamo quindi dire che:
-\begin{teorema}
+\begin{thm}
 Ogni funzione calcolabile a registri \`e Turing-cal\-co\-la\-bi\-le.
-\end{teorema}
+\end{thm}
 \textsc{Dimostrazione}: \`e ovvio perch\'e, per le motivazioni scritte
 sopra, ciascuna operazione eseguibile con una macchina a registri non
 \`e altro che un insieme strutturato di istruzioni che definiscono una
@@ -1090,10 +1090,10 @@ con le macchine a registri.
 Ora che abbiamo visto come funzionano le macchine a registri, diamo
 una definizione formale di "funzione calcolabile a re\-gi\-stri".
 
-\begin{teorema}
+\begin{thm}
 Una funzione \( f \) (di \( n \) variabili) \`e calcolabile a registri
 se esiste una macchina a registri che, mettendo gli input \( x_1,
 \ldots,\\ x_n \) nei registri pref\mbox{}issati \( R_1, \ldots, R_n
 \), d\`a output \( f(x_1, \ldots, x_n) \) per ogni \( x_1, \ldots, x_n
 \).
-\end{teorema}
+\end{thm}

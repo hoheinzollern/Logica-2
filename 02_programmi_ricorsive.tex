@@ -353,9 +353,9 @@ appena definito in termini matematici, \`e calcolabile dai programmi.
 
 % Ane Santos Herranz
 
-\begin{teorema}
+\begin{thm}
 \emph{Ogni funzione primitiva ricorsiva è eseguibile da un programma
-(e quindi calcolabile).}\end{teorema}
+(e quindi calcolabile).}\end{thm}
 \begin{proof}
 Dobbiamo fare un programma per le tre funzioni di base, per la
 composizione generalizzata e la ricorsione. Come sappiamo il output è
@@ -644,9 +644,9 @@ primitive ricorsive; possiamo dire che queste siano sufficienti per
 rappresentare tutte le funzioni calcolabili da una macchina di Turing?
 La risposta è negativa, come andremo ora a dimostrare.
 
-\begin{proposizione}\label{PRsonoTotali}
+\begin{prop}\label{PRsonoTotali}
 Le funzioni primitive ricorsive sono totali.
-\end{proposizione}
+\end{prop}
 \begin{proof}
 Si dimostra per induzione sulla struttura delle funzioni primitive
 ricorsive.  Poichè le funzioni di base sono funzioni totali dobbiamo
@@ -734,12 +734,12 @@ nella tabella almeno sulla diagonale. Questa nuova funzione, creata
 tramite una procedura effettiva, non può appartenere all'insieme di
 partenza, poichè altrimenti differirebbe da sè stessa sulla diagonale.
 
-\begin{proposizione}\label{TotCalcNonNum}
+\begin{prop}\label{TotCalcNonNum}
 Data una qualunque lista \emph{effettiva} di tutte le funzioni totali
 calcolabili, unarie per semplicit\`a, $f_{0},\; f_{1},\; f_{2},
 \cdots$ esiste sempre una funzione $g$ totale calcolabile che non
 compare nella lista.
-\end{proposizione}
+\end{prop}
 \begin{proof}
 Sia $f_{0},\; f_{1},\; f_{2}, \cdots$ una lista effettiva di funzioni
 totali calcolabili, allora costruiamo la funzione $g$ nel seguente
@@ -785,9 +785,9 @@ in modo effettivo tutte le funzioni totali calcolabili.
 
 Possiamo usare ora la proposizone~\ref{TotCalcNonNum} per dimostrare il seguente
 
-\begin{teorema}\label{diagRic} Esiste una funzione totale calcolabile che non
+\begin{thm}\label{diagRic} Esiste una funzione totale calcolabile che non
 è primitiva ricorsiva.
-\end{teorema}
+\end{thm}
 
 \begin{proof} Dobbiamo innanzitutto costruire una lista \emph{effettiva} di
 tutte le funzioni primitive ricorsive (per semplicità, supponiamole ad
@@ -847,8 +847,8 @@ non \; definita \; & \text{se $\exists z < y \; f(\vec{x},z) \uparrow$}\\
 \end{cases} \]
 
 con $\mu$ che prende il nome di operatore di minimizzazione.
-\begin{teorema} Le funzioni ricorsive sono b-programma-calcolabili.
-\end{teorema}
+\begin{thm} Le funzioni ricorsive sono b-programma-calcolabili.
+\end{thm}
 \begin{proof} Poich\`e abbiamo gi\`a dimostrato che le tre funzioni di base
 (funzione zero, successore e proiezioni), la composizione generalizzata e la
 ricorsione primitiva sono calcolabili da un b-programma ci resta solo da far
@@ -873,11 +873,11 @@ minimizzazione su $\vec{x}$ \`e il seguente:\\
 
 Una volta dimostrato che la minimizzazione è calcolabile dai
 b-programmi possiamo dare la seguente
-\begin{definizione} Una funzione $f:\mathbb{N}^{d} \to \mathbb{N}$ (totale o
+\begin{defi} Una funzione $f:\mathbb{N}^{d} \to \mathbb{N}$ (totale o
 parziale) si dice \emph{ricorsiva} se si ottiene dalle funzioni
 iniziali (a.--c.) applicando la composizione, la ricorsione e la
 minimizzazione (d.--f.).
-\end{definizione}
+\end{defi}
 
 Una cosa importante da notare \`e che l'utilizzo dell'operatore $\mu$ consente
 di ottenere funzioni parziali anche a partire funzioni totali, come vedremo nei
@@ -909,7 +909,7 @@ parziale $f$.
 \end{esempio}
 
 \section{Relazioni ricorsive}
-\begin{definizione} $R \subseteq \mathbb{N}^{n}$ è una \emph{relazione
+\begin{defi} $R \subseteq \mathbb{N}^{n}$ è una \emph{relazione
 ricorsiva} se esiste una funzione ricorsiva $\chi_R$ che assume solo valori 0 e
 1 e che soddisfa
 $$\chi_R(x_1, \ldots, x_n):= \left \{ \begin{array}{ll}
@@ -917,13 +917,13 @@ $$\chi_R(x_1, \ldots, x_n):= \left \{ \begin{array}{ll}
                                       0 & (x_{1}, x_{2}, \cdots, x_{n}) \not \in
  R\\
                                       \end{array} \right. $$
-\end{definizione}
-\begin{proposizione} Se $R, S \subseteq \mathbb{N}^{n}$ sono relazioni
+\end{defi}
+\begin{prop} Se $R, S \subseteq \mathbb{N}^{n}$ sono relazioni
 ricorsive allora anche $R\land S$, $R \vee S$, $\neg R$ sono relazioni
 ricorsive. Inoltre, se $w \in \mathbb{N}$, anche $\forall y \leq
 w. R(x_1, \ldots, x_{n-1}, y)$ e $\exists y \leq w. R(x_1, \ldots,
 x_{n-1}, y)$ sono relazioni ricorsive.
-\end{proposizione}
+\end{prop}
 \begin{proof} Si pone
 \begin{itemize}
 \item $\chi_{R\land S} = \chi_R \chi_S$;
@@ -1002,9 +1002,9 @@ concetti di funzioni calcolabili descritti fino ad ora sono tra loro
 equivalenti. Il seguente teorema dimostra che quest'inclusione è
 effettivamente valida.
 
-\begin{teorema}[Le funzioni Turing-calcolabili sono ricorsive]
+\begin{thm}[Le funzioni Turing-calcolabili sono ricorsive]
 Ovvero, per ogni MdT possiamo costruire una funzione ricorsiva che la calcola.
-\end{teorema}
+\end{thm}
 
 \begin{proof}
 Dobbiamo innanzitutto trovare un modo per rappresentare il nastro (ovvero la
@@ -1025,24 +1025,24 @@ $$\dots BB\overline{f(x_1,\dots,x_k)+1}BB\dots $$
 Diamo ora le seguenti definizioni, per meglio comprendere la nostra codifica
 del nastro in $\mathbb{N}$.
 
-\begin{definizione}[Numerale sinistro]
+\begin{defi}[Numerale sinistro]
 Si definisce numerale sinistro la sequenza di caratteri, letti da sinistra a
 destra a partire dal primo 1, che si trovano strettamente a sinistra della
 testina della MdT, dove 1 rappresenta la cifra 1 e $B$ rappresenta la cifra 0.
-\end{definizione}
-\begin{definizione}[Numero sinistro]
+\end{defi}
+\begin{defi}[Numero sinistro]
 Si dice numero sinistro l'interpretazione nei naturali del numerale sinistro,
 ovvero quel numero $n \in \mathbb{N}$ la cui rappresentazione in base 2 è
 esattamente il numerale sinistro.
-\end{definizione}
-\begin{definizione}[Numerale destro]
+\end{defi}
+\begin{defi}[Numerale destro]
 È la sequenza di caratteri a destra della testina (compreso quello sopra la
 testina stessa) lette da destra verso sinistra, a partire dal primo 1 che
 compare sul nastro.
-\end{definizione}
-\begin{definizione}[Numero destro]
+\end{defi}
+\begin{defi}[Numero destro]
 È l'interpretazione nei naturali del numerale destro.
-\end{definizione}
+\end{defi}
 
 È facile comprendere da queste definizioni che il nastro e la testina della
 macchina di Turing possono essere rappresentati da una coppia di interi, ovvero

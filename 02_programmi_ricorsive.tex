@@ -28,7 +28,7 @@ Nella (\emph{4}) \`e possibile sostituire alla condizione $x_i \neq0$
 una qualunque formula atomica di un linguaggio che usi le relazioni
 $=,\geq,<$ e le operazioni $+,-,successore,\ldots $ e le loro
 composizioni.
-\end{nota}	
+\end{nota}
 
 \begin{extra}
 Si scriva un programma in cui sia presente un'istruzione del tipo
@@ -431,40 +431,50 @@ Dopo questa sequenza di operazioni il risultato della composizione si
 trova in $x_{0}$.
 
 \item La ricorsione: sia $F$ un programma che calcola $f$ e $G$ un
-  programma per $g$. Dobbiamo copiare anche il input e i output in un
-  altro luogo, quindi, definiamo $\rho(Q)=max\left\{
-  i|x_{i}\longleftarrow...\epsilon Q\right\} $il massimo indice
-  utilizzato per il programma Q e $\varepsilon=max\left\{
-  \rho(F),\rho(G),k+2\right\} $il massimo indice di tutti quelli
-  utilizzati per tutti i programmi.
+  programma per $g$. Per realizzare un programma che calcola $h$
+  dobbiamo innanzitutto salvare le variabili di input e i risultati
+  parziali di $f$ e $g$ in variabili non utilizzate dai due programmi
+  $F$ e $G$.
 
-Allora, prima copiamo l'input, e mettiamo 0 in
-$x_{\varepsilon+k+2}$per cominziare la ricorsione (per calcolare
-$h(x,0)$). Adesso possiamo applicare il programma $F.$
+  Sia $\rho(Q)=max\left\{ i|x_{i}\leftarrow\dots \in Q\right\}$ il
+  massimo indice utilizzato nel programma Q; definiamo
+  $\varepsilon=max\left\{ \rho(F),\rho(G),k+2\right\}$ il massimo
+  indice utilizzato per entrambi i programmi.
 
-Ora dobbiamo guardare se il $y$ che ci dano al inizio è uguale a zero;
-se è cosi, il programma debe fermare. Se questo non è cosi, il
-programma debe calcolare $h(x,s(y))$(nella prima volta $s(y)$ sarà
-1). Il programma G utilizza come input $x_{1},...,x_{k}$ per
-$x_{1},...,x_{k}$, $x_{k+1}$per $y$ e $x_{k+2}$per $h(x,y)$ che sarà
-l'output che abbiamo trovato prima. Quindi dobbiamo mettere il input
-del inizio in $x_{1},...,x_{k}$, quello che abbiamo in
-$x_{\varepsilon+k+2}$ dobbiamo copiarlo in $x_{k+1}$e finalmente il
-output $x_{0}$in $x_{k+2}$.  Ora applichiamo il programma
-G. Finalmente, dobbiamo calcolare il successore di y e guardare se è
-il stesso numero che ci hanno dato al inizio. Allora, il programa
-sarà:
+Allora, prima copiamo l'input e mettiamo 0 in $x_{\varepsilon+k+2}$
+per cominziare la ricorsione (per calcolare $h(x,0)$). Adesso possiamo
+applicare il programma $F$.
+
+Poi dobbiamo guardare se l'$y$ che ci è stato dato all'inizio è uguale
+a zero; se è cosi, il programma deve terminare. Se non è cosi, il
+programma deve calcolare $h(x,s(y))$ (la prima volta $s(y)$ sarà
+1). Il programma G utilizza come input $x_{1},\dots,x_{k}$ per
+$x_{1},\dots,x_{k}$, $x_{k+1}$ per $y$ e $x_{k+2}$ per il risultato
+parziale $h(x,y)$. Quindi dobbiamo mettere l'input iniziale in
+$x_{1},\dots,x_{k}$, il risultato al passo precedente che si trova in
+$x_{\varepsilon+k+2}$ dobbiamo copiarlo in $x_{k+1}$ e, dopo aver
+eseguito $G$, dobbiamo copiare il suo output da $x_{0}$ in $x_{k+2}$.
+Infine calcoliamo il successore di $y$ e controlliamo se equivale
+all'$y$ iniziale: in caso affermativo dobbiamo terminare, altrimenti
+torniamo ad eseguire il ciclo. Allora, il programa sarà:
 
 \begin{mylisting}
 $x_{\varepsilon+1}\leftarrow x_{1}$\\
 $\vdots$\\
 $x_{\varepsilon+k}\leftarrow x_{k}$\\
-$x_{\varepsilon+k+1}\leftarrow x_{k+1}$\\
+$x_{\varepsilon+k+1}\leftarrow x_{k+3}$\\
 $F$\\
-$x_{k+2}\leftarrow x_{0}$\\
-$loop:\; $if$\; x_{\varepsilon+k+1}=x_{\varepsilon+k+2}\; $then goto$\;stop$\\
-$x_{k+2}\leftarrow x_{0}$\\
-$x_{\varepsilon+k+2}\leftarrow x_{\varepsilon+k+2}+1$\\
+$x_{\varepsilon+k+2}\leftarrow x_{0}$\\
+$x_{\varepsilon+k+1}\leftarrow 0$\\
+$loop:\; $if$\; x_{\varepsilon+k+1}=x_{\varepsilon+k+3}\; $then goto$\;stop$\\
+$x_{\varepsilon+k+1}\leftarrow x_{\varepsilon+k+1}+1$\\
+$x_{1}\leftarrow x_{\varepsilon+1}$\\
+$\vdots$\\
+$x_{k}\leftarrow x_{\varepsilon+k}$\\
+$x_{k+1}\leftarrow x_{\varepsilon+k+1}$\\
+$x_{k+2} \leftarrow x_{\varepsilon+k+2}$\\
+$G$\\
+$x_{\varepsilon+k+2} \leftarrow x_0$\\
 goto$\; loop$\\
 $stop:$
 \end{mylisting}
@@ -629,79 +639,74 @@ Allora
 % Alessandro Onnivello
 \section{Dalle funzioni primitive ricorsive alle funzioni ricorsive}
 
-Nel paragrafo precedente abbiamo definito l'insieme delle funzioni primitive
-ricorsive ma possiamo dire che siano sufficienti per rappresentare tutte le
-funzioni calcolabili da una macchina di Turing? La risposta a questa domanda \`e
-negativa come andremo ora a dimostrare.\\
-Per cominciare possiamo fare la seguente
+Nel paragrafo precedente abbiamo definito l'insieme delle funzioni
+primitive ricorsive; possiamo dire che queste siano sufficienti per
+rappresentare tutte le funzioni calcolabili da una macchina di Turing?
+La risposta è negativa, come andremo ora a dimostrare.
 
-\begin{osservazione}\label{totali} Ogni funzione definita per composizione e
-ricorsione primitiva a partire da funzioni 
-totali \`e totale.
-\end{osservazione}
-\begin{proof} Vediamo i due casi:\\
-\begin{itemize}
-\item ovvio per la composizione
-\item per la ricorsione primitiva dobbiamo dimostrare che h \`e definita
-$\forall y \in \mathbb{N}$ e $\forall \vec{x} \in \mathbb{N}^k$.\\
-Ricordando la definizione del costrutto di ricorsione primitiva:
-		$h:\mathbb{N}^{k+1} \to \mathbb{N}$\\
-			$h(\vec{x},y)=\left\{ \begin{array}{ll}
-			h(\vec{x}, 0) = f(\vec{x})\\
-			h(\vec{x}, s(y)) = g(\vec{x},y,h(\vec{x},y))
-			\end{array} \right.$\\
-la dimostrazione pu\'o essere fatta per induzione su y.\\ \\
-CASO BASE: per y = 0 abbiamo\\  h($\vec{x}$, 0) = f($\vec{x}$)\\
-f \`e totale quindi $\forall \vec{x} \in \mathbb{N}^k (\vec{x}, 0) \in dom(h)$
-come atteso\\ \\
-PASSO INDUTTIVO: per y + 1 abbiamo\\
-h($\vec{x}$, y + 1) = g($\vec{x}$, y, h($\vec{x}$, y))\\
-h($\vec{x}$, y) totale da ipotesi induttiva $\Rightarrow$ h($\vec{x}$, y) \`e
-definito\\
-Quindi essendo g totale e h($\overrightarrow{x}$, y) definito allora $\forall
-\overrightarrow{x} \in \mathbb{N}^k$  $(\vec{x}, y + 1) \in dom(h)$.
-\end{itemize}
-\end{proof}
-Data l'osservazione~\ref{totali} possiamo affermare la seguente
-\begin{proposizione}\label{PRsonoTotali} Le funzioni primitive ricorsive sono
-totali.
+\begin{proposizione}\label{PRsonoTotali}
+Le funzioni primitive ricorsive sono totali.
 \end{proposizione}
-\begin{proof} Banalmente dimostrata data la totalit\'a delle tre funzioni
-fondamentali e per quanto detto nell' osservazione ~\ref{totali}.
+\begin{proof}
+Si dimostra per induzione sulla struttura delle funzioni primitive
+ricorsive.  Poichè le funzioni di base sono funzioni totali dobbiamo
+verificare che la composizione e la ricorsione primitiva preservano la
+totalità delle funzioni composte.
+
+Per la composizione dobbiamo verificare che la funzione composta
+$f(g_1, \dots, g_k)$ è totale. Per ipotesi induttiva
+(strutturale) $f,g_1,\dots,g_k$ sono totali. Per la totalità di
+$g_1,\dots,g_k$ tutti gli argomenti di $f$ sono definiti e, poichè $f$
+è totale, anche la composizione è definita.
+
+Per la ricorsione primitiva dobbiamo dimostrare che
+$h:\mathbb{N}^{k+1} \to \mathbb{N}$ è definita $\forall y \in
+\mathbb{N}$ e $\forall \vec{x} \in \mathbb{N}^k$.
+
+$$h(\vec{x},y)=\left\{
+\begin{array}{ll} h(\vec{x}, 0) = f(\vec{x})\\
+                  h(\vec{x}, s(y)) = g(\vec{x},y,h(\vec{x},y))
+\end{array} \right.$$
+
+Si dimostra per induzione su $y$.
+
+$y = 0$: $h(\vec{x}, 0) = f(\vec{x})$\\ $f$ è totale per ipotesi
+induttiva quindi $\forall \vec{x} \in \mathbb{N}^k (\vec{x}, 0) \in
+dom(h)$ come atteso
+
+$y + 1$: $h(\vec{x}, y + 1) = g(\vec{x}, y, h(\vec{x}, y))$\\
+$h(\vec{x}, y)$ è totale per ipotesi induttiva su $y$ quindi
+$h(\vec{x}, y)$ è definita. Poichè $g$ totale per ipotesi induttiva e
+$h(\vec{x}, y)$ è definita allora $\forall \vec{x} \in \mathbb{N}^k \;
+(\vec{x}, y + 1) \in dom(h)$.
 \end{proof}
 
 Ora, per quanto detto nella precedente proposizione, l'insieme delle funzioni
 primitive ricorsive permette di rappresentare solo funzioni calcolabili totali
 ma, come abbiamo visto nel primo capitolo, le macchine di Turing possono
-calcolare anche funzioni parziali quindi gi\`a questo ci consente di dire che le
+calcolare anche funzioni parziali. Quindi possiamo affermare che le
 funzioni primitive ricorsive non rappresentano tutte le funzioni Turing
-calcolabili.\\ 
-Ma limitandoci al caso delle funzioni totali, possiamo dire che le primitive
-ricorsive le contengono tutte? Anche in questo caso la risposta \`e negativa
-come vedremo nel prossimo paragrafo.
+calcolabili.
+
+Ma limitandoci al caso delle funzioni totali, possiamo dire che queste
+siano tutte primitive ricorsive? Anche in questo caso la risposta è
+negativa come vedremo nel prossimo paragrafo.
 
 \section{Metodo diagonale di Cantor}
-Per poter dimostrare che la risposta che abbiamo dato al quesito con cui abbiamo
-chiuso il paragrafo precedente, ossia che non \`e sufficiente l'insieme delle
-funzioni primitive ricorsive per rappresentare tutte le funzioni totali
-calcolabili, \`e corretta andremo ora a introdurre il metodo diagonale (o
-diagonalizzazione) di Cantor.
-Il metodo di diagonalizzazione \`e una tecnica dimostrativa, ideata da Georg
-Cantor per provare la non numerabilit\'a dei numeri reali, che risulta molto
-utile anche nell'ambito della logica matematica e della teoria della
-computabilit\'a come vedremo in seguito.\\
-Possiamo riassumere il metodo diagonale e come esso sia utilizzando, nel modo
-seguente: supponiamo sia data una enumerazione effettiva
-$\chi_{0},\chi_{1},\cdots$ di oggetti (funzioni oppure insiemi di numeri
-naturali). Allora possiamo costruire un oggetto $\chi$ della stessa natura ma
-diverso da ogni oggetto $\chi_{i}$ usando la seguente idea:
-\begin{center}
-``costruire $\chi$ in modo tale che differisca da ogni $\chi_{i}$ in posizione
-i''
-\end{center}
-Per meglio capire cosa si intenda con l'idea precedente prendiamo in
-considerazione la seguente tabella:\\
-\begin{table}[!ht]
+Per poter dimostrare che l'insieme delle funzioni primitive ricorsive
+non contiene tutte le funzioni totali calcolabili andremo ora a
+introdurre il metodo diagonale (o diagonalizzazione) di Cantor.  Il
+metodo di diagonalizzazione è una tecnica dimostrativa, ideata da
+Georg Cantor per provare la non numerabilità dei numeri reali, che
+risulta molto utile anche nell'ambito della logica matematica e della
+teoria della computabilità come vedremo in seguito.
+
+Il metodo diagonale di Cantor consiste nel costruire una funzione $\chi$
+che differisce da un'insieme infinito di funzioni $\chi_0,\chi_1,\dots$
+effettivamente enumerabile. Si costruisce quindi la seguente tabella
+dove ogni colonna contiene una funzione unaria e le righe contengono
+la sequenza dei naturali, ovvero tutti i possibili argomenti.
+\begin{table}[!h]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c}
 
@@ -720,19 +725,26 @@ $\vdots$ & $\vdots$ &       $\vdots$  & $\vdots$  & $\ddots$\\
 \end{center}
 \caption{Metodo diagonale di Cantor}
 \end{table}
-quello che noi vogliamo fare \`e costruire l'oggetto $\chi$ in modo tale che
-esso differisca da qualsiasi altro oggetto dell'enumerazione sulla diagonale
-della tabella precedente, ossia avere che $\forall i \; \chi(i) \neq
-\chi_{i}(i)$.\\
-Per chiarire le idee, consideriamo la dimostrazione della seguente
 
-\begin{proposizione}\label{TotCalcNonNum} Data una qualunque lista
-\emph{effettiva} di tutte le funzioni totali calcolabili, unarie per
-semplicit\`a, $f_{0},\; f_{1},\; f_{2}, \cdots$ esiste sempre una funzione $g$
-totale calcolabile che non compare nella lista.
+A questo punto possiamo costruire una funzione $\chi$ in modo tale che
+differisca da ogni funzione enumerata nella tabella; vogliamo quindi
+costruire una funzione tale che $\forall i \; \chi(i) \neq
+\chi_{i}(i)$, ovvero che differisce da ogni altra funzione elencata
+nella tabella almeno sulla diagonale. Questa nuova funzione, creata
+tramite una procedura effettiva, non può appartenere all'insieme di
+partenza, poichè altrimenti differirebbe da sè stessa sulla diagonale.
+
+\begin{proposizione}\label{TotCalcNonNum}
+Data una qualunque lista \emph{effettiva} di tutte le funzioni totali
+calcolabili, unarie per semplicit\`a, $f_{0},\; f_{1},\; f_{2},
+\cdots$ esiste sempre una funzione $g$ totale calcolabile che non
+compare nella lista.
 \end{proposizione}
-\begin{proof} Sia $f_{0},\; f_{1},\; f_{2}, \cdots$ una lista effettiva allora
-costruiamo la funzione $g$ nel seguente modo:\\
+\begin{proof}
+Sia $f_{0},\; f_{1},\; f_{2}, \cdots$ una lista effettiva di funzioni
+totali calcolabili, allora costruiamo la funzione $g$ nel seguente
+modo:
+
 \begin{center}
 $g: \mathbb{N} \to \mathbb{N}$\\
 $g(x) = f_{x}(x) + 1$
@@ -751,45 +763,40 @@ $g(x) = f_{x}(x) + 1$
 2 &  $f_0(2)$ & $f_1(2)$  & $f_2(2) \mathbf{+1}$  & $\ldots$\\
 \hline
 $\vdots$ & $\vdots$ &       $\vdots$  & $\vdots$  & $\ddots$\\
-
-
 \end{tabular}
 \end{center}
 \caption{Funzione di diagonalizzazione $\mathbf{g}$}
 \label{diagG}
 \end{table}
-g \`e sicuramente totale calcolabile poich\`e, essendo la lista di funzioni
-effettiva \`e quindi possibile, dato un qualsiasi $n \in \mathbb{N}$, calcolare
-qual'\`e l'\textrm{n-esima} funzione, valutarla in n ed infine aggiungerci 1. Ma
-\`e chiaro che g non pu\`o appartenere alla lista poich\`e presa una qualsiasi
-colonna n della tabella~\ref{diagG} che rappresenta l'immagine della
-\textrm{n-esima} funzione, nel posto \textrm{n-esimo} avremo $g(n) \neq
-f_{n}(n)$ poich\`e da definizione $g(n)=f_{n}(n)+1$. Perci\`o non esiste n tale
-che $f_{n}(x)=g(x)$ per ogni $x \in \mathbb{N}$ e quindi $g$ non \`e contenuta
-nella nostra lista.
+
+$g$ è sicuramente totale calcolabile poichè, essendo la lista di
+funzioni effettiva è quindi possibile, dato un qualsiasi $n \in
+\mathbb{N}$, calcolare l'ennesima funzione, valutarla in $n$ ed
+aggiungerci 1. È chiaro che $g$ non può appartenere alla lista, poichè
+presa una qualsiasi colonna $n$ della tabella~\ref{diagG} che
+rappresenta l'immagine dell'ennesima funzione, alla riga ennesima
+$g(n) \neq f_{n}(n)$ poichè per definizione $g(n)=f_{n}(n)+1$. Perciò
+non esiste alcun $n$ tale che $f_{n}(x)=g(x)$ per ogni $x \in
+\mathbb{N}$ e quindi $g$ non è contenuta nella nostra lista.
 \end{proof}
 
-
-Osserviamo che la precedente proposizione si pu\`o anche leggere come: ``non \`e
-possibile enumerare in modo effettivo tutte le funzioni totali calcolabili''.\\
+Fatto questo ragionamento, ne consegue che non è possibile enumerare
+in modo effettivo tutte le funzioni totali calcolabili.
 
 Possiamo usare ora la proposizone~\ref{TotCalcNonNum} per dimostrare il seguente
 
 \begin{teorema}\label{diagRic} Esiste una funzione totale calcolabile che non
-\`e primitiva ricorsiva.
+è primitiva ricorsiva.
 \end{teorema}
 
 \begin{proof} Dobbiamo innanzitutto costruire una lista \emph{effettiva} di
-tutte le funzioni primitive ricorsive (per semplicit\`a, supponiamole ad un
-argomento). 
-Un modo semplice per fare ci\`o \`e quello di considerare l'insieme delle
-funzioni primitive ricorsive $\mathcal{PR}$ ed un formalismo, ovvero un insieme
-finito di simboli con il quale sia possibile descrivere tutte le possibili
-derivazioni associate alle funzioni di $\mathcal{PR}$. Un siffatto alfabeto
-pu\`o essere ad esempio:
-\begin{center}
-$\Sigma = \lbrace a, b, c, \cdots ,z , 0, 1, 2, \cdots , 9, (, ) \rbrace$
-\end{center}
+tutte le funzioni primitive ricorsive (per semplicità, supponiamole ad
+un argomento).  Un modo semplice per farlo è considerare l'insieme
+delle funzioni primitive ricorsive $\mathcal{PR}$ ed un formalismo,
+ovvero un insieme finito di simboli con il quale sia possibile
+descrivere tutte le possibili derivazioni associate alle funzioni di
+$\mathcal{PR}$. Un siffatto alfabeto può essere ad esempio:
+$$\Sigma = \lbrace a, b, c, \cdots ,z , 0, 1, 2, \cdots , 9, (, ) \rbrace$$
 Ogni derivazione associata ad una funzione in $\mathcal{PR}$ \`e quindi
 descrivibile con una opportuna sequenza finita di simboli $\Sigma^{*}$. \`E
 inoltre facile definire una procedura che verifichi se una data stringa $\sigma
@@ -848,45 +855,41 @@ ricorsione primitiva sono calcolabili da un b-programma ci resta solo da far
 vedere che questo vale anche per la minimizzazione. Infatti se
 $f:\mathbb{N}^{d+1} \to \mathbb{N}$ \`e computabile con un b-programma $\alpha$
 allora possiamo eseguire la seguente assegnazione:
-\[ x_i \leftarrow f(\vec{x_{j}}, x_k) \]
+$$x_i \leftarrow f(\vec{x_{j}}, x_k)$$
 (dove con $\vec{x_{j}}$ vogliamo rappresentare in modo compatto una lista di d
 variabili di input)che significa "`dai come input $\vec{x_{j}}$ e $x_k$ al
 b-programma $\alpha$ che calcola $f(\vec{x_{j}}, x_k)$ e dai output risultante
 come valore a $x_i$"'. Dunque il b-programma che calcola la funzione di
 minimizzazione su $\vec{x}$ \`e il seguente:\\
-   \begin{eqnarray}
-       x_0 \leftarrow 0 \\
-       \vec{x_{1}} \leftarrow \vec{x}  \label{eq:CalcF}\\
-       x_{d+2} \leftarrow f(\vec{x_{1}}, x_0) \\
-       \textrm{If } x_{d+2} \neq 0 \
-       \textrm{then goto}\ (\ref{eq:IncY})\ \textrm{else goto stop}\\
-       x_0 \leftarrow x_0 + 1 \label{eq:IncY}\\
-       \textrm{goto}\ (\ref{eq:CalcF})       
-  \end{eqnarray}
+   \begin{mylisting}
+       $x_0 \leftarrow 0$ \\
+       $loop$: $\vec{x_{1}} \leftarrow \vec{x}$\\
+       $x_{d+2} \leftarrow f(\vec{x_{1}}, x_0)$\\
+       if $x_{d+2} = 0$ then goto $stop$\\
+       $x_0 \leftarrow x_0 + 1$\\
+       goto $loop$
+  \end{mylisting}
 \end{proof}
 
-Dimostrato che la minimizzazione \`e b-programma-calcolabile possiamo dare la
-seguente
+Una volta dimostrato che la minimizzazione è calcolabile dai
+b-programmi possiamo dare la seguente
 \begin{definizione} Una funzione $f:\mathbb{N}^{d} \to \mathbb{N}$ (totale o
-parziale) si dice
-\underline{ricorsiva} se si ottiene dalle funzioni iniziali (a.- c.) applicando
-la composizione, la ricorsione e la minimizzazione (d.- f.).
+parziale) si dice \emph{ricorsiva} se si ottiene dalle funzioni
+iniziali (a.--c.) applicando la composizione, la ricorsione e la
+minimizzazione (d.--f.).
 \end{definizione}
 
 Una cosa importante da notare \`e che l'utilizzo dell'operatore $\mu$ consente
 di ottenere funzioni parziali anche a partire funzioni totali, come vedremo nei
 seguenti esempi.
 \begin{esempio} data $f:\mathbb{N} \to \mathbb{N}$ definita nel seguente modo:
-\begin{center}
 $$f(x)= \left\{ \begin{array}{ll}
 il \; min \; y \; t. \, c. \; x+y=0 & se \; \exists \; y\\
 non \; definita & se \; x+y \neq 0 \; \forall y \in \mathbb{N}\\
 \end{array} \right.$$
-\end{center}
 utilizzando la minimizzazione pu\`o essere scritta nel seguente modo:
-\begin{center}
 $$f(x)= \mu_{y}(x+y)$$
-\end{center}
+
 Si noti che, essendo $x \in \mathbb{N}$, se $x \neq 0 \; f$ non \`e definita
 anche se la funzione somma su cui viene applicato l'operatore di minimizzazione
 \`e totale.
@@ -894,12 +897,10 @@ anche se la funzione somma su cui viene applicato l'operatore di minimizzazione
 
 \begin{esempio} data $f:\mathbb{N}^{2} \to \mathbb{N}$ definita nel seguente
 modo:
-\begin{center}
 $$f(x,y)= \left\{ \begin{array}{ll}
 x/y & se \; y \vert x\\
 non \; definita & se \; y \nmid x\\
 \end{array} \right.$$
-\end{center}
 pu\`o essere scritta nel seguente modo:
 $$f(x,y) = \mu_{z}(\vert (z*y) - x \vert) $$
 anche in questo caso la funzione $g(x,y,z)=\vert (z*y) - x \vert$ \`e totale, ma
@@ -907,11 +908,8 @@ combinata con l'operatore di minimizzazione consente di ottenere la funzione
 parziale $f$.
 \end{esempio}
 
-Ora che abbiamo definito l'insieme delle funzioni ricorsive vogliamo dimostrare
-il seguente
-
 \section{Relazioni ricorsive}
-\begin{definizione} $R \subseteq \mathbb{N}^{n}$ \`e una \underline{relazione
+\begin{definizione} $R \subseteq \mathbb{N}^{n}$ è una \emph{relazione
 ricorsiva} se esiste una funzione ricorsiva $\chi_R$ che assume solo valori 0 e
 1 e che soddisfa
 $$\chi_R(x_1, \ldots, x_n):= \left \{ \begin{array}{ll}
@@ -919,14 +917,12 @@ $$\chi_R(x_1, \ldots, x_n):= \left \{ \begin{array}{ll}
                                       0 & (x_{1}, x_{2}, \cdots, x_{n}) \not \in
  R\\
                                       \end{array} \right. $$
-\`e ricorsiva.
 \end{definizione}
-\begin{proposizione} Se $R$,$S \subseteq \mathbb{N}^{n}$ sono relazioni
-ricorsive allora anche $R\land S$, $R \vee S$,
-$\neg R$ sono relazioni ricorsive. Inoltre, se $w \in \mathbb{N}$, anche
-$\forall y
-\leq w. R(x_1, \ldots, x_{n-1}, y)$ e $\exists y
-\leq w. R(x_1, \ldots, x_{n-1}, y)$ sono relazioni ricorsive.
+\begin{proposizione} Se $R, S \subseteq \mathbb{N}^{n}$ sono relazioni
+ricorsive allora anche $R\land S$, $R \vee S$, $\neg R$ sono relazioni
+ricorsive. Inoltre, se $w \in \mathbb{N}$, anche $\forall y \leq
+w. R(x_1, \ldots, x_{n-1}, y)$ e $\exists y \leq w. R(x_1, \ldots,
+x_{n-1}, y)$ sono relazioni ricorsive.
 \end{proposizione}
 \begin{proof} Si pone
 \begin{itemize}
@@ -943,8 +939,8 @@ x_{n-1},i))$
 \end{proof}
 
 Grazie alla definizione data sopra, ci \`e possibile giustificare la
-\emph{definizione per casi} delle funzioni ricorsive. Cosa vuol dire
-questo?\\ 
+\emph{definizione per casi} delle funzioni ricorsive.
+
 Supponiamo di avere una funzione $f: \mathbb{N}^{n} \to n$ t. c.
 $$f(\vec{x}):= \left \{ \begin{array}{ll}
                     g_1(\vec{x}) & $se $ \vec{x} \in R_{1}\\
@@ -961,13 +957,12 @@ relazioni ricorsive mutualmente esclusive ed esaustive, ossia abbiamo che:
 \end{itemize} 
 Possiamo quindi prendere le funzioni caratteristiche $\chi_{R_{1}},
 \chi_{R_{2}}, \cdots, \chi_{R_{k}}$ e definire la funzione $f$ come:
-$$f(\vec{x})= \sum_{i=1}^{k} g_i(\vec{x})\chi_{R_{i}}(\vec{x})$$
-e quindi essendo $f$ ottenuta per composizione di funzioni ricorsive \`e
-anch'essa ricorsiva.
-Quindi se vogliamo descrivere una funzione che assume valori diversi
-in ``casi'' diversi lo possiamo fare mantenendoci all'interno
-delle funzioni primitive ricorsive. Questo pu\`o essere utile
-nel definire funzioni importanti come:\\
+$$f(\vec{x})= \sum_{i=1}^{k} g_i(\vec{x})\chi_{R_{i}}(\vec{x})$$ e
+quindi essendo $f$ ottenuta per composizione di funzioni ricorsive \`e
+anch'essa ricorsiva.  Quindi se vogliamo descrivere una funzione che
+assume valori diversi in casi diversi lo possiamo fare mantenendoci
+all'interno delle funzioni primitive ricorsive. Questo può permetterci
+di definire funzioni come quella del prossimo esempio.
 
 \begin{esempio} Data la seguente funzione:
 \[ f: \mathbb{N}^{2} \to \mathbb{N} \]
@@ -985,6 +980,28 @@ Si lascia come esercizio al lettore il trovare $\chi_{R_{\geq}}$.
 
 \section{Equivalenze}
 
+Per riassumere il percorso seguito finora presentiamo il seguente schema.
+Ad ogni passaggio abbiamo introdotto un linguaggio pi\`u
+raffinato senza per\`o aggiungere nuove funzioni:
+ ogni volta abbiamo aggiunto qualcosa che fosse definibile in
+termini del precedente e quindi in particolare di macchine di Turing.
+\begin{align*}
+{\rm Macchine\ }&{\rm di\ Turing\ }\\
+\bigcup &|\\
+{\rm Macchine\ }&{\rm a\ registri\ }\\
+\bigcup &|\\
+{\rm Progra}&{\rm mmi}\\
+\bigcup &|\\
+{\rm Funzioni\ }&{\rm ricorsive\ }\\
+\bigcup &| \; {\rm?}\\
+{\rm Macchine\ }&{\rm di\ Turing\ }\\
+\end{align*}
+
+È valida valida l'ultima inclusione? in caso affermativo tutti i
+concetti di funzioni calcolabili descritti fino ad ora sono tra loro
+equivalenti. Il seguente teorema dimostra che quest'inclusione è
+effettivamente valida.
+
 \begin{teorema}[Le funzioni Turing-calcolabili sono ricorsive]
 Ovvero, per ogni MdT possiamo costruire una funzione ricorsiva che la calcola.
 \end{teorema}
@@ -998,10 +1015,11 @@ dell'input.
 
 Una MdT computa una funzione $f: \mathbb{N}^k \rightarrow \mathbb{N}$,
 possibilmente parziale, quindi lo stato del nastro all'inizio della
-computazione è una sequenza di caratteri che contiene le variabili in input:
+computazione è una sequenza di caratteri che contiene le variabili in
+input:
 $$\dots BB\overline{x_1+1}B\overline{x_2+1}B...B\overline{x_k+1}BB\dots $$
-mentre alla fine del calcolo la macchina dovrebbe lasciare nel nastro il
-risultato della funzione che calcola:
+mentre alla fine del calcolo la macchina dovrebbe lasciare nel nastro
+il risultato della funzione che calcola:
 $$\dots BB\overline{f(x_1,\dots,x_k)+1}BB\dots $$
 
 Diamo ora le seguenti definizioni, per meglio comprendere la nostra codifica
@@ -1078,59 +1096,63 @@ e $r$ rispettivamente il numero sinistro e il numero destro prima dello
 spostamento della testina, $l'$ ed $r'$ il numero sinistro ed il numero destro
 dopo lo spostamento della testina.
 \begin{enumerate}
- \item Se la testina si muove verso sinistra ed $l$ è pari allora vuol dire che
-a sinistra della testina c'è uno 0, che passa da cifra meno significativa del
-numerale sinistro ad essere la cifra meno significativa del numerale destro.
-Quindi $l' = l/2$ ed $r' = r \cdot 2$.
- \item Se la testina si muove verso sinistra ed $l$ è pari allora vuol dire che
-a sinistra della testina c'è un 1, che passa dal numerale sinistro al numerale
-destro; quindi $l' = (l-1)/2$ ed $r' = r \cdot 2 + 1$.
- \item Se la testina si muove verso destra e la cifra meno significativa del
-numerale destro è un 1, questa passa al numerale sinistro per cui: $l' = l
-\cdot 2 + 1$, $r' = (r-1)/2$.
- \item Se la testina si muove verso destra e la cifra meno significativa del
-numerale destro è uno 0, $l' = l \cdot 2$ e $r' = r/2$.
+ \item Se la testina si muove verso sinistra ed $l$ è pari allora vuol
+   dire che a sinistra della testina c'è uno 0, che passa da cifra
+   meno significativa del numerale sinistro ad essere la cifra meno
+   significativa del numerale destro.  Quindi $l' = l/2$ ed $r' = r
+   \cdot 2$.
+ \item Se la testina si muove verso sinistra ed $l$ è pari allora vuol
+   dire che a sinistra della testina c'è un 1, che passa dal numerale
+   sinistro al numerale destro; quindi $l' = (l-1)/2$ ed $r' = r \cdot
+   2 + 1$.
+ \item Se la testina si muove verso destra e la cifra meno
+   significativa del numerale destro è un 1, questa passa al numerale
+   sinistro per cui: $l' = l \cdot 2 + 1$, $r' = (r-1)/2$.
+ \item Se la testina si muove verso destra e la cifra meno
+   significativa del numerale destro è uno 0, $l' = l \cdot 2$ e $r' =
+   r/2$.
 \end{enumerate}
 
-Vediamo ora come codificare le quintuple $\langle q_i, S_i, S_j, \{L,R\}, q_j
-\rangle$ che descrivono una macchina di Turing.
+Vediamo ora come codificare le quintuple $\langle q_i, S_i, S_j,
+\{L,R\}, q_j \rangle$ che descrivono una macchina di Turing.
 
 Queste definiscono una funzione di transizione $\tau : \mathbb{N}^2
-\rightarrow \mathbb{N}^3$ e, poichè le nostre funzioni ricorsive sono tutte
-della forma $f:\mathbb{N}^k \rightarrow \mathbb{N}$, dobbiamo trovare una
-funzione di codifica delle ennuple $\nu: \mathbb{N}^n \rightarrow \mathbb{N}$ ed
-una classe di funzioni di proiezione $\nu_i: \mathbb{N} \rightarrow \mathbb{N}$
-che estrapolano la proiezione dell'i-esima componente dalla tripla codificata
-nei naturali.
+\rightarrow \mathbb{N}^3$ e, poichè le nostre funzioni ricorsive sono
+tutte della forma $f:\mathbb{N}^k \rightarrow \mathbb{N}$, dobbiamo
+trovare una funzione di codifica delle ennuple $\nu: \mathbb{N}^n
+\rightarrow \mathbb{N}$ ed una classe di funzioni di proiezione
+$\nu_i: \mathbb{N} \rightarrow \mathbb{N}$ che estrapolano la
+proiezione dell'i-esima componente dall'ennupla codificata nei
+naturali.
 
 Delle funzioni adatte a questo scopo sono le seguenti:
-$$\nu(\overrightarrow{x}) = \prod_{i=1}^n p_i^{x_i}$$
-per la codifica e
-$$\nu_i(w) = \max_x.p_i^x \mid w$$
-per la decodifica dell'i-esima componente, dove $p_i$ indica l'i-esimo numero
-primo.
+$$\nu(\vec{x}) = \prod_{i=1}^n p_i^{x_i}$$ per la codifica
+e $$\nu_i(w) = \max_x.p_i^x \mid w$$ per la decodifica dell'i-esima
+componente, dove $p_i$ indica l'i-esimo numero primo. Queste funzioni
+sfruttano l'unicità della fattorizzazione in numeri primi dei
+naturali.
 
 La funzione di codifica è chiaramente primitiva ricorsiva, in quanto
-composizione di funzioni primitive ricorsive, ovvero il prodotto e l'elevamento
-a potenza.
+composizione di funzioni primitive ricorsive, ovvero il prodotto e
+l'elevamento a potenza.
 
-Per verificare che anche la funzione di proiezione è primitiva ricorsiva
-dobbiamo introdurre gli operatori di minimizzazione e massimizzazione limitata,
-rispettivamente $\mu_{w<n}[f](\overrightarrow{x})$ e
-$\max_{w<n}[f](\overrightarrow{x})$, che calcolano il minimo e il massimo $w
-\in [0,n]$ tale per cui $f(\overrightarrow{x}, w) = 0$.
+Per verificare che anche la funzione di proiezione è primitiva
+ricorsiva dobbiamo introdurre gli operatori di minimizzazione e
+massimizzazione limitata, rispettivamente $\mu_{w<n}[f](\vec{x})$ e
+$\max_{w<n}[f](\vec{x})$, che calcolano il minimo e il massimo $w \in
+[0,n]$ tale per cui $f(\vec{x}, w) = 0$.
 
-$$\mu_{w<n}[f](\overrightarrow{x}) = \sum_{i=0}^n sgn\left(\prod_{j=0}^i
-f(\overrightarrow{x},w)\right)$$
+$$\mu_{w<n}[f](\vec{x}) = \sum_{i=0}^n sgn\left(\prod_{j=0}^i
+f(\vec{x},w)\right)$$
 
-Sia $h(\overrightarrow{x},y) = f(\overrightarrow{x},n-y)$, definiamo la
-funzione di massimizzazione in questo modo:
+Sia $h(\vec{x},y) = f(\vec{x},n-y)$, definiamo la funzione di
+massimizzazione in questo modo:
 
-$$\max_{w<n}[f](\overrightarrow{x}) = n-\mu_{w<n}[h](\overrightarrow{x})$$
+$$\max_{w<n}[f](\vec{x}) = n-\mu_{w<n}[h](\vec{x})$$
 
-Chiaramente sia la minimizzazione che la massimizzazione limitate sono funzioni
-primitive ricorsive, in quanto definite in termini di altre funzioni primitive
-ricorsive.
+Chiaramente sia la minimizzazione che la massimizzazione limitate sono
+funzioni primitive ricorsive, in quanto definite in termini di altre
+funzioni primitive ricorsive.
 
 Ora definiamo la funzione caratteristica della divisione:
 
@@ -1146,12 +1168,13 @@ div(x,y) =& \left\{
 \end{align*}
 
 Infine possiamo definire la funzione di proiezione nel seguente modo:
-$$\nu_i(w) = \max_{x<w}.\left| div(p_i^x, w) - 1\right|$$
-e quindi abbiamo dimostrato che anche la massimizzazione è primitiva rcorsiva.
+$$\nu_i(w) = \max_{x<w}.\left| div(p_i^x, w) - 1\right|$$ e quindi
+abbiamo dimostrato che anche la massimizzazione è primitiva rcorsiva.
 
-Con gli strumenti che ci siamo appena procurati possiamo ora costruire la
-codifica della funzione di transizione. Intanto ci serve una mappa dei simboli
-che usiamo per descrivere la macchina di Turing nei naturali:
+Con gli strumenti che ci siamo appena procurati possiamo ora costruire
+la codifica della funzione di transizione. Intanto ci serve una mappa
+dei simboli che usiamo per descrivere la macchina di Turing nei
+naturali:
 \begin{align*}
 q_i &\rightsquigarrow i+1\\
 B &\rightsquigarrow 0\\
@@ -1160,24 +1183,25 @@ L &\rightsquigarrow 1\\
 R &\rightsquigarrow 2\\
 \end{align*}
 
-La funzione di transizione, dato un insieme $S$ di regole per la macchina di
-Turing, è la seguente:
+La funzione di transizione, dato un insieme $S$ di regole per la
+macchina di Turing, è la seguente:
 $$\tau(x,y) = \left\{
 \begin{array}{ll}
-\nu(u,v,w) & \text{se $\langle q_i, S_i, S_j, D, q_j \rangle \in S$}\\
-& \text{e $q_i \rightsquigarrow x$, $S_i \rightsquigarrow y$,
-$S_j \rightsquigarrow u$, $D \rightsquigarrow v$, $q_j \rightsquigarrow w$}\\
-\nu(0,0,0) & \text{se non si applica nessuna regola}
+\nu(u,v,w) & \text{se $\langle q_i, S_i, S_j, D, q_j \rangle \in
+  S$}\\ & \text{e $q_i \rightsquigarrow x$, $S_i \rightsquigarrow y$,
+  $S_j \rightsquigarrow u$, $D \rightsquigarrow v$, $q_j
+  \rightsquigarrow w$}\\ \nu(0,0,0) & \text{se non si applica nessuna
+  regola}
 \end{array}
-\right.$$
-è una funzione definita per casi su un insieme finito di regole $S$, per cui,
-come dimostrato nei paragrafi precedenti, è primitiva ricorsiva.
+\right.$$ è una funzione definita per casi su un insieme finito di
+regole $S$, per cui, come dimostrato nei paragrafi precedenti, è
+primitiva ricorsiva.
 
-Codifichiamo ora la funzione che esegue sul nastro la tripla ottenuta dalla
-funzione di transizione. Siano $left(l,r)$ e $right(l,r)$ le funzioni che
-simulano lo spostamento della testina rispettivamente a sinistra ed a destra
-secondo le regole date in precedenza. Un passo della MdT è codificato dalla
-seguente funzione:
+Codifichiamo ora la funzione che esegue sul nastro la tripla ottenuta
+dalla funzione di transizione. Siano $left(l,r)$ e $right(l,r)$ le
+funzioni che simulano lo spostamento della testina rispettivamente a
+sinistra ed a destra secondo le regole date in precedenza. Un passo
+della MdT è codificato dalla seguente funzione:
 
 $$step(l,r,x) = \left\{
 \begin{array}{ll}
@@ -1188,8 +1212,8 @@ right(l, w_1(r)) \cdot p_3^{\nu_3(x)} & \text{se }\nu_1(x) = 1, \nu_2(x) = 2\\
 \end{array}
 \right.$$
 
-Questa funzione, definita per ricorsione primitiva, ci da lo stato della
-macchina dopo $t$ passi:
+Questa funzione, definita per ricorsione primitiva, ci da lo stato
+della macchina dopo $t$ passi:
 \begin{align*}
 f(l,r,0) &= \nu(l,r,1)\\
 f(l,r,t+1) &= step(\nu_1(n), \nu_2(n), \tau(\nu_3(n), \nu_2(n) \mod 2) )
@@ -1207,17 +1231,17 @@ $$cod(x_1, \dots, x_n) = g(\dots 2\cdot g(0, x_n), x_1)$$
 e decodifichiamo il risultato:
 $$dec(r) = \mu_x.r+1\dot{-}2^x$$
 
-Ora non ci resta che costruire la funzione che esegue la macchina di Turing
-sull'input e che ritorna la codifica del nastro alla terminazione:
-$$MdT(\overrightarrow{x}) = dec(\nu_2(f(0,cod(\overrightarrow{x}),\mu_t .
-|\nu_3(f(0,cod(\overrightarrow{x}),t)) = 0|)))$$
+Ora non ci resta che costruire la funzione che esegue la macchina di
+Turing sull'input e che ritorna la codifica del nastro alla
+terminazione: $$MdT(\vec{x}) = dec(\nu_2(f(0,cod(\vec{x}),\mu_t .
+|\nu_3(f(0,cod(\vec{x}),t)) = 0|)))$$
 
 In questo modo abbiamo definito una funzione ricorsiva che svolge
 l'intera computazione di una macchina di Turing, se questa termina, ed
 è indefinita altrimenti. In effetti si può dire qualcosa in più: fino
 alla fine della nostra costruzione abbiamo usato solo funzioni
 primitive ricorsive, quindi totali per la
-Proposizione~\ref{PRSonoTotali}. Ovvero è sempre possibile sapere qual
+Proposizione~\ref{PRsonoTotali}. Ovvero è sempre possibile sapere qual
 è lo stato della computazione della macchina di Turing (rappresentato
 dai numerali sinistro e destro) ad un dato tempo $t$, la vera
 incognita sta nella terminazione della macchina, com'era giusto
@@ -1239,8 +1263,12 @@ sostituendola nel nostra prova otteniamo la macchina di Turing
 universale, in grado cioè di eseguire una qualunque macchina di
 Turing.
 
-Abbiamo quindi dimostrato che per ogni macchina di Turing esiste una funzione
-ricorsiva che la computa ed abbiamo visto come costruirla.
+Abbiamo quindi dimostrato che per ogni macchina di Turing esiste una
+funzione ricorsiva che la computa ed abbiamo visto come costruirla.
 \end{proof}
 
-
+\subsection{Tesi di Church-Turing}
+Poichè tutti questi (ed altri) tentativi di definire tutto ciò che è
+effettivamente calcolabile portano alla stessa classe di funzioni, si
+può pensare che la nostra nozione intuitiva di calcolabilità coincida
+esattamente con ognuna di queste definizioni.

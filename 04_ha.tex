@@ -1,0 +1,1397 @@
+\chapter{Sistema assiomatico HA}
+\section{Introduzione}
+
+Quotidianamente l'uomo al fine di argomentare, strutturare discorsi e giungere a conclusioni fa uso della logica e di un linguaggio formale ben preciso che gli permette di evitare ambiguit\`a e ridondanze durante un colloquio.\\
+Di fondamentale importanza sono le \emph{deduzioni formali} in quanto forzano la verit\`a delle nostre argomentazioni perch\`e ci permettono di definire in modo chiaro le premesse da cui partiamo e le varie regole di inferenza che utilizziamo per arrivare alla conclusione.\\
+Quello che a noi interessa quindi sono le \emph{prove} che portiamo per mostrare se determinate proposizioni sono vere e perch\`e lo sono.\\
+Per questo abbiamo bisogno di una \emph{teoria assiomatica formale}, cio\`e di una teoria formale in cui \`e possibile esprimere enunciati e dedurre le loro conseguenze logiche in modo del tutto formale e meccanico.\\
+\vspace{0.3 cm}
+
+Una \emph{teoria assiomatica} $T$ nel linguaggio $\mathcal{L}$ \`e determinata da un calcolo logico $L$ e da un insieme $\Sigma$ (anche infinito) di formule di $\mathcal{L}$ chiamate assiomi di $T$. Si dice che $\varphi$ \`e conseguenza logica di $\Gamma$\footnote{Con $\Gamma$ indichiamo l'insieme di tutte le assunzioni (premesse) di $T$} in $T$ se esiste una deduzione in $L$ con conclusione $\varphi$ e assunzioni contenute in $\Gamma \cup \Sigma$. In particolare, si dice che $\varphi$ \`e un teorema di $T$ se esiste una deduzione di $\varphi$ con assunzioni tutte contenute in $\Sigma$
+
+
+\vspace{0.4 cm}
+Gli elementi fondamentali di una teoria assiomatica dunque sono:
+\begin{enumerate}
+	\item un \textsl{\textbf{linguaggio formalizzato}} $\mathcal{L}$
+\item un insieme di enunciati nel linguaggio che trattiamo come \textsl{\textbf{assiomi}} della teoria
+\item un \textsl{\textbf{sistema deduttivo}} per costruire prove, ossia per derivare teoremi da assiomi
+
+\end{enumerate}
+Il linguaggio formalizzato $\mathcal{L}$ consiste di:
+\begin{itemize}
+	\item un \underline{alfabeto} $\alpha$ di simboli che possono essere le variabili, i connettivi e i quantificatori e i simboli relazionali
+\item \underline{regole di costruzione sintattica} che permettono di determinare quali stringhe finite di simboli di $\alpha$ costituiscono il vocabolario delle costanti individuali (nomi), delle variabili, dei predicati e delle funzioni
+	\item \underline{regole per determinare} quali sequenze di parole in questo vocabolario  ci danno \underline{formule} di $\mathcal{L}$
+\end{itemize}
+\vspace{0.5 cm}
+Mentre per quanto rigurda il sistema deduttivo \`e importante specificare che cosa \`e una prova.\\
+Una \textbf{prova} \`e \textit{un vettore \textsl{finito} di formule conforme alle regole del sistema e le cui assunzioni appartengono solo al sistema di assiomi}.\\
+Dal momento che le prove sono composte da un numero finito di passaggi logici, allora per ogni prova esister\`a solo un numero finito di assiomi coinvolti. \\
+Specifichiamo infine che fornire una prova non significa decidere in anticipo se questa prova esiste o meno. Noi siamo interessati non ad argomentazioni semantiche ma a derivazioni nel sistema formale HA, che \`e l'equivalente \textsl{costruttivo} della teoria assiomatica di Peano, di cui parleremo tra breve.
+
+\vspace{0.5 cm}
+
+\underline{Perch\'e ci serve tutto questo?}\\
+\vspace{0.2 cm}
+
+Il primo teorema di incompletezza di G\"odel pone dei limiti alle teorie assiomatiche dell'aritmetica, o meglio alle teorie formali assiomatiche dell'aritmetica, il cui linguaggio di base consiste nella definizione della struttura dei numeri naturali, della somma e della moltiplicazione in $\mathbb{N}$ e in un apparato logico del primo ordine.\newline
+Quindi, dati gli assiomi che regolano la struttura di una sequenza di naturali e che caratterizzano somma e prodotto esiste sicuramente almeno una proposizione $\phi$, formulata nel dato linguaggio dell'aritmetica di base, della quale non ï¿œ possibile dimostrare, a partire dagli assiomi, nï¿œ la sua affermazione, nï¿œ la sua negazione.\footnote{Notiamo che comunque l'incompletabilit\`a non compromette l'aritmetica che c'\`e alla base.}\\
+Questo fatto \`e proprio ci\`o che viene affermato nel primo teorema di G\"odel: ogni teoria aritmetica di base assiomatizzata rimane incompleta, qualsiasi sforzo si faccia per completarla con altri assiomi.\\
+Quindi qualsiasi teoria matematica assiomatizzata con un'aritmetica di base costituita dalle operazioni di somma e moltiplicazione in $\mathbb{N}$ deve essere incompleta e incompletabile (consistente e con alcuni enunciati non dimostrabili).
+
+\section{Assiomi di HA}
+Definiamo ora il sistema assiomatico PA e di conseguenza il sistema HA. Infatti l'aritmetica di Heyting HA formalizza la teoria intuizionista dei numeri.\\ Essa ha gli stessi assiomi propri dell'aritmetica classica PA, a cui si aggiunge l'apparato deduttivo della logica intuizionista. \\I teoremi di HA sono quindi necessariamente un sottoinsieme proprio dei teoremi di PA. L'assioma di induzione appartiene sia a PA che ad HA e questo riflette le posizioni della matematica intuizionista sul carattere costruttivo della successione dei numeri naturali. Come sappiamo, per far ci\`o, dobbiamo specificare il \textsl{linguaggio}, gli \textsl{assiomi} e il \textsl{sistema di prova deduttivo}.\\
+Definiamo dunque:
+\begin{enumerate}
+ \item \underline{\texttt{il linguaggio al primo ordine LA}}\footnote{LA sta per \textsl{linguaggio dell'aritmetica}}, il cui vocabolario comprende:
+\begin{itemize}
+	\item [-] la \textsl{costante} individuale $0$
+	\item[-] il predicato di \textsl{uguaglianza} "`$=$"' 
+	\item[-] la funzione a un solo argomento \textsl{successore} $s(x)$
+	\item[-] le funzioni a due argomenti $x+y$ (\textsl{somma}) e $x*y$ (\textsl{moltiplicazione})	
+	\item[-] quantit\`a numerabile di variabili $x, y, z, w\ldots$
+	\item[-] connettivi logici e quantificatori
+	\item[-] i segni $,$, $($, $)$
+\end{itemize}
+\vspace{.5cm}
+\item L'\underline{\texttt{insieme dei termini $Trm$}} \`e definito in modo induttivo come segue:
+\begin{itemize}
+\item[-] La costante $0$ \`e un termine;
+\item[-] Ogni variabile \`e un termine;
+\vspace{0.3 cm}
+\item[-] 
+	$\prooftree
+  t_1\in Trm ,t_2\in Trm,\dots,t_n\in Trm
+   \justifies
+f_n(t_1,t_2,\dots,t_n) \in Trm
+\endprooftree$ 
+\end{itemize}
+\vspace{.5cm}
+\item  L'\underline{\texttt{insieme delle formule $Frm$}} \`e definito in modo induttivo come segue:
+\begin{itemize}
+\item[-] Ogni \textit{formula atomica} \`e una formula\footnote{una formula atomica \`e del tipo $R_n(t_1,t_2,\dots,t_n)$ in cui $t_1,t_2,\dots, t_n$ sono termini e $R_n$ \`e una relazione in LA ad $n$ argomenti}
+\item[-] Date $\alpha,\beta \in Frm$, $\alpha \circ \beta \in Frm$, con $\circ$ un qualsiasi connettivo di LA, cio\`e $Frm$  chiuso per i connettivi sopra elencati.
+\item[-] 
+	$\prooftree
+  \alpha \in Frm \qquad x \in Variabili
+   \justifies
+\forall x.\alpha \in Frm
+\endprooftree$ 
+\vspace{0.3 cm}
+\item[-] 
+$\prooftree
+  \alpha \in Frm \qquad x \in Variabili
+   \justifies
+\exists x.\alpha \in Frm
+\endprooftree$ 
+
+\end{itemize}
+\vspace{.5cm}
+\item \underline{\texttt{gli assiomi}} che si basano sui postulati di Peano e li vedremo in dettaglio tra poco
+\vspace{.5cm}
+\item \underline{\texttt{il sistema di prova deduttivo}} che \`e una qualche versione standard di logica al primo ordine costruttiva (dunque senza assunzione del principio del terzo escluso) con identit\`e (le differenze tra le varie versioni sono insignificanti)
+\end{enumerate}\par\ \par\noindent
+
+I \underline{postulati} di Peano, sui quali si basa la nostra teoria, sono:
+\begin{enumerate}
+	\item[(P1)] $0$ \`e un numero naturale
+	\item[(P2)] Se $x$ \`e un numero naturale, allora esiste un altro numero na-turale, detto \textsl{successore} di $x$, denotato con $s(x)$
+	\item[(P3)] $0\neq s(x)$ per qualsiasi numero naturale $x$
+	\item[(P4)] Se $s(x)=s(y)$ allora $x=y$
+	\item[(P5)] Sia $P$ una certa propriet\`a sui numeri naturali. Se $P$ vale per $0$ e se per ogni numero naturale $x$ che gode della propriet\`a si ha che $s(x)$ gode di $P$, allora $P$ vale per ogni naturale (non \`e altro che il \textsl{principio di induzione})
+\end{enumerate}\par\ \par\noindent
+
+Gli \underline{\textbf{assiomi}} di HA dunque sono:
+\begin{enumerate}
+	\item[(A1)] $\vdash 0\neq s(x)$ (corrisponde a (P3))
+	\item[(A2)] $s(x)=s(y)\vdash x=y$ (corrisponde a (P4))
+	\item[(A3)] $\vdash x+0=x$
+	\item[(A4)] $\vdash x+s(y)=s(x+y)$
+	\item[(A5)] $\vdash x*0=0$
+	\item[(A6)] $\vdash x*s(y)=x*y+x$
+	\item[(A7)] Regola di induzione (corrisponde a (P5)):\newline\newline
+	$\prooftree
+  \Gamma, \varphi(z) \vdash \varphi(s(z))
+   \justifies
+ \Gamma, \varphi(0) \vdash \varphi(t)
+ \using
+ {IR}
+\endprooftree$.
+\end{enumerate}\par\ \par\
+Si noti che:
+\begin{itemize}
+\item (A1) afferma che $0$ non \`e l'immagine di $s$ e questo permette di escludere modelli in cui, iterando la funzione successore, si possa compiere un loop che ritorni al punto di partenza. Nel modello di Peano questo sta a indicare, ad esempio, che $0$ non \`e il "`successivo"' di nessun numero naturale
+\item (A2) afferma che $s$ \`e una funzione iniettiva che permette di escludere i modelli in cui, partendo da $0$ e andando avanti ripetutamente da un elemento al successore, si possa tornare su un elemento gi\`a visitato e rimanere confinati in un ciclo. In altre parole si sta dicendo ad esempio che se $s$ sta ad indicare il "`successivo"' di un numero naturale, allora se $s(x)$ e $s(y)$ coincidono, anche i "`numeri"' di partenza necessariamente coincidono
+\item (A3) e (A4) sono gli assiomi che definiscono la somma tra due numeri naturali
+\item (A5) e (A6) definscono il prodotto tra due numeri naturali
+\item (A7) permette di affermare che l'insieme dei naturali $\mathbb {N}$ \`e il pi\`u piccolo insieme che contenga lo $0$ e che contenga il successore di ogni suo elemento (cio\`e che sia chiuso per la funzione s) e quindi permette di escludere modelli in cui siano presenti degli elementi "`intrusi"' al di fuori della sequenza infinita dei successori dello zero
+\end{itemize}
+
+\par\ \par\noindent
+\underline{\texttt{Osservazione}} Non sono stati dati, almeno esplicitamente, assiomi corrispondenti ai postulati (P1) e (P2). In realt\`a, essi seguono dal fatto che consideriamo $\mathbb{N}$ come dominio di interpretazione e dall'aver definito nel nostro linguaggio la costante $0$ ($0$ \`e automaticamente elemento di $\mathbb{N}$) e la funzione a un solo argomento successore (che vogliamo sia totale, dunque se $x$ \`e un elemento, anche $s(x)$ lo \`e).
+\par\ \par\noindent
+
+Questa serie di assiomi sembra per noi sovrabbondante. Infatti, avendo gi\`a l'idea di $\mathbb{N},$ si sarebbe portati a definire i naturali nel modo seguente:\\ 
+\emph{definisco $0$ e poi definisco $1$ come il successore di $0$, $2$ come il successore del successore di $0$ e cos\`i via.}\\ 
+E' chiaro quindi che i naturali si possono concepire, a partire da $0,$ come una "`linea retta"' di cui consideriamo solo i punti interi positivi.\\
+Ma per un robot invece, tali assiomi sono fondamentali per la definizione dei numeri naturali, in quanto non ha modo di costruire la stessa struttura di $\mathbb{N}$ come noi abbiamo in mente.\\
+%Questo per\`o un robot (ad esempio) non lo pu\`o fare, in quanto non ha la minima idea della struttura di $\mathbb{N}$ che noi abbiamo in mente.\\ 
+Vediamo infatti che cosa succede se forniamo al robot soltanto i postulati P1 e P2: potrebbe costruire i naturali come una "`corona del rosario"' senza cadere in contraddizione con gli stessi. Infatti potrebbe partire dallo $0$, fare ad esempio dieci applicazioni del successore di $0$ e poi chiu-dere il cerchio sullo $0$ iniziale e questo, il robot, lo considererebbe un modello corretto per i naturali, in quanto \`e palese che soddisfa ai due assiomi proposti. \\ L'uomo potrebbe cercare di correggere il tutto inserendo il postulato P3 per far si che $0$ non sia il successore di nessun numero naturale, come vuole la nostra intuizione. Nuovamente, senza cadere in contraddizione, il robot potrebbe costruire un suo modello di $\mathbb{N}$ che neanche lontanamente assomiglia a quello reale, ma che d'altra parte non \`e in contraddizione con P1, P2 e P3 e potrebbe essere una "`corona del rosario"', come nel caso precedente, a cui viene aggiunto (e ovviamente collegato) un "`punto esterno"' (lo zero appunto).\\ Qui non si cade in contraddizione con P3 perch\`e $0$, che \`e esterno alla "`corona"', non ha effettivamente numeri naturali prima di s\`e, d'altra parte i numeri naturali che abbiamo in mente hanno una struttura assai differente. \\ Come si nota, i soli P1, P2 e P3 possono dar luogo a una "`circolarit\`a"', un loop, nella struttura e per eliminare questa possibilit\`a \`e necessario assumere almeno un altro postulato come P4. Si potrebbe pensare che basti quest'ultimo per concludere. Eppure un'ulteriore struttura ben pi\`u complessa renderebbe veri i primi postulati, ma non creerebbe affatto l'idea di $\mathbb{N}$ che vogliamo, n\`e tantomeno la possibilit\`a di indurre su ogni naturale. \\ Ecco perch\`e \`e necessario introdurre anche il postulato di induzione.\\
+Bisogna dunque dare al robot l'istruzione: $$\varphi(0) \& \forall z (\varphi(z)\longrightarrow \varphi(s(z))) \vdash \forall z \varphi(z)$$ con $\varphi$ formula.\\
+Ma proprio il fornire questa istruzione al robot diventa difficile al programmatore, in quanto bisogna saper scrivere $\varphi$ nel nostro sistema.\\
+E' importante sapere che noi, di fatto, stiamo "`sperando"' che quanto fornito sia sufficiente al robot affinch\`e "`capisca"' la nostra intuizione di $\mathbb{N}.$\\ 
+
+\vspace{0.5 cm}
+Essendo PA una teoria con uguaglianza, si hanno anche gli assiomi:
+\begin{enumerate}
+	\item[(U1)] $x=y,x=z\vdash y=z$
+	\item[(U2)] $x=y\vdash s(x)=s(y). $
+\end{enumerate}
+\par\ \par
+
+Potrebbe sembrare che il linguaggio di HA sia povero di espressivit\`a e non ci permetta di parlare di una stringa finita di numeri ma, una volta che abbiamo l'esponenziazione, possiamo semplicemente \textsl{codificare} una sequenza finita di numeri.\\ G\"odel ha mostrato che l'esponenziazione \`e definibile tramite l'introduzione di qualche altra funzione nella nostra aritmetica (la $\beta$-function di cui si parler\`a in seguito). In realt\`a \`e stato provato che essa pu\`o essere introdotta in HA e questo ci permette dunque di codificare sequenze.\\ Quindi potrebbe sembrare che HA dotato di esponenziazione sia pi\`u forte di HA, ma a dire il vero, per quanto appena accennato, sono equivalenti e dunque possiamo eliminare l'esponenziazione dalle nostre assunzioni.\\ Oltre alla potenza di questo linguaggio, verr\`a mostrata pi\`u avanti la consistenza di HA (secondo teorema di G\"odel).  Noi dunque considereremo il sistema assiomatico HA senza estenderlo. \newline
+Vedremo come sar\`a possibile definire i concetti di \textsl{numero primo} (che insieme all'esponenziazione \`e comodissimo per codificare, in particolare, sequenze finite di numeri naturali), \textsl{resto della divisione}, \textsl{sottrazione adeguata}, \textsl{divisibilit\`a}, \textsl{relazione d'ordine} e cos\`i via, giusto rimanendo nell'ambito di questa teoria formale. Quindi vedremo come in questo sistema assiomatico sia possibile \textsl{derivare} tutto ci\`o che ci serve per fare matematica. \newline
+Si utilizzer\`a il sistema di regole che si basa sul calcolo dei sequenti.
+
+\vspace{0.3 cm}
+\subsection{Regole del calcolo dei sequenti}
+Il nome "`sequente"' \`e la traduzione dal tedesco della parola {\itshape Sequenz}, introdotta da Gerhard Gentzen nel 1934, ed indica un formalismo che si presenta nella forma:
+$$\Gamma_1,\Gamma_2,\dots,\Gamma_m\vdash\Delta_1,\Delta_2,\dots,\Delta_n$$
+Il simbolo $\vdash$\ indica che le formule a sinistra (gli {\itshape antecedenti}) sono le ipotesi dalla cui asserzione segue la dichiarazione delle formule a destra (i {\itshape conseguenti}).\\
+Occorrono anche altre abbreviazioni come ad esempio:
+$$\frac{\Gamma\vdash\Delta}{\Gamma'\vdash\Delta'}$$
+dove la barra orizzontale ï¿œ dunque un modo veloce per scrivere `"'ci\`o che sta sopra comporta ci\`o che sta sotto"'.\\
+Ovvero quello che sta sopra la barra orizzontale deve essere assunto come premessa, mentre quello che sta sotto corrisponde alle deduzioni fatte a partire da tali premesse.\\
+Quindi elenchiamo le regole del calcolo dei sequenti (nella versione intuizionista) che utilizzeremo per costruire le prove:
+\begin{enumerate}
+\vspace{.3cm}
+\item[] \textit{Assioma}:
+$$\Gamma,A\vdash A \ ax$$
+
+\item[] \textit{Ordine o Scambio}:
+$$\prooftree
+  A,B \vdash \Delta
+   \justifies
+ B,A\vdash \Delta
+ \using
+ {ord}
+\endprooftree$$\\
+\item[] \textit{Indebolimento}:
+$$\prooftree
+  \Gamma \vdash \Delta
+   \justifies
+ \Gamma, \Sigma \vdash \Delta
+ \using
+ {ind}
+\endprooftree$$\\
+
+\item[] \textit{Contrazione}:
+$$\prooftree
+  \Gamma, A, A \vdash \Delta
+   \justifies
+ \Gamma, A \vdash \Delta
+ \using
+ {cont}
+\endprooftree$$\\
+
+\item[] \textit{Taglio}:
+$$\prooftree
+  \Gamma \vdash A\qquad\Gamma', A\vdash \Delta
+   \justifies
+ \Gamma, \Gamma' \vdash \Delta
+ \using
+ {cut}
+\endprooftree$$\\
+
+	\item[] \textit{Regole per}\ \&:\par\ \par\noindent
+$$\prooftree
+  \Gamma, A,B \vdash \Delta
+   \justifies
+ \Gamma, A\ \mbox{\&}\ B \vdash \Delta
+ \using
+ {\mbox{\&}_{left}}
+\endprooftree$$
+\hspace{\stretch{1}}
+
+$$\prooftree
+  \Gamma \vdash A\qquad\Gamma \vdash B
+   \justifies
+ \Gamma \vdash A\mbox{\&}B
+ \using
+ {\mbox{\&}_{right}}
+\endprooftree$$\\
+
+\item[] \textit{Regole per $\vee$}:\\
+$$\prooftree
+  \Gamma, A \vdash \Delta\qquad\Gamma, B \vdash \Delta
+   \justifies
+ \Gamma, A\vee B \vdash \Delta
+ \using
+ {\vee_{left}}
+\endprooftree$$\\
+	$\prooftree
+  \Gamma \vdash A
+   \justifies
+ \Gamma \vdash A\vee B
+ \using
+ {\vee_{right}}
+\endprooftree$
+\hspace{\stretch{1}}
+$\prooftree
+  \Gamma \vdash B
+   \justifies
+ \Gamma \vdash A\vee B
+ \using
+ {\vee_{right}}
+\endprooftree$
+\vspace{.8cm}
+
+\item[] \textit{Regole per $\to$}:\\
+$$\prooftree
+  \Gamma_1 \vdash A\qquad\Gamma_2, B \vdash \Delta
+   \justifies
+ \Gamma_1, \Gamma_2, A\to B \vdash \Delta
+ \using
+ {\to_{left}}
+\endprooftree$$\\
+$$\prooftree
+  \Gamma, A \vdash B
+   \justifies
+ \Gamma \vdash A\to B
+ \using
+ {\to_{right}}
+\endprooftree$$\\
+
+\item[] \textit{Regole per $\neg$}:\\
+$$\prooftree
+  \Gamma \vdash A
+   \justifies
+ \Gamma, \neg A \vdash \Delta
+ \using
+ {\neg_{left}}
+\endprooftree$$\\
+$$\prooftree
+  \Gamma, A \vdash \bot
+   \justifies
+ \Gamma \vdash \neg A
+ \using
+ {\neg_{right}}
+\endprooftree$$\\
+
+\item[] \textit{Regole per $\forall$}:\\
+$$\prooftree
+  \Gamma, A(c) \vdash \Delta
+   \justifies
+ \Gamma, \forall\ x\ A(x) \vdash \Delta
+ \using
+ {\forall_{left}}
+\endprooftree$$\\
+$$\prooftree
+  \Gamma \vdash A(z)
+   \justifies
+ \Gamma \vdash \forall\ x\ A(x)
+ \using
+ {\forall_{right}\ \mbox{*}}
+\endprooftree$$\\
+
+\item[] \textit{Regole per $\exists$}:\\
+$$\prooftree
+  \Gamma, A(z) \vdash \Delta
+   \justifies
+ \Gamma, \exists\ x\ A(x) \vdash \Delta
+ \using
+ {\exists_{left}\ \mbox{*}}
+\endprooftree$$\\
+$$\prooftree
+  \Gamma \vdash A(c)
+   \justifies
+ \Gamma \vdash \exists\ x\ A(x)
+ \using
+ {\exists_{right}}
+\endprooftree$$
+
+\end{enumerate}
+\par\ \par\noindent
+\vspace{.3cm}
+
+Contrassegnamo con * le regole in cui $z$ non \`e una variabile libera nel contesto $\Gamma, \Delta$.\\
+
+\section{Espressivit\`a di HA}
+Vediamo ora cosa \`e possibile derivare nel nostro sistema assiomatico.\\
+Si cercher\`a di dimostrare ogni proposizione tramite una prova, ma si ricorda che le derivazioni non sono uniche e quindi potrebbero esistere altri modi per provare un determinato enunciato.\\
+Inoltre prima di cominciare si noti che, per dire che qualcosa \`e derivabile nella nostra teoria, si user\`a il simbolo $\vdash$ anzich\`e $\vdash_{HA}$, ossia si lascia sottinteso il sistema in cui si lavora, salvo specifiche particolari.\\
+Valendo: $$\prooftree
+\vdash\Gamma\quad\[\vdash\varphi(0)\quad\[\varphi(z),\Gamma\vdash\varphi(s(z))\justifies \varphi(0),\Gamma\vdash \varphi(t)\using{IR}\]\justifies \Gamma\vdash\varphi(t)\using{cut}\]\justifies \vdash\varphi(t)\using{cut}
+\endprooftree$$
+dimostreremo per tutte le propriet\`a ricorsive solamente $\varphi(0)$ e $\varphi(z)\vdash\varphi(s(z))$. \newline
+Infatti, per la validit\`a di:
+$$\prooftree
+   \vdash \varphi(t)
+   \justifies
+  \vdash \forall\ x\ \varphi(x)
+ \using
+ {\forall_{right}}
+\endprooftree$$\\
+una volta derivati il passo base e il passo induttivo, abbiamo tutti gli strumenti per provare che la propriet\`a $\varphi$ vale per qualunque numero naturale.
+\newline
+\begin{prop}
+Dati $p$, $r$, $t$ termini, in HA valgono le seguenti propriet\`a:
+\begin{enumerate}
+	\item[(R1)] Simmetria destra:\\ $$\prooftree
+  \Gamma \vdash t=r
+   \justifies
+ \Gamma \vdash r=t
+ \using
+ {sim_{dx}}
+\endprooftree$$
+  \item[(R2)] Simmetria sinistra:\\ $$\prooftree
+  \Gamma,t=r \vdash\Gamma'
+   \justifies
+  \Gamma,r=t\vdash\Gamma'
+ \using
+ {sim_{sx}}
+\endprooftree$$
+	\item[(R3)] Transitivit\`a:\\ $$\prooftree
+  \Gamma \vdash p=t \qquad \Gamma'\vdash t=r
+   \justifies
+ \Gamma, \Gamma' \vdash p=r
+ \using
+ {tran}
+\endprooftree$$
+\end{enumerate}
+\end{prop}
+\textsc{Dimostrazione} Assumiamo di aver dimostrato (1.2) e (1.3)
+\begin{enumerate}
+\item[(R1)]
+{\scriptsize{
+	$$\prooftree
+  \Gamma \vdash t=r \qquad t=r\vdash_{1.2} r=t
+   \justifies
+ \Gamma \vdash r=t
+ \using
+ {cut}
+\endprooftree$$}}
+  \item[(R2)]
+{\scriptsize{$$\prooftree
+	t=r\vdash_{1.2} r=t\qquad \Gamma,r=t\vdash\Gamma'
+  \justifies
+ \Gamma,t=r \vdash\Gamma'
+ \using
+ {cut}
+\endprooftree$$}}
+\item[(R3)]
+{\scriptsize{$$\prooftree
+  \Gamma' \vdash t=r \qquad  \[\Gamma\vdash p=t\qquad p=t,t=r\vdash_{1.3} p=r\justifies \Gamma, t=r\vdash_{1.3} p=r\using {cut}\]
+   \justifies
+ \Gamma, \Gamma' \vdash p=r
+ \using
+ {cut}
+\endprooftree$$}}
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$\\
+Usando la propriet\`a simmetria destra si dimostrano:
+\begin{enumerate}
+	\item[(S1)] $\vdash s(r+p)=r+s(p)$
+	\vspace{.2cm}
+	\item[(S2)] $\vdash r=r+0$
+	\vspace{.2cm}
+	\item[(S3)] $\vdash 0+t=t$
+	\vspace{.2cm}
+	\item[(S4)] $\vdash s(t)\neq 0$
+\end{enumerate}
+\vspace{.5cm}
+\begin{prop}
+Per ogni termine $p,\ r,\ t$ valgono:
+\begin{enumerate}
+	\item[(1.1)] $\vdash t=t$        (riflessivit\`a)
+	\vspace{.2cm}
+	\item[(1.2)] $t=r\vdash r=t$     (simmetria)
+	\vspace{.2cm}
+	\item[(1.3)] $p=t,t=r\vdash p=r$ (transitivit\`a)
+	\vspace{.2cm}
+	\item[(1.4)] $r=t,p=t\vdash r=p$
+	\vspace{.2cm}
+	\item[(1.5)] $t=r\vdash t+p=r+p$
+	\vspace{.2cm}
+	\item[(1.6)] $\vdash t=0+t$
+	\vspace{.2cm}
+	\item[(1.7)] $\vdash s(t)+p=s(t+p)$
+	\vspace{.2cm}
+	\item[(1.8)] $\vdash t+r=r+t$         (commutativa)
+	\vspace{.2cm}
+	\item[(1.9)] $t=r\vdash p+t=p+r$
+	\vspace{.2cm}
+	\item[(1.10)] $\vdash (t+r)+p=t+(r+p)$ (associativa)
+	\vspace{.2cm}
+	\item[(1.11)] $t=r\vdash t*p=r*p$
+	\vspace{.2cm}
+	\item[(1.12)] $\vdash 0*t=0$
+	\vspace{.2cm}
+	\item[(1.13)] $\vdash s(t)*r=t*r+r$
+	\vspace{.2cm}
+	\item[(1.14)] $\vdash t*r=r*t$         (commutativa)
+	\vspace{.2cm}
+	\item[(1.15)] $t=r\vdash p*t=p*r$
+	\vspace{.2cm}
+	\item[(1.16)] $\vdash (t*r)*p=t*(r*p)$ (associativa)
+	\vspace{.2cm}
+	\item[(1.17)] $p_1=t_1,p_2=t_2,p_1=p_2\vdash t_1=t_2$
+	\vspace{.2cm}
+	\item[(1.18)] $p_1=t_1,p_2=t_2\vdash p_1+p_2=t_1+t_2$
+\end{enumerate}
+\end{prop}
+\vspace{1cm}
+\textsc{Dimostrazione}
+\vspace{.2cm}
+\begin{enumerate}
+\item[(1.1)] [\ $\vdash t=t$\ ]:
+\par
+{\scriptsize{
+	$$\prooftree
+	\vdash_{A3} t+0=t\qquad\[\vdash_{A3} t+0=t\qquad t+0=t,t+0=t\vdash_{U1} t=t\justifies t+0=t\vdash t=t\using{cut}\]\justifies \vdash t=t\using{cut}
+	\endprooftree$$}}
+\\
+\item[(1.2)][\ $t=r\vdash r=t$\ ]:
+\par
+{\scriptsize{$$\prooftree
+	\vdash_{1.1} t=t\qquad t=r,t=t\vdash_{U1} r=t \justifies t=r\vdash r=t\using{cut}
+	\endprooftree$$}}
+%\%justifies t=t,t=r\vdash r=t\using(ord)\
+\\
+\item[(1.3)][\ $p=t,t=r\vdash p=r$\ ]:
+\par
+{\scriptsize{	$$\prooftree
+	p=t\vdash_{1.2} t=p\qquad t=p,t=r\vdash_{U1} p=r\justifies p=t,t=r\vdash p=r\using{cut}
+	\endprooftree$$}}
+\\
+	\item[(1.4)][\ $r=t,p=t\vdash r=p$\ ]:
+\par
+{\scriptsize{	$$\prooftree
+	p=t\vdash_{1.2} t=p\qquad r=t,t=p\vdash_{1.3} r=p\justifies r=t,p=t\vdash r=p\using{cut}
+	\endprooftree$$}}
+\\
+\item[(1.5)][\ $t=r\vdash t+p=r+p$\ ]:
+\vspace{0.5cm}
+\\Per induzione su $p$.
+\vspace{0.3cm}
+\\In questo caso abbiamo: {\scriptsize{$$\varphi(p) :=\ t+p=r+p.$$}}
+\\
+Passo base:
+\par
+{\scriptsize{$$\prooftree
+	\[\vdash_{A3} t+0=t\qquad t=r\vdash_{ax} t=r\justifies t=r\vdash t+0=r\using{tran}\]\qquad \vdash_{S2}r=r+0\justifies t=r\vdash t+0=r+0\using{tran}
+	\endprooftree$$}}
+\\
+Passo induttivo:
+\par
+{\scriptsize{$$\prooftree
+	\vdash_{A4} t+s(p)=s(t+p)\qquad\[t=r,t+p=r+p\vdash_{U2}s(t+p)=s(r+p)\qquad \vdash_{S1} s(r+p)=r+s(p)\justifies t=r,t+p=r+p\vdash s(t+p)= r+s(p)\using{tran}\]\justifies t=r,t+p=r+p\vdash t+s(p)=r+s(p)\using{tran}
+	\endprooftree$$}}
+\\
+\item[(1.6)][\ $\vdash t=0+t$\ ]:
+\vspace{0.5cm}
+\\Per induzione su $t$:
+\vspace{0.3cm}
+\\Passo base: {\scriptsize{$$\vdash_{S2} 0=0+0$$}}
+\\Passo induttivo:
+\par
+{\scriptsize{$$\prooftree
+	t=0+t\vdash_{U2} s(t)=s(0+t)\qquad\vdash_{S1} s(0+t)=0+s(t)\justifies t=0+t \vdash s(t)=0+s(t)\using{tran}
+	\endprooftree$$}}
+\\
+\item[(1.7)][\ $\vdash s(t)+p=s(t+p)$\ ]:
+\vspace{0.5cm}
+\\Per induzione su $p$:
+\vspace{0.3cm}
+\\Passo base:
+\par
+{\scriptsize{$$\prooftree
+	\vdash_{A3} s(t)+0=s(t)\qquad\[\vdash_{S2}t=t+0\qquad t=t+0\vdash_{U2} s(t)=s(t+0)\justifies \vdash s(t)=s(t+0)\using{cut}\]\justifies \vdash s(t)+0=s(t+0)\using{tran}
+	\endprooftree$$}}
+	\vspace{0.5cm}
+\\Passo induttivo:
+\vspace{0.3cm}
+\\Dimostriamo prima (1A):
+\par
+{\scriptsize{$$\prooftree
+	\[\vdash_{A4} t+s(p)=s(t+p)\qquad t+s(p)=s(t+p)\vdash_{U2} s(t+s(p))=s(s(t+p))\justifies\vdash s(t+s(p))=s(s(t+p))\using{cut}\]\justifies \vdash s(s(t+p))=s(t+s(p))\using{sim_{dx}}
+	\endprooftree$$}}
+\vspace{2cm}
+quindi si ha:
+\par
+{\tiny{$$\prooftree
+	\vdash_{A4} s(t)+s(p)=s(s(t)+p)\qquad\[s(t)+p=s(t+p)\vdash_{U2}s(s(t)+p)=s(s(t+p))\qquad \vdash_{1A} s(s(t+p))=s(t+s(p))\justifies s(t)+p=s(t+p)\vdash s(s(t)+p)=s(t+s(p))\using{tran}\]\justifies s(t)+p=s(t+p)\vdash s(t)+s(p)=s(t+s(p))\using{tran}
+	\endprooftree$$}}
+\\
+\item[(1.8)][\ $\vdash t+r=r+t$\ ]:
+\vspace{0.5cm}
+\\Per induzione su $r$.
+\vspace{0.3cm}
+\\Passo base:
+\vspace{0.3cm}
+{\scriptsize{$$\prooftree
+	\vdash_{A3} t+0=t\qquad \vdash_{1.6} t=0+t\justifies \vdash t+0=0+t\using{tran}
+	\endprooftree$$}}
+\vspace{0.5cm}
+\\Passo induttivo:
+\vspace{0.3cm}
+{\scriptsize{$$\prooftree \vdash_{A4}t+s(r)=s(t+r)\qquad\[\[\vdash_{1.7}s(r)+t=s(r+t)\qquad\[t+r=r+t\vdash_{U2}s(t+r)=s(r+t)\justifies t+r=r+t\vdash s(r+t)=s(t+r)\using{sim_{dx}}\]\justifies t+r=r+t\vdash s(r)+t=s(t+r)\using{tran}\]\justifies t+r=r+t\vdash s(t+r)=s(r)+t\using{sim_{dx}}\]\justifies t+r=r+t\vdash t+s(r)=s(r)+t\using{tran}
+	\endprooftree$$}}
+\\
+\item[(1.9)][\ $t=r\vdash p+t=p+r$\ ]:
+\vspace{0.5cm}
+\\Per induzione su $p$.
+\vspace{0.3cm}
+\\Passo base:
+\par
+{\scriptsize{	$$\prooftree
+	\vdash_{S3} 0+t=t\qquad\[\[\vdash_{S3} 0+r=r\qquad t=r\vdash_{1.2}r=t\justifies t=r\vdash 0+r=t\using{tran}\]\justifies t=r\vdash t=0+r\using{sim_{dx}}\]\justifies t=r\vdash 0+t=0+r\using{tran}
+	\endprooftree$$}}
+	\vspace{3cm}
+\\Passo induttivo:
+\vspace{0.3cm}
+{\scriptsize{$$\prooftree
+	\vdash_{1.7}s(p)+t=s(p+t)\qquad\[t=r,p+t=p+r\vdash_{U2}s(p+t)=s(p+r) \qquad\[\vdash_{1.7} s(p)+r=s(p+r)\justifies \vdash s(p+r)=s(p)+r\using{sim_{dx}}\]\justifies t=r,p+t=p+r\vdash s(p+t)=s(p)+r\using{tran}\]\justifies t=r,p+t=p+r\vdash s(p)+t=s(p)+r\using{tran}
+	\endprooftree$$}}
+\\
+\item[(1.10)][\ $\vdash (t+r)+p=t+(r+p)$\ ]:
+\vspace{0.5cm}
+\\Per induzione su $p$.
+\vspace{0.3cm}
+\\Passo base:
+\par
+{\scriptsize{$$\prooftree
+	\vdash_{A3} (t+r)+0=t+r\qquad \[\vdash_{S2} r=r+0\qquad r=r+0\vdash_{1.9}t+r=t+(r+0)\justifies \vdash t+r=t+(r+0)\using{cut}\]\justifies\vdash (t+r)+0=t+(r+0)\using{tran}
+	\endprooftree$$}}
+\vspace{0.5cm}
+\\Passo induttivo:
+\vspace{0.3cm}
+\\Dimostriamo prima (1B)
+\vspace{0.3cm}
+  {\scriptsize{$$\prooftree
+  \vdash_{A4} (t+r)+s(p)=s((t+r)+p)\qquad (t+r)+p=t+(r+p)\vdash_{U2} s((t+r)+p)=s(t+(r+p))\justifies (t+r)+p=t+(r+p)\vdash (t+r)+s(p)=s(t+(r+p))\using{tran}
+	\endprooftree$$}}
+	\vspace{0.5cm}
+\\e (1C):
+\vspace{0.2cm}
+  {\tiny{$$\prooftree
+  \vdash_{S1} s(t+(r+p))=t+s(r+p)\qquad\[\vdash_{S1} s(r+p)=r+s(p)\qquad s(r+p)=r+s(p)\vdash_{1.9} t+s(r+p)=t+(r+s(p))\justifies \vdash t+s(r+p)=t+(r+s(p))\using{cut}\]\justifies \vdash s(t+(r+p))=t+(r+s(p))\using{tran}
+	\endprooftree$$}}
+	\vspace{0.5cm}
+\\quindi otteniamo:
+\vspace{0.3cm}
+{\scriptsize{	$$\prooftree
+	(t+r)+p=t+(r+p)\vdash_{1B} (t+r)+s(p)=s(t+(r+p))\qquad\vdash_{1C} s(t+(r+p))=t+(r+s(p))\justifies (t+r)+p=t+(r+p)\vdash (t+r)+s(p)=t+(r+s(p))\using{tran}
+	\endprooftree$$}}
+\vspace{.3cm}
+\item[(1.11)] [\ $t=r\vdash t*p=r*p$\ ]:
+\vspace{.2cm}
+\\Per induzione su $p$, analogamente a (1.5).
+\item[(1.12)] [\ $\vdash 0*t=0$\ ]:
+\vspace{.2cm}
+\\Per induzione su $t$, analogamente a (1.6).
+\vspace{0.5cm}
+\item[(1.13)] [\ $\vdash s(t)*r=t*r+r$\ ]:
+\vspace{.2cm}
+\\Per induzione su $r$, analogamente a (1.7).
+\vspace{0.5cm}
+\item[(1.14)] [\ $\vdash t*r=r*t$ \ ]:
+\vspace{.2cm}
+\\Per induzione su $r$, analogamente a (1.8).
+\vspace{0.5cm}
+\item[(1.15)] [\ $t=r\vdash p*t=p*r$\ ]:
+\vspace{.2cm}
+\\Per induzione su $p$, analogamente a (1.9).
+\vspace{0.5cm}
+\item[(1.16)] [\ $\vdash (t*r)*p=t*(r*p)$\ ]:
+\vspace{.2cm}
+\\Per induzione su $p$, analogamente a (1.10).
+\vspace{0.5cm}
+\item[(1.17)] [\ $p_1=t_1,p_2=t_2,p_1=p_2\vdash t_1=t_2$\ ]:
+\vspace{.2cm}
+\\Si dimostra usando (1.3), (1.4) e (U1).
+\vspace{0.5cm}
+\item[(1.18)] [\ $p_1=t_1,p_2=t_2\vdash p_1+p_2=t_1+t_2$\ ]:
+\vspace{.2cm}
+\\Come il punto precedente\end{enumerate}
+\hspace{\stretch{1}} $\Box$\\
+
+
+\vspace{2cm}
+\begin{prop}
+Per ogni termine $p,\ r,\ t,$ valgono:
+\begin{enumerate}
+	\item[(2.1)] $\vdash t*(r+p)=(t*r)+(t*p)$ (distributiva)
+	\vspace{.2cm}
+	\item[(2.2)] $\vdash (r+p)*t=(r*t)+(p*t)$ (distributiva)
+	\vspace{.2cm}
+	\item[(2.3)] $t+p=r+p\vdash t=r$ (cancellativa)
+\end{enumerate}
+\end{prop}
+\vspace{.5cm}
+\textsc{Dimostrazione}
+\vspace{.2cm}
+\begin{enumerate}
+\item[(2.1)] [\ $\vdash t*(r+p)=(t*r)+(t*p)$\ ]:
+\vspace{.5cm}
+\\Per induzione su $p$.
+\vspace{1cm}
+\\Passo base:
+\vspace{.2cm}
+\\Dimostriamo prima (2A)
+\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\[\[\vdash_{A5}t*0=0\qquad t*0=0\vdash_{1.9}t*r+t*0=t*r+0\justifies\vdash (t*r)+(t*0)=t*r+0\using{cut}\]\qquad\vdash_{A3}t*r+0=t*r\justifies\vdash (t*r)+(t*0)=t*r\using{tran}\]\justifies\vdash t*r=(t*r)+(t*0)\using{sim_{dx}}
+	\endprooftree$$}}\\
+da cui segue
+\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\[\vdash_{A3}r+0=r\qquad r+0=r\vdash_{1.15}t*(r+0)=t*r\justifies\vdash t*(r+0)=t*r\using{cut}\]\quad\vdash_{2A} t*r=(t*r)+(t*0)\justifies\vdash t*(r+0)=(t*r)+(t*0)\using{tran}
+	\endprooftree.$$}}
+	\vspace{.5cm}
+\\Passo induttivo:
+\vspace{.2cm}
+\\Ci serviranno inoltre:
+\vspace{.2cm}
+\\(2B)
+{\scriptsize{	$$\prooftree
+	\[\vdash_{A6}(t*s(p))=(t*p)+t\qquad (t*s(p))=(t*p)+t\vdash_{1.9}(t*r)+(t*s(p))=(t*r)+(t*p)+t\justifies\vdash  (t*r)+(t*s(p))=(t*r)+(t*p)+t\using{cut}\]
+	\justifies \vdash(t*r)+(t*p)+t=(t*r)+(t*s(p))\using{sim_{dx}}
+	\endprooftree$$	}}
+	\vspace{.2cm}
+	\\(2C)
+	{\tiny{$$\prooftree
+	t*(r+p)=(t*r)+(t*p)\vdash_{1.5} t*(r+p)+t=(t*r)+(t*p)+t\qquad
+	\vdash_{2B}(t*r)+(t*p)+t=(t*r)+(t*s(p))\using{tran}
+	\justifies t*(r+p)=(t*r)+(t*p)\vdash t*(r+p)+t=(t*r)+(t*s(p))
+	\endprooftree$$	}}
+	\vspace{.2cm}
+	\\(2D)
+	{\scriptsize{$$\prooftree
+	\vdash_{A6}t*s(r+p)=t*(r+p)+t\qquad
+	t*(r+p)=(t*r)+(t*p)\vdash_{2C} t*(r+p)+t=(t*r)+(t*s(p))
+	\justifies t*(r+p)=(t*r)+(t*p)\vdash t*s(r+p)=(t*r)+(t*s(p))\using{tran}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\e (2E)
+{\scriptsize{	$$\prooftree
+	\vdash_{A4}r+s(p)=s(r+p)\qquad r+s(p)=s(r+p)\vdash_{1.15}t*(r+s(p))=t*s(r+p)\justifies \vdash t*(r+s(p))=t*s(r+p)\using{cut}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\da cui segue
+	{\scriptsize{$$\prooftree
+	\vdash_{2E} t*(r+s(p))=t*s(r+p)\qquad
+		t*(r+p)=(t*r)+(t*p)\vdash_{2D} t*s(r+p)=(t*r)+(t*s(p))
+	\justifies t*(r+p)=(t*r)+(t*p)\vdash t*(r+s(p))=(t*r)+(t*s(p))\using{tran}
+	\endprooftree$$}}
+	\vspace{.5cm}
+\item[(2.2)] [\ $\vdash (r+p)*t=(r*t)+(p*t)$\ ]:
+\vspace{.2cm}
+\\Similmente al punto precedente, per induzione su $p$; oppure si sfruttano il punto precedente (2.1), la commutativit\`a del prodotto (1.14), e la (1.18).
+\vspace{.5cm}
+\item[(2.3)] [\ $t+p=r+p\vdash t=r$\ ]:
+\vspace{.2cm}
+\\Per induzione su $p$.
+\vspace{.2cm}
+\\Passo base:
+
+	{\scriptsize{$$\prooftree\vdash_{A3} t+0=t\qquad\[t+0=t,t+0=r+0\vdash_{U1}t=r+0\qquad\[\vdash_{A3}r+0=r\qquad t=r+0, r+0=r\vdash_{1.3} t=r\justifies t=r+0\vdash t=r\using{cut}\]\justifies t+0=t, t+0=r+0\vdash t=r\using{cut}\]\justifies t+0=r+0\vdash t=r\using{cut}
+	\endprooftree$$}}
+\vspace{.5cm}
+\\Passo induttivo:
+\vspace{.2cm}
+\\Dimostriamo prima (2F)
+
+$$
+\tiny{
+\prooftree
+\[\vdash_{A4} t+s(p)=s(t+p) \qquad t+s(p)=s(t+p),t+s(p)=r+s(p)\vdash_{U1} s(t+p)=r+s(p) \justifies t+s(p)=r+s(p) \vdash s(t+p)=r+s(p)\using_{cut}\]\qquad \vdash_{A4} r+s(p)=s(r+p)\justifies t+s(p)=r+s(p) \vdash s(t+p)=s(r+p)\using_{tran}\
+\endprooftree}
+$$\\
+\vspace{.2cm}
+da cui (2G):
+$${\prooftree
+ t+s(p)=r+s(p)\vdash_{2F} s(t+p)=s(r+p) \qquad s(t+p)=s(r+p)\vdash_{A2}t+p=r+p\justifies t+s(p)=r+s(p)\vdash t+p=r+p\using{cut}
+\endprooftree}
+$$
+\\quindi si ha:
+\vspace{.2cm}
+{\scriptsize{$$\prooftree t+s(p)=r+s(p)\vdash_{2G} t+p=r+p\qquad t+s(p)=r+s(p),t=r \vdash_{ax} t=r\justifies t+p=r+p\rightarrow t=r,t+s(p)=r+s(p)\vdash t=r\using{\rightarrow_{left}}
+\endprooftree$$}}
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$
+
+
+\vspace{.6cm}
+
+\begin{defi}
+Chiameremo \underline{defi} ($\mathcal{N}$) i termini $0$,\ $s(0)$,\ $s(s(0))$,\ $s(s(s(0)))$ e cos\`i via e li denoteremo con $\overline{0},\ \overline{1},\ \overline{2},\ \overline{3}$ etc. Pi\`u precisamente $\overline{0}$ \`e $0$ e per ogni naturale $n$, $\overline{n+1}$ \`e $s(\overline{n})$, ossia il numerale $\overline{n}$, con $n$ naturale, sta per $0$ a cui si applica $n$ volte la funzione $s$. E\-qui\-va\-len\-te\-men\-te, i numerali si possono definire induttivamente tramite le regole:
+\begin{enumerate}
+\item[-]$0$ \`e un numerale
+\item[-]se $u$ \`e un numerale, allora anche $s(u)$ lo \`e.
+\end{enumerate}
+\end{defi}
+
+In pratica un numerale \`e la formalizzazione, nel nostro sistema, di un numero naturale; si noti per\`o non rientra nel linguaggio come termine, perch\'e rappresenta una abbreviazione della scrittura corretta pi\`u formale $sss\dots s(0)$.
+
+I numerali vengono introdotti qui per poter enunciare alcune proprietï¿œ in cui vengono coinvolti dei naturali specifici, e bisogna indicarli con i termini corrispondenti.
+
+\begin{prop}
+Per ogni termine $\ p,\ r,\ t$ valgono:
+\begin{enumerate}
+	\item[(3.1)] $\vdash t+\overline{1}=s(t)$
+	\vspace{.2cm}
+	\item[(3.2)] $\vdash t*\overline{1}=t$
+	\vspace{.2cm}
+	\item[(3.3)] $\vdash t*\overline{2}=t+t$
+	\vspace{.2cm}
+	\item[(3.4)] $t+p=0\vdash t=0\ \mbox{\emph{\&}}\ p=0$
+	\vspace{.2cm}
+	\item[(3.5)] $t\neq 0,p*t=0\vdash p=0$
+	\vspace{.2cm}
+	\item[(3.6)] $t+p=\overline{1}\vdash (t=0\ \mbox{\emph{\&}}\ p=\overline{1})\ \vee\ (t=\overline{1}\ \mbox{\emph{\&}}\ p=0)$
+	\vspace{.2cm}
+	\item[(3.7)] $t*p=\overline{1}\vdash t=\overline{1}\ \mbox{\emph{\&}}\ p=\overline{1}$
+	\vspace{.2cm}
+	\item[(3.8)] $t\neq 0\vdash \exists\ y (t=s(y))$
+	\vspace{.2cm}
+	\item[(3.9)] $p\neq 0,t*p=r*p\vdash t=r$
+	\vspace{.2cm}
+	\item[(3.10)] $t\neq 0,t\neq \overline{1}\vdash \exists\ y(t=s(s(y)))$
+\end{enumerate}
+\end{prop}
+\vspace{.5cm}
+\textsc{Dimostrazione}\\
+ Per la definizione di nume\-rale, possiamo sostituire il termine $\overline{n}$ con ${\overbrace{sss\dots s(0)}^{n\ volte}}$.
+\begin{enumerate}
+\vspace{.2cm}
+	\item[(3.1)] [ $\vdash t+\overline{1}=s(t)$ ]:
+	\vspace{.2cm}
+{\scriptsize{	$$\prooftree
+	\vdash_{A4}t+s(0)=s(t+0)\qquad \[\vdash_{A3}t+0=t\qquad t+0=t\vdash_{U2}s(t+0)=s(t)\justifies \vdash s(t+0)=s(t)\using{cut}\]\justifies \vdash t+s(0)=s(t)\using{tran}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\newpage
+	\item[(3.2)] [ $\vdash t*\overline{1}=t$ ]:
+	\vspace{.2cm}
+{\scriptsize{	$$\prooftree
+	\vdash_{A6} t*s(0)=t*0+t\qquad\[\[\vdash_{A5}t*0=0\qquad t*0=0\vdash_{1.5}t*0+t=0+t\justifies\vdash t*0+t=0+t\using{cut}\]\qquad\vdash_{S3} 0+t=t\justifies \vdash t*0+t=t\using{tran}\]\justifies\vdash t*s(0)=t\using{tran}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\item[(3.3)] [ $\vdash t*\overline{2}=t+t$ ]:
+	\vspace{.2cm}
+	\\Basta usare il punto precedente e A6.
+	\vspace{.2cm}
+	\item[(3.4)] [ $t+p=0\vdash t=0\ \mbox{\&} \ p=0$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $p$.
+	\vspace{.2cm}
+\\Passo base:
+\vspace{.2cm}
+{\scriptsize{$$\prooftree
+	\[\vdash_{A3}t+0=t\qquad t+0=t,t+0=0\vdash_{U1}t=0\justifies t+0=0\vdash t=0\using{cut}\]\qquad\[\vdash_{1.1} 0=0\justifies t+0=0\vdash 0=0\using{ind}\]\justifies t+0=0\vdash t=0\mbox{\&}\ 0=0\using{\mbox{\&}_{right}}
+	\endprooftree$$}}
+	\vspace{.5cm}
+	\\Per il passo induttivo, dimostriamo (3A)
+	\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\[\vdash_{S1}s(t+p)=t+s(p)\qquad s(t+p)=t+s(p),t+s(p)=0\vdash_{1.3}s(t+p)=0\justifies t+s(p)=0\vdash s(t+p)=0\using{cut}\]\qquad\[0=s(t+p)\vdash_{A1}\bot\justifies s(t+p)=0\vdash\bot\using{sim_{sx}}\]\justifies t+s(p)=0\vdash\bot\using{cut}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\da cui segue:
+	\vspace{.2cm}
+{\scriptsize{	$$\prooftree
+	\[t+s(p)=0\vdash_{3A}\bot\qquad\bot\vdash t=0\justifies t+s(p)=0\vdash t=0\using{cut}\]\[t+s(p)=0\vdash_{3A}\bot\qquad\bot\vdash s(p)=0\justifies t+s(p)=0\vdash s(p)=0\using{cut}\]\justifies t+p=0\rightarrow t=0\mbox{\&} p=0, t+s(p)=0\vdash t=0\mbox{\&} s(p)=0\using{\mbox{\&}_{right}+ind}
+	\endprooftree$$}}
+	\vspace{.5cm}
+	\item[(3.5)] [ $t\neq 0,p*t=0\vdash p=0$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $p$.
+	\vspace{.2cm}
+\\Passo base:
+\vspace{.2cm}
+{\scriptsize{$$\prooftree
+	\vdash_{1.1} 0=0\justifies t\neq 0,0*t=0\vdash 0=0\using{ind}
+	\endprooftree$$}}
+	\vspace{.5cm}\\
+	\\Per dimostrare il passo induttivo, proviamo prima (3B)
+\vspace{.2cm}
+{\scriptsize{	$$\prooftree
+	p*t+t=0\vdash_{3.4} p*t=0\mbox{\&} t=0 \qquad\[\[t=0 \vdash_{ax}t=0\justifies p*t=0\mbox{\&}t=0\vdash t=0\using{\mbox{\&}_{left}}\]\justifies  \justifies p*t=0\mbox{\&} t=0, t\neq 0\vdash\bot\using{\neg_{left}}\]\justifies p*t+t=0, t\neq 0\vdash\bot\using{cut}
+	\endprooftree$$}}
+		\vspace{.2cm}
+	\\e (3C)
+	\vspace{.2cm}
+{\scriptsize{$$\prooftree
+	s(p)*t=p*t+t,s(p)*t=0\vdash_{U1}p*t+t=0\qquad p*t+t=0, t\neq 0\vdash_{3B}\bot\justifies s(p)*t=p*t+t,s(p)*t=0, t\neq 0\vdash\bot\using{cut}
+	\endprooftree$$}}
+\vspace{.2cm}
+\\da cui segue:
+	{\scriptsize{$$\prooftree
+	\[\[\vdash_{1.13}s(p)*t=p*t+t\qquad s(p)*t=p*t+t,s(p)*t=0, t\neq 0\vdash_{3C}\bot\justifies  t\neq 0,s(p)*t=0\vdash\bot\using{cut}\]\qquad\bot\vdash s(p)=0\justifies t\neq 0,s(p)*t=0\vdash s(p)=0\using{cut}\]\justifies t\neq 0,p*t=0\rightarrow p=0, t\neq 0,s(p)*t=0\vdash s(p)=0\using{ind}
+	\endprooftree$$}}
+	\vspace{.5cm}
+	\item[(3.6)] [ $t+p=\overline{1}\vdash (t=0\ \mbox{\&} \ p=\overline{1})\ \vee\ (t=\overline{1}\ \mbox{\&} \ p=0)$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $p$.
+	\vspace{.2cm}
+\\Passo base:
+\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\[\[\vdash_{A3} t+0=t\qquad t+0=t,t+0=s(0)\vdash_{U1}t=s(0)\justifies t+0=s(0)\vdash t=s(0)\using{cut}\]\[\vdash_{1.1}0=0\justifies t+0=s(0)\vdash 0=0\using{ind}\]\justifies t+0=s(0)\vdash t=s(0)\mbox{\&} 0=0\using{\mbox{\&}_{right}}\]\justifies t+0=s(0)\vdash (t=0\mbox{\&} 0=s(0))\vee (t=s(0)\mbox{\&} 0=0)\using{\vee_{right}}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\Per il passo induttivo dimostriamo prima:
+	\vspace{.2cm}
+  \\(3D)
+  \vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\vdash_{A4}t+s(p)=s(t+p)\qquad\[t+s(p)=s(t+p),t+s(p)=s(0)\vdash_{U1} s(t+p)=s(0)\qquad s(t+p)=s(0)\vdash_{A2}t+p=0\justifies t+s(p)=s(t+p),t+s(p)=s(0)\vdash t+p=0\using{cut}\]\justifies t+s(p)=s(0)\vdash t+p=0\using{cut}
+	\endprooftree$$	}}
+	\vspace{.2cm}
+	\\(3E)
+	{\scriptsize{$$\prooftree
+	t+s(p)=s(0)\vdash_{3D}t+p=0\qquad\[t+p=0\vdash_{3.4}t=0\mbox{\&} p=0\qquad\[t=0\vdash_{ax} t=0\justifies t=0\mbox{\&} p=0\vdash t=0\using{\mbox{\&}_{left}}\]\justifies t+p=0\vdash t=0\using{cut}\]\justifies t+s(p)=s(0)\vdash t=0\using{cut}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\(3F)
+	\vspace{.2cm}
+{\scriptsize{	$$\prooftree
+	t+s(p)=s(0)\vdash_{3D}t+p=0\qquad\[t+p=0\vdash_{3.4}t=0\mbox{\&} p=0\qquad\[p=0\vdash_{U2} s(p)=s(0)\justifies t=0\mbox{\&} p=0\vdash s(p)=s(0)\using{\mbox{\&}_{left}}\]\justifies t+p=0\vdash s(p)=s(0)\using{cut}\]\justifies t+s(p)=s(0)\vdash s(p)=s(0)\using{cut}
+	\endprooftree$$}}
+\vspace{.2cm}
+	\\e quindi segue:
+	{\tiny{$$\prooftree
+	\[t+s(p)=s(0)\vdash_{3E}t=0\qquad t+s(p)=s(0)\vdash_{3F}s(p)=s(0)\justifies t+s(p)=s(0)\vdash t=0\mbox{\&} s(p)=s(0)\using{\mbox{\&}_{right}}\]\justifies t+p=s(0)\rightarrow(t=0\mbox{\&} p=s(0))\vee(t=s(0)\mbox{\&} p=0),t+s(p)=s(0)\vdash(t=0\mbox{\&} s(p)=s(0))\vee(t=s(0)\mbox{\&} s(p)=0)\using{ind+\vee_{right}}
+	\endprooftree$$}}
+
+	\vspace{.5cm}
+	\item[(3.7)] [ $t*p=\overline{1}\vdash t=\overline{1}\ \mbox{\&} \ p=\overline{1}$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $p$, usando il punto precedente.
+	\vspace{.5cm}
+	\item[(3.8)] [ $t\neq 0\vdash \exists\ y (t=s(y))$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $t$.
+	\vspace{.2cm}
+\\Passo base:
+\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\[\vdash_{1.1}0=0\justifies  0\neq 0\vdash\bot\using{\neg_{left}}\]\qquad\bot\vdash\exists y(0=s(y))\justifies 0\neq 0\vdash\exists y(0=s(y))\using{cut}
+	\endprooftree$$}}
+	\vspace{.2cm}
+\\Passo induttivo:
+\vspace{.2cm}
+{\scriptsize{$$\prooftree
+	\[\vdash_{1.1} s(t)=s(t)\justifies\vdash\exists y(s(t)=s(y))\using{\exists_{right}}\]\justifies t\neq 0\rightarrow\exists y(t=s(y)), s(t)\neq 0\vdash\exists y(s(t)=s(y))\using{ind}
+	\endprooftree$$}}
+	\vspace{.5cm}
+	\item[(3.9)] [ $p\neq 0,t*p=r*p\vdash t=r$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $t$, utilizzando anche la (3.5).
+	\vspace{.5cm}
+	\item[(3.10)] [ $t\neq 0,t\neq \overline{1}\vdash \exists\ y(t=s(s(y)))$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $t$, usando anche la (3.8).
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$\\
+\vspace{1cm}
+\begin{prop}
+Siano $m$ e $n$ due numeri naturali qualsiasi. Allora si ha:
+\begin{enumerate}
+  \item[(a.)] Se $m=n$ allora $\vdash \overline{m} = \overline{n}$
+  \vspace{.2cm}
+	\item[(b.)] Se $m\neq n$ allora $\vdash \overline{m} \neq \overline{n}$
+	\vspace{.2cm}
+	\item[(c.)] $\vdash \overline{m+n} = \overline{m} + \overline{n}$ e $\vdash \overline{m*n} = \overline{m} * \overline{n}$
+\end{enumerate}
+\vspace{.5cm}
+\end{prop}
+\textsc{Dimostrazione}
+\begin{enumerate}
+\vspace{.2cm}
+	\item[(a.)] Ovvio, dalla definizione di numerale.
+	\item[(b.)] Sia $p=|m-n|\neq 0$ in quanto $n\neq m$ per ipotesi. Supponendo $m>n$,
+	{\scriptsize{$$\prooftree
+	\[\overline{m}=\overline{n}\vdash_{A2} \overline{m-1}=\overline{n-1}\qquad\[\[s(\overline{p})=s(0)\vdash_{A2}\overline{p}=0\qquad\overline{p}=0\vdash\bot\justifies ...\]\justifies \overline{m-1}=\overline{n-1}\vdash\bot\using{A2\ (n-2)-volte}\]\justifies \overline{m}=\overline{n}\vdash\bot\using{cut}\]\justifies \vdash \overline{m}\neq \overline{n}\using{\neg_{right}}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\item[(c.)] Dimostriamo la prima parte per induzione su $n$ (per la seconda si procede analogamente).
+	\vspace{.2cm}
+\\Passo base:
+\vspace{.2cm}
+	{\scriptsize{$$\prooftree \vdash_{A3}\overline{m+0}=\overline{m}\qquad\vdash_{S2}\overline{m}=\overline{m}+\overline{0}\justifies\vdash\overline{m+0}=\overline{m}+\overline{0}\using{tran}
+	\endprooftree$$}}
+	\vspace{.2cm}
+\newline
+Passo induttivo:
+\vspace{.2cm}
+{\scriptsize{$$\prooftree	 \vdash_{A4+a}\overline{m+s(n)}=\overline{s(m+n)}\qquad\[\[\vdash_{A4}\overline{m}+\overline{s(n)}=s(\overline{m}+\overline{n})\quad\[\overline{m+n}=\overline{m}+\overline{n}\vdash_{U2}\overline{s(m+n)}=s(\overline{m}+\overline{n})\justifies \overline{m+n}=\overline{m}+\overline{n}\vdash s(\overline{m}+\overline{n})=\overline{s(m+n)}\using{sim_{dx}*}\]\justifies\overline{m+n}=\overline{m}+\overline{n}\vdash\overline{m}+\overline{s(n)}=\overline{s(m+n)}\using{tran}\]\justifies\overline{m+n}=\overline{m}+\overline{n}\vdash\overline{s(m+n)}=\overline{m}+\overline{s(n)}\using{sim_{dx}}\]\justifies \overline{m+n}=\overline{m}+\overline{n}\vdash\overline{m+s(n)}=\overline{m}+\overline{s(n)}\using{tran}
+	\endprooftree$$}}
+	\vspace{.5cm}
+\\In quest'ultima dimostrazione nel punto * si nota facilmente che vale l'uguaglianza $\overline{s(m+n)}=s(\overline{m+n})$. Infatti, per esempio $s(\overline{2})=s(s(s(0)))$ ma anche $\overline{s(2)}=s(s(s(0)))$.
+
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$
+\vspace{.5cm}
+\\
+
+\texttt{Osservazione}\\
+\vspace{.2cm}
+
+Ci\`o che abbiamo affermato nella proposizione 3.4 \`e di fondamentale importanza: esprime il fatto che il sistema formale HA, di fronte alle operazioni di somma e prodotto applicate ai \underline{defi}, sa procedere esattamente come siamo in grado di fare noi sui \underline{naturali}, ovvero \`e stato istruito cos\`i bene che possiamo dimostrare che calcola esattamente ci\`o che noi ci aspettiamo . Quindi, nonostante la netta distinzione tra noi e il robot, aver dimostrato questa sorta di parallelismo ci garantisce l'efficienza (non in senso computazionale, ma come coerenza, buona costruzione) del sistema formale: questo, infatti, \`e stato istruito bene a tal punto da saper riconoscere, a partire da un insieme finito di assiomi e regole, qualsiasi altra espressione con i numerali, e conseguentemente, sa agire su essa proprio come noi vogliamo. La distinzione rimane comunque marcata in quanto noi abbiamo istruito il robot, e possiamo riconoscere un senso a ciï¿œ che elabora, aggiungendo l'interpretazione, mentre quest'ultimo resta solo un esecutore.
+
+\vspace{.5cm}
+
+\begin{defi}
+Definiamo le relazioni d'ordine:
+\vspace{.2cm}
+\begin{itemize}
+\item $t<z :=\ \exists\ w(w\neq 0\ \mbox{\emph{\&}}\ w+t=z)$ o, equivalentemente, $t<z :=\ \exists\ w(s(w)+t=z)$
+\vspace{.2cm}
+\item $t\leq z\ :=\ t<z\ \vee\ t=z$, cio\`e $t\leq z\ :=\ \exists\ w(w+t=z)$
+\vspace{.2cm}
+\item $t>z\ :=\ z<t$
+\vspace{.2cm}
+\item $t\geq z\ :=\ z\leq t$
+\vspace{.2cm}
+\item $t\not< z\ :=\ \neg(t<z).$
+\end{itemize}
+\end{defi}
+
+\vspace{.5cm}
+\begin{prop}
+Per ogni termine $p,\ r,\ t$ valgono:
+\vspace{.2cm}
+\begin{enumerate}
+	\item[(5.1)] $ \vdash t\not< t$ (antiriflessiva)
+	\vspace{.2cm}
+	\item[(5.2)] $t<p, p<r\vdash t<r$ (transitiva)
+	\vspace{.2cm}
+	\item[(5.3)] $t<p\vdash p\not< t$ (antisimmetrica)
+	\vspace{.2cm}
+	\item[(5.4)] $\vdash t<p\ \leftrightarrow\ t+r<p+r$
+	\vspace{.2cm}
+	\item[(5.5)] $\vdash t\leq t$
+	\vspace{.2cm}
+	\item[(5.6)] $t\leq p,p\leq r\vdash t\leq r$
+	\vspace{.2cm}
+	\item[(5.7)] $\vdash t\leq p\ \leftrightarrow\ t+r\leq p+r$
+	\vspace{.2cm}
+	\item[(5.8)] $t\leq p,p<r\vdash t<r$
+	\vspace{.2cm}
+	\item[(5.9)] $\vdash 0\leq t$
+	\vspace{.2cm}
+	\item[(5.10)] $\vdash 0<s(t)$
+	\vspace{.2cm}
+	\item[(5.11)] $\vdash t<r\ \leftrightarrow\ s(t)\leq r$
+	\vspace{.2cm}
+	\item[(5.12)] $\vdash t\leq r\ \leftrightarrow\ t<s(r)$
+	\vspace{.2cm}
+	\item[(5.13)] $\vdash t<s(t)$
+	\vspace{.2cm}
+	\item[(5.14)] $\vdash 0<\overline{1},\ \overline{1}<\overline{2},...$
+	\vspace{.2cm}
+	\item[(5.15)] $t\neq r\vdash t<r\ \vee\ r<t$
+	\vspace{.2cm}
+	\item[(5.16)] $\vdash t=r\ \vee\ t<r\ \vee\ r<t$
+	\vspace{.2cm}
+	\item[(5.17)] $\vdash t\leq r\ \vee\ r\leq t$
+	\vspace{.2cm}
+	\item[(5.18)] $\vdash t+r\geq t$
+	\vspace{.2cm}
+	\item[(5.19)] $r\neq 0\vdash t+r>t$
+	\vspace{.2cm}
+	\item[(5.20)] $r\neq 0\vdash t*r\geq t$
+	\vspace{.2cm}
+	\item[(5.21)] $\vdash r\neq 0\ \leftrightarrow\ r>0$
+	\vspace{.2cm}
+	\item[(5.22)] $r>0,t>0\vdash r*t>0$
+	\vspace{.2cm}
+	\item[(5.23)] $r\neq 0,t>\overline{1}\vdash t*r>r$
+	\vspace{.2cm}
+	\item[(5.24)] $r\neq 0\vdash t<p\ \leftrightarrow\ t*r<p*r$
+	\vspace{.2cm}
+	\item[(5.25)] $r\neq 0\vdash t\leq p\ \leftrightarrow\ t*r\leq p*r$
+	\vspace{.2cm}
+	\item[(5.26)] $\vdash t\not< 0$
+	\vspace{.2cm}
+	\item[(5.27)] $t\leq r\ \mbox{\emph{\&}}\ r\leq t\vdash t=r$
+\end{enumerate}
+\end{prop}
+
+\vspace{.5cm}
+\textsc{Dimostrazione}
+\begin{enumerate}
+	\item[(5.1)] [ $ \vdash t\not< t$ (antiriflessiva) ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $\not<$ e quanto precedentemente mostrato in (1.6) e (2.3).
+	\vspace{.5cm}
+	\item[(5.2)] [ $t<p, p<r\vdash t<r$ (transitiva) ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $<$, utilizzare i punti (1.8) e (1.5) e scegliere $w=v+z$ nell'$\exists_{right}$, dove $v$ e $z$ vengono scelte rispettivamente nell'$\exists_{left}$ in $t<p$ e $p<r$.
+	\vspace{.5cm}
+	\item[(5.3)] [$t<p\vdash p\not< t$ (antisimmetrica) ]:
+	\vspace{.2cm}
+	\\Proviamo prima (5A)
+
+	{\scriptsize{$$\prooftree
+	\vdash_{1.6}t=0+t\qquad \[v+w+t=t,t=0+t\vdash_{1.3}v+w+t=0+t\qquad v+w+t=0+t\vdash_{2.4}v+w=0\justifies v+w+t=t,t=0+t\vdash v+w=0\using{cut}\]\justifies v+w+t=t\vdash v+w=0\using{cut}
+	\endprooftree$$	}}
+\vspace{.5cm}
+	(5B)
+{\scriptsize{$$\prooftree
+	v+w+t=t\vdash_{5A} v+w=0\qquad\[v+w=0\vdash_{3.4}v=0\mbox{\&} w=0\qquad\[\[v=0\vdash_{ax} v=0\justifies v=0,v\neq 0\vdash\bot\using{\neg_{left}}\]\justifies v=0\mbox{\&} w=0,v\neq 0\vdash\bot\using{\mbox{\&}_{left}}\]\justifies v+w=0,v\neq 0\vdash\bot\using{cut}\]\justifies v+w+t=t,v\neq 0\vdash\bot\using{cut}
+	\endprooftree$$}}	\vspace{.2cm}
+	e (5C)
+	{\tiny{$$\prooftree
+	p=w+t\vdash_{1.9}v+p=v+w+t\qquad\[v+p=v+w+t,v+p=t\vdash_{U1}v+w+t=t\qquad v+w+t=t,v\neq 0\vdash_{5B}\bot\justifies v\neq 0,v+p=v+w+t,v+p=t\vdash\bot\using{cut}\]\justifies p=w+t,v\neq 0,v+p=t\vdash\bot\using{cut}
+	\endprooftree$$	}}
+	\vspace{.2cm}
+{\scriptsize{$$\prooftree
+	\[\[w+t=p\vdash_{1.2}p=w+t\quad w\neq 0,p=w+t,v\neq 0,v+p=t\vdash_{5C}\bot\justifies w\neq 0,w+t=p,v\neq 0\mbox{\&} v+p=t\vdash\bot\using{cut+\mbox{\&}_{left}}\]\justifies\exists w(w\neq 0\mbox{\&}\ w+t=p),\exists v(v\neq 0\mbox{\&} v+p=t)\vdash\bot\using{\exists_{left}+\mbox{\&}_{left}}\]\justifies \exists w(w\neq 0\mbox{\&} w+t=p)\vdash\neg\exists v(v\neq 0\mbox{\&} v+p=t)\using{\neg_{right}}
+	\endprooftree$$}}
+	\vspace{.5cm}
+	\item[(5.4)] [ $\vdash t<p\ \leftrightarrow\ t+r<p+r$ ]:
+	\vspace{.2cm}
+	\\Bisogna mostrare le due implicazioni \textsl{separatamente}, applicando la definizione di $<$ e scegliendo in entrambi i casi $w$ dell'$\exists_{right}$ uguale alla variabile $v$ ottenuta applicando l'$\exists_{left}$.
+	\vspace{.5cm}
+	\item[(5.5)] [ $\vdash t\leq t$ ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $\leq$ e scegliere, nell'$\vee_{right}$, $t=t$, dimostrata in precedenza nel punto(1.1).
+	\vspace{.5cm}
+	\item[(5.6)] [ $t\leq p,p\leq r\vdash t\leq r$ ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $\leq$, usando i punti (5.2) e (1.3).
+	\vspace{.5cm}
+	\item[(5.7)] [ $\vdash t\leq p\ \leftrightarrow\ t+r\leq p+r$ ]:
+	\vspace{.2cm}
+\begin{itemize}
+	\item[($\leftarrow$)]
+{\scriptsize{	$$\prooftree
+	\[t+r<p+r\vdash_{5.4}t<p\justifies t+r<p+r\vdash t<p\vee t=p\using{\vee_{right}}\]\[t+r=p+r\vdash_{2.3}t=p\justifies t+r=p+r\vdash t<p\vee t=p\using{\vee_{right}}\]\justifies t+r<p+r\vee t+r=p+r\vdash t<p\vee t=p\using{\vee_{left}}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\item[($\rightarrow$)] Proviamo prima (5D)
+	{\scriptsize{$$\prooftree
+	\[\[\[\[w\neq 0\vdash_{ax} w\neq 0\justifies w\neq 0\mbox{\&} w+t=p\vdash w\neq 0\using{\mbox{\&}_{left}}\]\quad\[w+t=p\vdash_{1.5}w+t+r=p+r\justifies w\neq 0\mbox{\&} w+t=p\vdash w+t+r=p+r\using{\mbox{\&}_{left}}\]\justifies w\neq 0\mbox{\&} w+t=p\vdash w\neq 0\mbox{\&} w+t+r=p+r\using{\mbox{\&}_{right}}\]\justifies w\neq 0\mbox{\&} w+t=p\vdash\exists v(v\neq 0\mbox{\&} v+t+r=p+r)\using{\exists_{right}}\]\justifies \exists w(w\neq 0\mbox{\&} w+t=p)\vdash\exists v(v\neq 0\mbox{\&} v+t+r=p+r)\using{\exists_{left}}\]\justifies\exists w(w\neq 0\mbox{\&} w+t=p)\vdash (t+r<p+r)\vee (t+r=p+r)\using{def.\leq }
+	\endprooftree$$}}
+	\vspace{.4cm}
+	\\da cui segue:
+	\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+  \exists w(w\neq 0\mbox{\&} w+t=p)\vdash_{5D} (t+r<p+r)\vee (t+r=p+r)\qquad\[
+t=p\vdash_{1.5}t+r=p+r\justifies t=p\vdash (t+r<p+r)\vee(t+r=p+r)\using{\vee_{right}}\]\justifies t<p\vee t=p\vdash (t+r<p+r)\vee (t+r=p+r)\using{\vee_{left}}
+	\endprooftree$$}}
+
+\vspace{.5cm}
+\end{itemize}
+\newpage
+	\item[(5.8)] [ $t\leq p,p<r\vdash t<r$ ]:
+	\vspace{.2cm}
+	\\Basta applicare le definizioni di $<$ e $\leq$ e ricordare il punto (5.2).
+	\vspace{.5cm}
+	\item[(5.9)] [ $\vdash 0\leq t$ ]:
+	\vspace{.2cm}
+	\\Applicando la definizione di $\leq$, e scegliere $w=t$ nell'$\exists_{right}$.
+	\vspace{.5cm}
+	\item[(5.10)] [ $\vdash 0<s(t)$ ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $<$, scegliendo $w=s(t)$ nell'$\exists_{right}$.
+	\vspace{.5cm}
+	\item[(5.11)] [ $\vdash t<r\ \leftrightarrow\ s(t)\leq r$ ]:
+	\vspace{.2cm}
+	\\Dimostrare i due versi \textsl{separatamente}, tenendo presente che in ($\rightarrow$) bisogna procedere per induzione su $r$.
+	\vspace{.5cm}
+	\item[(5.12)] [ $\vdash t\leq r\ \leftrightarrow\ t<s(r)$ ]:
+	\vspace{.2cm}
+	\\Basta applicare le definizioni di $<$ e $\leq$.
+	\vspace{.5cm}
+	\item[(5.13)] [ $\vdash t<s(t)$ ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $<$ e scegliere nell'$\exists_{right}$ $w=s(0)$.
+	\vspace{.5cm}
+	\item[(5.14)] [ $\vdash 0<\overline{1},\ \overline{1}<\overline{2},...$ ]:
+	\vspace{.2cm}
+	\\Considerare il punto precedente.
+	\vspace{.5cm}
+	\item[(5.15)] [ $t\neq r\vdash t<r\ \vee\ r<t$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $r$.
+	\vspace{.2cm}
+\\Passo base:
+\vspace{.2cm}
+{\scriptsize{	$$\prooftree
+	\[\[t\neq 0\vdash_{ax} t\neq 0\qquad\[\vdash_{A3}t+0=t\justifies t\neq 0\vdash t+0=t\using{ind}\]\justifies t\neq 0\vdash t\neq 0\mbox{\&} t+0=t\using{\mbox{\&}_{right}}\]\justifies t\neq 0\vdash\exists v(v\neq 0\mbox{\&} v+0=t)\using{\exists_{right}}\]\justifies t\neq 0\vdash t<0\vee 0<t\using{\vee_{right}}
+	\endprooftree$$}}
+	\vspace{.5cm}
+	Per il passo induttivo mostriamo prima
+	\vspace{.2cm}
+	\\(5E)
+ \vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\vdash_{A4}v+s(r)=s(v+r)\qquad s(v+r)=t\vdash_{ax} s(v+r)=t\justifies s(v+r)=t\vdash v+s(r)=t\using{tran}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\(5F)
+	\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\vdash_{1.7}s(v)+r=s(v+r)\qquad\[s(v)+r=s(v+r),s(v)+r=t\vdash_{U1}s(v+r)=t\qquad s(v+r)=t\vdash_{5E} v+s(r)=t\justifies
+	s(v)+r=s(v+r),s(v)+r=t\vdash v+s(r)=t\using{cut}\]\justifies t\neq s(r),s(v)+r=t\vdash v+s(r)=t\using{cut+ind}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\(5G)
+	\vspace{.2cm}
+	{\tiny{$$\prooftree
+	\[\[v=0\vdash_{1.5}v+r=0+r\qquad\vdash_{S3}0+r=r\justifies v=0\vdash v+r=r\using{tran}\]v+r=r\vdash_{U2} s(v+r)=s(r)\justifies v=0\vdash s(v+r)=s(r)\using{cut}\]\quad s(v+r)=t,s(v+r)=s(r)\vdash_{U1} t=s(r)\justifies v=0,s(v+r)=t\vdash t=s(r)\using{cut}
+	\endprooftree$$}}
+	\vspace{.2cm}
+  (5H)
+	\vspace{.2cm}
+	{\scriptsize{$$\prooftree
+	\[\[\vdash_{1.7}s(v)+r=s(v+r)\qquad\[s(v)+r=s(v+r),s(v)+r=t\vdash_{U1}s(v+r)=t\qquad v=0,s(v+r)=t\vdash_{5G} t=s(r)\justifies v=0,s(v)+r=s(v+r),s(v)+r=t\vdash t=s(r)\using{cut}\]\justifies v=0,s(v)+r=t\vdash t=s(r)\using{cut}\]\justifies s(v)+r=t,v=0,t\neq s(r)\vdash\bot\using{\neg_{left}}\]\justifies t\neq s(r),s(v)+r=t\vdash v\neq 0\using{\neg_{right}}
+	\endprooftree$$}}
+	\vspace{.2cm}
+	\\(5I)
+	\vspace{.2cm}
+	{\tiny{$$\prooftree
+	\[\[\[\[\vdash_{S4}s(w)\neq 0\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w)\neq 0\using{ind}\]\qquad\[\vdash_{1.7} s(w)+t=s(w+t)\qquad\[v\neq 0,w+t=r\vdash_{U2}s(w+t)=s(r)\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w+t)=s(r)\using{\mbox{\&}_{left}}\]\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w)+t=s(r)\using{tran}\]\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w)\neq 0\mbox{\&} s(w)+t=s(r)\using{\mbox{\&}_{right}}\]\justifies w\neq 0\mbox{\&} w+t=r\vdash\exists v(v\neq
+ 0\mbox{\&} v+t=s(r))\using{\exists_{right}}\]\justifies\exists w(w\neq 0\mbox{\&} w+t=r)\vdash\exists v(v\neq 0\mbox{\&} v+t=s(r))\using{\exists_{left}}\]\justifies t\neq r,t<r,t\neq s(r)\vdash t<s(r)\using{ind+def. < }
+	\endprooftree$$}}
+	\newpage
+ (5L)
+ \vspace{.2cm}
+{\scriptsize{$$\prooftree
+\[\[\[\[t\neq s(r),s(v)+r=t\vdash_{5F}v+s(r)=t\qquad t\neq s(r),s(v)+r=t\vdash_{5H}v\neq 0\justifies t\neq s(r),s(v)+r=t\vdash v\neq 0\mbox{\&} v+s(r)=t\using{\mbox{\&}_{right}}\]\justifies t\neq s(r),s(v)+r=t\vdash\exists w(w\neq 0\mbox{\&} w+s(r)=t)\using{\exists_{right}}\]\justifies t\neq s(r),\exists v(s(v)+r=t)\vdash\exists w(w\neq 0\mbox{\&} w+s(r)=t)\using{\exists_{left}}\]\justifies t\neq r,r<t,t\neq s(r)\vdash s(r)<t\using{ind}\]\justifies t\neq r,r<t,t\neq s(r)\vdash t<s(r)\vee s(r)<t\using{\vee_{right}}
+\endprooftree$$}}
+\vspace{.5cm}
+{\scriptsize{$$\prooftree
+\[t\neq r,t<r,t\neq s(r)\vdash_{5I} t<s(r)\justifies t\neq r,t<r,t\neq s(r)\vdash t<s(r)\vee s(r)<t\using{\vee_{right}}\]\quad t\neq r,r<t,t\neq s(r)\vdash_{5L} t<s(r) \vee s(r)<t \justifies t\neq r \to t<r\vee r<t,t\neq s(r)\vdash t<s(r)\vee s(r)<t\using{\vee_{left}}
+	\endprooftree$$}}
+\vspace{.5cm}
+	\item[(5.16)] [ $\vdash t=r\ \vee\ t<r\ \vee\ r<t$ ]:
+	\vspace{.2cm}
+	\\Per induzione su $t$.
+	\vspace{.2cm}
+	\\Passo base
+	\vspace{.2cm}
+		$$
+  \prooftree \[\vdash_{5.9} 0\leq r \justifies \vdash 0=r \vee 0<r \using{def.\leq}\] \justifies \vdash 0=r \vee 0<r \vee r<0   \using{\vee_{right}}
+	\endprooftree $$
+	\vspace{.5cm}
+	\\Passo induttivo
+	\vspace{.2cm}
+	$${\scriptsize{
+\prooftree \[r\leq t \vdash_{5.12} r<s(t) \justifies r \leq t \vdash s(t)=r \vee s(t)<r \vee r<s(t)\using{\vee_{right}}\] \quad \[t<r\vdash_{5.11} s(t)\leq r \justifies t<r \vdash s(t)=r \vee s(t)<r \vee r<s(t)\using{\vee_{right}}\] \justifies t=r \vee t<r \vee r<t \vdash s(t)=r \vee s(t)<r \vee r<s(t) \using{\vee_{left}}
+\endprooftree}
+}$$	
+\vspace{.5cm}
+	\item[(5.17)] [ $\vdash t\leq r\ \vee\ r\leq t$ ]:
+	\vspace{.2cm}
+		$$\prooftree\vdash_{5.16} t=r \vee t<r \vee t>r \justifies  \vdash t \leq r \vee r \leq t \using{def. \leq + \vee_{right}}
+	\endprooftree$$		
+	\vspace{.5cm}
+	\item[(5.18)] [ $\vdash t+r\geq t$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $\leq$ e procedere per induzione su $r$.
+	\vspace{.5cm}
+	\item[(5.19)] [ $r\neq 0\vdash t+r>t$  ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $>$, scegliendo $w=r$ nell'$\exists_{right}$.
+	\vspace{.5cm}
+	\item[(5.20)] [ $r\neq 0\vdash t*r\geq t$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione e procedere per induzione su $t$.
+	\vspace{.5cm}
+	\item[(5.21)] [ $\vdash r\neq 0\ \leftrightarrow\ r>0$ ]:
+	\vspace{.2cm}
+	\\Basta semplicemente applicare la definizione di $>$ e mostrare le due direzioni \textsl{separatamente}.
+	\vspace{.5cm}
+	\item[(5.22)] [ $r>0,t>0\vdash r*t>0$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $>$ e scegliere $w=r*t$ nell'$\exists_{right}$.
+	\vspace{.5cm}
+	\item[(5.23)] [ $r\neq 0,t>\overline{1}\vdash t*r>r$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $>$ e scegliere $w=v*r$ nell'$\exists_{right}$, ove $v$ \`e la variabile ottenuta nell'$\exists_{left}$.
+	\vspace{.5cm}
+	\item[(5.24)] [ $r\neq 0\vdash t<p\ \leftrightarrow\ t*r<p*r$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $<$ e mostrare le due direzioni \textsl{separatamente}; in $(\rightarrow)$ scegliere $w=u*r$ nell'$\exists_{right}$, dove $u$ \`e la variabile ottenuta nell'$\exists_{left}$.
+	\vspace{.5cm}
+	\item[(5.25)] [ $r\neq 0\vdash t\leq p\ \leftrightarrow\ t*r\leq p*r$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $\leq$, ricordando in $(\rightarrow)$ punti (1.11), e (5.24$\rightarrow$), e in $(\leftarrow)$ i punti (3.9) e (5.24$\leftarrow$).
+	\vspace{.5cm}
+	\item[(5.26)] [ $\vdash t\not< 0$ ]:
+	\vspace{.2cm}
+	\\Basta applicare la definizione di $\not<$ e il punto (3.4).
+	\vspace{.5cm}
+	\item[(5.27)] [ $t\leq r\ \mbox{\&}\ r\leq t\vdash t=r$ ]:
+	\vspace{.2cm}
+	\\Applicare la definizione di $\leq$.
+\end{enumerate}
+\hspace{\stretch{1}}$\Box$\\
+
+\vspace{.5cm}
+\newpage
+\begin{prop}
+Per ogni numero naturale $k$, e ogni $\varphi$ formula si hanno:
+\vspace{.2cm}
+\begin{enumerate}
+	\item[(6.1.1)] $\vdash x=0\ \vee\ ...\ \vee\ x=\overline{k}\ \leftrightarrow\ x\leq \overline{k}$
+	\vspace{.2cm}
+	\item[(6.1.2)] $\vdash \varphi(0)\ \mbox{\emph{\&}}\ ...\ \mbox{\emph{\&}}\ \varphi(\overline{k})\ \leftrightarrow\ \forall x (x\leq \overline{k}\ \to\ \varphi(x))$
+	\vspace{.2cm}
+	\item[(6.2.1)] $\vdash x=0\ \vee\ ...\ \vee\ x=\overline{k-1}\ \leftrightarrow\ x<\overline{k}$ dove $k>0$
+	\vspace{.2cm}
+	\item[(6.2.2)] $\vdash \varphi(0)\ \mbox{\emph{\&}}\ ...\ \mbox{\emph{\&}}\ \varphi(\overline{k-1})\ \leftrightarrow\ \forall x (x<\overline{k}\ \to\ \varphi(x))$, dove $k>0$
+	\vspace{.2cm}
+	\item[(6.3)] $\vdash (\forall x (x<y\ \to\ \varphi(x))\ \mbox{\emph{\&}}\ \forall x (x\geq y\ \to\ \psi(x)))\ \to\ \forall x (\varphi(x)\ \vee\ \psi(x))$
+\end{enumerate}
+\end{prop}
+\vspace{.6cm}
+\textsc{Dimostrazione}
+\vspace{.2cm}
+\begin{enumerate}
+  \item[(6.1.1)] Vediamo prima ($\rightarrow$)\\
+  \vspace{.2cm}
+	$$ \scriptsize{\prooftree
+	\[\[\[\[x=0 \vdash_{1.5} x+\overline{k}=0+\overline{k}\qquad \vdash_{S3} 0+\overline{k}=\overline{k}\justifies x=0 \vdash x+\overline{k}= \overline{k}\using{tran}\]\justifies x=0 	\vdash \exists w (w+x)=\overline{k}\using{\exists_{right}}\] \justifies x=0 \vdash x \leq \overline{k} \using{def. \leq}\]\quad \cdots \quad \[ \cdots \justifies x= \overline{k} \vdash x \leq \overline{k}\] \justifies x=0 \vee x= \overline{1} \vee \cdots \vee x=\overline{k} \vdash x\leq \overline{k} \using{\vee_{left}}\] \justifies \vdash x=0 \vee x=\overline{1} \vee \cdots \vee x= \overline{k} \rightarrow x \leq \overline{k}\using{\rightarrow_{right}}
+	\endprooftree}$$
+  \vspace{.2cm}\\
+  ($\leftarrow$) Per induzione su k, ricordando la (5.12)\\
+\\ Passo base:
+\vspace{.2cm}
+$$
+{\prooftree
+\[x=0 \vdash_{ax} x=0 \justifies x=0 \vdash x=0\]  \quad \[x<0 \vdash \bot \quad \bot \vdash x=0 \justifies x<0 \vdash x=0 \using{cut}\] \justifies x \leq 0 \vdash x=0
+\endprooftree}
+$$
+\vspace{.2cm}
+Passo induttivo:\\ Dimostriamo prima (6A)
+$$
+{\prooftree
+\vdash_{5.12} x < s(\overline{k}) \rightarrow x \leq \overline{k} \quad \[x<s(\overline{k}) \vdash_{ax} x<s(\overline{k})\quad x \leq \overline{k} \vdash_{ax} x \leq \overline{k} \justifies x<s(\overline{k}), x<s(\overline{k})\rightarrow x\leq \overline{k} \vdash x \leq \overline{k} \using{\rightarrow_{left}}\] \justifies x<s(\overline{k}) \vdash x\leq \overline{k} \using{cut}
+\endprooftree}
+$$\newpage
+E (6B):\\
+\vspace{.2cm}
+$$
+{\prooftree
+x \leq \overline{k} \vdash_{ax} x \leq \overline{k} \qquad x=0\ \vee\ ...\ \vee\ x=\overline{k} \vdash_{ax} x=0\ \vee\ ...\ \vee\ x=\overline{k}
+\justifies x \leq \overline{k}, x\leq\overline{k}\rightarrow x=0\ \vee\ ...\ \vee\ x=\overline{k} \vdash  x=0\ \vee\ ...\ \vee\ x=\overline{k} \using{\rightarrow_{left}}
+\endprooftree}
+$$\\
+\vspace{.5cm}
+Allora si ottiene:
+$$
+\scriptsize{
+\prooftree
+\[\[x<s(\overline{k})\vdash_{6A} x\leq\overline{k}\quad x\leq\overline{k}, hp. indutt.\vdash_{6B} x=0\ \vee\ ...\ \vee\ x=\overline{k} \justifies x<s(\overline{k}), hp. ind.\vdash x=0\ \vee\ ...\ \vee x=s(\overline{k}) \using{cut + \vee_{right}}\]  \quad x=s(\overline{k}) \vdash x=0\ \vee\ ...\ \vee x=s(\overline{k}) \justifies x\leq s(\overline{k}), hp. ind. \vdash x=0\ \vee\ ...\ \vee x=s(\overline{k}) \using{\vee_{left}}\] \justifies hp. induttiva\vdash x\leq s(\overline{k}) \rightarrow x=0\ \vee\ ...\ \vee x=s(\overline{k}) \using{\rightarrow{right}}
+\endprooftree}
+$$
+\vspace{.5cm}
+  I tre punti seguenti 6.1.2, 6.2.1, 6.2.2 derivano dal precedente.
+  \vspace{.5cm}
+  \item[(6.3)]
+  \vspace{.2cm}
+ {\scriptsize $$\prooftree
+  \[\[\vdash_{6C}z<y\vee y\leq z\qquad \[\[\[z<y\vdash_{ax} z<y\qquad\varphi(z)\vdash_{ax}\varphi(z)\justifies z<y,z<y\rightarrow\varphi(z)\vdash\varphi(z)\using{\rightarrow_{left}}\]
+\justifies z<y,z<y\rightarrow\varphi(z)\vdash\varphi(z)\vee\psi(z)\using{\vee{right}}\]\qquad\[\[y\leq z\vdash_{ax} y\leq z\qquad\psi(z)\vdash_{ax}\psi(z)\justifies y\leq z,y\leq z\rightarrow\psi(z)\vdash\psi(z)\using{\rightarrow_{left}}\]\justifies y\leq z,y\leq z\rightarrow\psi(z)\vdash\psi(z)\vee\psi(z)\using{\vee_{right}}\]\justifies z<y\vee y\leq z,z<y\rightarrow\varphi(z),z\geq y\rightarrow\psi(z)\vdash\varphi(z)\vee\psi(z)\using{\vee_{left}+ind}\]\justifies z<y\rightarrow\varphi(z),z\geq y\rightarrow\psi(z)\vdash\varphi(z)\vee\psi(z)\using{cut}\]\justifies\forall x(x<y\rightarrow\varphi(x))\mbox{\&}\forall x(x\geq y\rightarrow\psi(x))\vdash\varphi(z)\vee\psi(z)\using{\forall_{left}+\mbox{\&}_{left}}\]\justifies\forall x(x<y\rightarrow\varphi(x))\mbox{\&}\forall x(x\geq y\rightarrow\psi(x))\vdash\forall x(\varphi(x)\vee\psi(x))\using{\forall_{right}}
+  \endprooftree$$}
+  \vspace{.2cm}
+  dove (6C) deriva direttamente da (5.16) e dalla definizione di $\leq$.
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$\\
+
+\vspace{.5cm}
+La definizione di una funzione in HA viene fatta indirettamente ogniqualvolta si prenda un termine $t(x)$ (ovvero in cui sia presente la variabile $x$ libera), e vi si sostituisca dentro un numerale $\overline{n}$, ottenendo cos\`i $t(\overline{n})$; tuttavia, nel formalismo base di HA sono stati definiti segni per rappresentare solo l'addizione e la moltiplicazione, ma manca il termine $t$ per cui $t(\overline{n})=\overline{f(x)}$, quindi non si pu\`o controllare che il formalismo rappresenti proprio la funzione $f$ da noi voluta; solo nel caso dell'addizione e del prodotto, infatti, si pu\`o dimostrare (come abbiamo fatto nella proposizione (3.4)) che il risultato di tali operazioni sui numerali \`e proprio quello corretto. Per indicare altre funzioni diverse da somma e prodotto, dobbiamo ricorrere alla loro caratterizzazione tramite formule, mentre per la loro rappresentabilit\`a, bisogna attendere il prossimo capitolo.
+
+\begin{defi}
+Diciamo che $t$ divide $p$ se esiste $z$ che, moltiplicato per $t$, d\`a $p$. Ossia\ $t|p\ :=\ \exists\ z(p=t*z)$.
+\end{defi}
+
+\begin{prop} Per ogni termine $p$, $r$, $t$ valgono:
+\vspace{.2cm}
+\begin{enumerate}
+	\item[(7.1)] $\vdash t|t$
+	\vspace{.2cm}
+	\item[(7.2)] $\vdash\overline{1}|t$
+	\vspace{.2cm}
+	\item[(7.3)] $\vdash t|0$
+	\vspace{.2cm}
+	\item[(7.4)] $t|p\ \mbox{\emph{\&}}\ p|r\vdash t|r$
+	\vspace{.2cm}
+	\item[(7.5)] $p\neq 0\ \mbox{\emph{\&}}\ t|p\vdash t\leq p$
+	\vspace{.2cm}
+	\item[(7.6)] $t|p\ \mbox{\emph{\&}}\ p|t\vdash p=t$
+	\vspace{.2cm}
+	\item[(7.7)] $t|p\vdash t|(r*p)$
+	\vspace{.2cm}
+	\item[(7.8)] $t|p\ \mbox{\emph{\&}}\ t|r\vdash t|(p+r)$
+\end{enumerate}
+\end{prop}
+
+\vspace{.5cm}
+\textsc{Dimostrazione}
+\begin{enumerate}
+  \item[(7.1)] Applicare la definizione e scegliere $z=s(0)$ nell'$\exists_{right}$.
+  \vspace{.5cm}
+  \item[(7.2)] Applicare la definizione e scegliere $z=t$ nell'\ $\exists_{right}$.
+  \vspace{.5cm}
+  \item[(7.3)] Applicare la definizione e scegliere $z=0$ nell'\ $\exists_{right}$.
+  \vspace{.5cm}
+  \item[(7.4)] Applicare la definizione e scegliere $z=v*w$ nell'\ $\exists_{right}$, ove $v$ e $w$ sono le variabili ottenute nelle $\exists_{left}$.
+  \vspace{.5cm}
+  \item[(7.5)] Per induzione su $z$, ove $z$ \`e la variabile ottenuta nell'\ $\exists_{left}$.
+  \vspace{.5cm}
+  \item[(7.6)] Applicare la definizione.
+  \vspace{.5cm}
+  \item[(7.7)] Applicare la definizione e scegliere $z=v*r$ nell'\ $\exists_{right}$, ove $v$ \`e la variabile ottenuta nell'\ $\exists_{left}$.
+  \vspace{.5cm}
+  \item[(7.8)] Applicare la definizione e scegliere $z=v+w$ nell'\ $\exists_{right}$, ove $v$ e $w$ sono le variabili ottenute nelle $\exists_{left}$.
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$\\
+
+\vspace{.5cm}
+Dimostriamo ora l' esistenza e l' unicit\`a del resto e del quoto nell'algoritmo di divisione.
+
+\begin{prop}
+{\tiny{$$y\neq 0\vdash \exists q\ \exists r((x=y*q+r\ \mbox{\emph{\&}} r<y)\ \mbox{\emph{\&}} \forall u\ \forall v\ ((x=y*u+v\ \mbox{\emph{\&}} v<y)\ \to\ q=u\ \mbox{\emph{\&}} r=v)))$$}}
+\end{prop}
+\vspace{.5cm}
+\textsc{Dimostrazione}
+\\La dimostrazione sarebbe molto lunga con le derivazioni, per questo motivo procederemo diversamente, indicando solo come proseguire.\footnote{Comunque \textsl{esiste} una derivazione}\newline
+Proviamo l'esistenza: sia $\varphi(x):=\ y\neq 0\vdash \exists q\ \exists r(x=y*q+r\ \mbox{\&}\ r<y)$. $\varphi(x)$ si dimostra facilmente per induzione su $x$. Per $x=0$ si utilizzano la (3.4) e la (3.5) per dimostrare che $q=0$ e $r=0$ vanno bene.\\ Nel passo induttivo, bisogna ragionare cos\`i: siano $q$, $r$ tali che $x=y*q+r$; se $r+1$ resta minore di $y$, allora $q$ e $r+1$ sono il quoto e il resto cercati per $s(x)$, invece se $r+1=y$, allora $q+1$ e $0$ sono il quoto e il resto cercati.\newline
+Per provare l'unicit\`a, si assuma $y\neq 0$, $x=y*q+r \mbox{\&}\ r<y$ e $x=y*u+v\mbox{\&}\ v<y$. Dalla (5.16), si ha che, nel confrontare $q$ e $u$, ci sono solo tre possibilit\`a: $q=u\vee q<u\vee q>u$.  $q<u$ non si pu\`o presentare, perch\`e equivale a $\exists\ w(w\neq 0\ \mbox{\&}\ w+q=u)$; questo implica $y*q+r= y*(w+q)+v$, e quindi $r=y*w+v$, da cui $r\geq y$, poich\`e $y*w\geq y$, essendo $w$ non nullo, per la (5.20). \\Pertanto, abbiamo dimostrato che $q<u \vdash \bot $, quindi $\neg (q<u)$. Analogamente, neanche $q>u$ si presenta, perch\`e equivale a $\exists\ w(w\neq 0\ \mbox{\&}\ w+u=q)$, che implica $y*u+v= y*(w+u)+r$, cio\`e $v=y*w+r$, che implica $v\geq y$, per cui anche qui si arriva a $\neg (q>u)$. \\Resta quindi valida solo la possibilit\`a $q=u$. Per l'unicit\`a del resto della divisione, si sfrutta l'unicit\`a del quoziente appena dimostrata; si ha che $x=y*q+r=y*q+v$, e per i resti si hanno le tre possibilit\`a $r=v\vee r<v\vee r>v$. Se $r>v$ vuol dire che $\exists w(w\neq 0\ \mbox{\&}\ w+v=r)$, da cui $y*q+(w+v)=y*q+v$, che implica $w=0$; quindi anche qui abbiamo dimostrato $r>v \vdash \bot$. Lo stesso si fa con $r<v$, e l'unica possibilit\`a che resta \`e $r=v$, come voluto.
+\hspace{\stretch{1}} $\Box$\\
+
+\newpage Concludiamo ora facendo vedere come sia possibile in HA definire formalmente alcuni concetti fondamentali in matematica.
+
+\begin{defi}
+Definiamo le seguenti:
+\vspace{.1cm}
+\begin{itemize}
+\item sottrazione adeguata($\dot{-}$)\footnote{$z$ \`e legato a $x$ e $y$ tramite $\dot{-}$ se soddisfa alla propriet\`a nella definizione. Questo \`e diverso dal dire che $z$ \`e il risultato della funzione $\dot{-}$ applicata a $x$ e $y$, nonostante la notazione matematica sia la stessa; \`e il problema a cui si \`e accennato prima di introdurre la divisione}: {\footnotesize{$$z=y\dot{-} x:=\ (x<y\ \mbox{\emph{\&}} x+z=y)\ \vee\ (y\leq x\ \mbox{\emph{\&}} z=0)$$}}
+\vspace{.1cm}
+\item $z$ \`e il resto della divisione di $y$ per $x$:{\footnotesize{ $$z=rm(x,y)\ :=\ (x\neq 0\ \ \exists u(y=u*x+z)\ \mbox{\emph{\&}} z<x)\ \vee\ (x=0\ \mbox{\emph{\&}} z=y)$$}}
+\vspace{.1cm}
+\item $x$ \`e un numero primo: {\footnotesize{$$Prime(x):=\ x>1\ \mbox{\emph{\&}} \forall yz\  (x=y*z\ \to\ y=x\ \vee\ y=1)$$}}
+\end{itemize}
+\end{defi}
+
+\vspace{.2cm}
+\begin{prop} Valgono:
+\vspace{.2cm}
+\begin{enumerate}
+	\item[(11.1)] $\vdash Prime(x)\ \leftrightarrow\ x>1\ \mbox{\emph{\&}} \forall y\ (y|x\ \to\ y=1\ \vee\ y=x)$
+	\vspace{.2cm}
+	\item[(11.2)] $\vdash Prime(x)\ \leftrightarrow\ x>1\ \mbox{\emph{\&}}\ \forall yz\ (x|y*z\ \to\ x|y\ \vee\ x|z)$
+\end{enumerate}
+\end{prop}
+\vspace{.5cm}
+\textsc{Dimostrazione}
+Basta applicare le definizioni.
+\hspace{\stretch{1}} $\Box$\\

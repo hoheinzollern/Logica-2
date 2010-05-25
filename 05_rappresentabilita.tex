@@ -1,0 +1,691 @@
+\chapter{Rappresentabilita}
+
+
+\section{Introduzione e definizioni di base}
+
+Nel capitolo precedente abbiamo introdotto la teoria formale $HA$ (Aritmetica di Heyting) come equivalente costruttivo della teoria $PA$ basata sugli assiomi di Peano. Lo scopo di questo capitolo \`e vedere cosa tale teoria $HA$ \`e in grado di dimostrare.\\
+Infatti quando costruiamo una teoria formale, vogliamo che il sistema deduttivo all'interno di tale teoria sia in grado di provare tutto ci\`o che noi siamo in grado di fare informalmente (e quindi al di fuori di questa teoria).\\
+Per arrivare a questo risultato diamo qualche definizione necessaria alla comprensione della trattazione successiva.\\
+
+\begin{defi}
+Sia $T$ una teoria nel linguaggio $\mathcal{L}_{A}$ dell'aritmetica. Diciamo che la relazione\footnote{Quando parliamo di relazioni (o funzioni) ci riferiamo sempre a relazioni (o funzioni) che hanno come argomenti numeri naturali.} $R$ ad $n$ argomenti \`e \underline{esprimibile} in $T$ sse esiste una formula $\phi(x_{1},\ldots,x_{n})$ di $T$, con $x_{1}, \ldots, x_{n}$ variabili libere, tale che, per ogni numero naturale $k_{1}, \ldots,k_{n}$, valgono le seguenti:
+\begin{enumerate}
+  \item se $R(k_{1}, \ldots,k_{n})$ \`e vera, allora $\vdash_{T} \phi(\overline{k}_{1}, \ldots, \overline{k}_{n})$\footnote{Dove $\overline{k}_{1}, \ldots,\overline{k}_{n}$ sono, come abbiamo visto, numerali.};
+  \item se $R(k_{1}, \ldots,k_{n})$ \`e falsa, allora $\vdash_{T} \neg \phi(\overline{k}_{1}, \ldots, \overline{k}_{n})$.
+\end{enumerate}
+\end{defi}
+\vspace{0.1cm}
+\underline{Esempio}: la relazione di uguaglianza \`e esprimibile in $HA$ dalla formula $\phi(x_{1},x_{2})\equiv x_{1}=x_{2}$. Infatti, per ogni numero naturale $k_{1}, k_{2}$ valgono:\\
+ \begin{enumerate}
+  \item se $k_{1}=k_{2}$ (ovvero $R(k_{1},k_{2})$ \'e vera), ricordando che in $HA$ se $m=n$ allora $\vdash_{HA} \overline{m}=\overline{n}$\footnote{Come ï¿œ stato dimostrato nel precedente capitolo.}, si ottiene $\vdash_{HA} \overline{k}_{1}=\overline{k}_{2}$ (ovvero $\vdash_{HA}\phi(\overline{k}_{1},\overline{k}_{2}))$);
+  \item se $k_{1}\neq k_{2}$ (ovvero $R(k_{1},k_{2})$ \'e falsa), ricordando che in $HA$ se $m\neq n$ allora $\vdash_{HA} \overline{m}\neq \overline{n}$\footnote{Come ï¿œ stato dimostrato nel precedente capitolo.}, si ottiene $\vdash_{HA} \overline{k}_{1}\neq \overline{k}_{2}$ (ovvero $\vdash_{HA} \neg \phi(\overline{k}_{1},\overline{k}_{2})$).
+\end{enumerate}
+\vspace{0.5cm}
+\begin{defi}
+Sia $T$ una teoria con uguaglianza nel linguaggio $\mathcal{L}_{A}$ dell'aritmetica. Diciamo che una funzione $f$ ad $n$ argomenti \`e \underline{rappresentabile} in $T$ sse esiste una formula $\phi(x_{1}, \ldots,x_{n}, y)$ di $T$, con $x_{1}, \ldots, x_{n}, y$ variabili libere, tale che, per ogni numero naturale $k_{1}, \ldots, k_{n}, m$, valgono le seguenti:
+\begin{enumerate}
+  \item se $f(k_{1}, \ldots,k_{n})=m$, allora $\vdash_{T} \phi(\overline{k}_{1}, \ldots, \overline{k}_{n}, \overline{m})$;
+  \item $\vdash_{T} (\exists ! y) \phi(\overline{k}_{1}, \ldots, \overline{k}_{n}, y)$.
+\end{enumerate}
+La condizione $(2)$, in presenza della $(1)$, pu\`o essere sostituita dalla seguente:
+\begin{enumerate}
+\item[(2')] $\vdash_{T} \forall\ y (\phi(\overline{k_1},\ldots,\overline{k_n}, y)\rightarrow y = \overline{f(k_1,\ldots,k_n)})$.
+\end{enumerate}
+\end{defi}
+\vspace{0.1cm}
+\underline{Esempio}: la funzione somma \'e rappresentabile in $HA$ dalla formula $\phi(x_{1},x_{2},y)\equiv x_{1}+x_{2}=y$. Infatti, per ogni numero naturale $k_{1}, k_{2}, m$ valgono:\\
+ \begin{enumerate}
+  \item se $k_{1}+k_{2}=m$ (ovvero $f(k_{1}, k_{2})=m$) allora ricordando che in $HA$ se $a+b=c$ allora $\vdash_{HA} \overline{a}+\overline{b}=\overline{c}$\footnote{Come si puï¿œ ricavare dalle proprietï¿œ dimostrate nel precedente capitolo.}, si ha che $\vdash_{HA} \overline{k}_{1}+\overline{k}_{2}=\overline{m}$ (ovvero $\vdash_{HA} \phi(\overline{k}_{1}, \overline{k}_{2}, \overline{m})$);
+  \item $\vdash_{HA}(\exists ! y) (\overline{k}_{1} + \overline{k}_{2}= y)$ vale banalmente.
+\end{enumerate}
+\vspace{0.5cm}
+\begin{defi}
+Una relazione $R$ si dice \underline{complementata} se per essa vale il principio del terzo escluso, ovvero se, per ogni $k_1,\ldots,k_n$, vale che $R(k_1,\ldots,k_n)$ \`e vera oppure $\neg R(k_1,\ldots,k_n)$ \`e vera.
+\end{defi}
+\vspace{0.7cm}
+
+\section{Risultati}
+La seguente proposizione esprime una definizione equivalente a quella giï¿œ data di rappresentabilit\`a.
+
+\begin{prop}
+Sia $T$ una teoria nel linguaggio $\mathcal{L}_{A}$ dell'aritmetica. Una funzione $f$ a $n$ argomenti \`e rappresentabile con una formula $\phi (\vec{x}$\footnote{D'ora in poi adotteremo la notazione vettoriale per indicare in generale $n$ argomenti, ovvero $\vec{x}=(x_{1},\ldots, x_{n})$.}$, m)$ sse per ogni naturale $k_{1},\ldots k_{n}, m$ vale la condizione:
+$$se \ \ f(\vec{k}) = m \ \ allora \vdash_{T} \forall\ y\ (\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m}).$$
+\end{prop}
+\vspace{0.2cm}
+\textsc{\textbf{Dim:}} ($\Rightarrow$) L'ipotesi che $f$ sia rappresentabile con la formula $\phi(\vec{x},m)$ porge le seguenti condizioni per ogni naturale $k_{1},\ldots k_{n}, m$:
+\begin{enumerate}
+\item se $f(\vec{k})=m$ allora $\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})$;
+\item [(2')]$\vdash_{T} \forall y (\phi(\vec{\overline{k}}, y)\rightarrow y=\overline{f(\vec{k})})$.
+\end{enumerate}
+Inoltre se $f(\vec{k})$ = m si ottiene $\overline{f(\vec{k})} = \overline{m}$, per cui la condizione $(2')$ si puï¿œ riscrivere come:
+\begin{enumerate}
+\item [(2')]$\vdash_{T} \forall y (\phi(\vec{\overline{k}}, y)\rightarrow y=\overline{m})$.
+\end{enumerate}
+\`E immediato ricavare la conclusione $\vdash_{T} \forall y (\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m})$ grazie alla seguente derivazione che ï¿œ stata suddivisa in due alberi per migliorarne la leggibilit\`a.\\
+Per prima cosa ricaviamo $\vdash_{T}\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m}$ come segue utilizzando $(2')$:
+
+$$\prooftree
+\vdash_{T} \forall y (\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m})
+\quad
+\[\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m}\vdash_{T}\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m}\using{\forall_{left}}
+\justifies
+\forall y (\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m})\vdash_{T} \phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m}\]\using{cut}
+\justifies
+\vdash_{T}\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m}
+\endprooftree$$
+\\
+\begin{flushleft}
+Pertanto utilizzando $(1)$ otteniamo:
+\end{flushleft}
+
+$$\prooftree
+\[\vdash_{T}\phi(\vec{\overline{k}}, y)\rightarrow y = \overline{m}
+\quad
+\[\[\vdash_{T} \phi(\vec{\overline{k}},\overline{m})
+\quad
+\phi(\vec{\overline{k}},\overline{m}), y = \overline{m} \vdash_{T} \phi(\vec{\overline{k}},y) \using{cut}
+\justifies
+y = \overline{m}\vdash_{T} \phi(\vec{\overline{k}}, y)\]\using{\rightarrow_{right}}
+\justifies
+\vdash_{T} y = \overline{m}\rightarrow \phi(\vec{\overline{k}}, y)\]\using{\&_{right}}
+\justifies
+\vdash_{T}\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m}\]\using{\forall_{right}}
+\justifies
+\vdash_{T} \forall y (\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m})
+\endprooftree$$
+\\
+\begin{flushleft}
+($\Leftarrow$) Vogliamo dimostrare che, se per ogni naturale $k_{1},\ldots k_{n}, m$ vale la:
+$$se \ \ f(\vec{k}) = m \ \ allora \vdash_{T} \forall\ y\ (\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m}),$$ allora le condizioni $(1)$ e $(2)$ sono verificate.
+\end{flushleft}
+\vspace{0.1cm}
+$(1)$ Valendo la condizione appena scritta si pu\`o dimostrare come segue che se $f(\vec{k}) = m$ allora $\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})$:
+\vspace{0.5cm}
+$$\prooftree
+\vdash_{T}\forall y (\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m})
+\quad
+\[\[\[\vdash_{T} \overline{m} = \overline{m} \quad \phi(\vec{\overline{k}}, \overline{m})\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})\using{\rightarrow_{left}}
+\justifies
+\overline{m}=\overline{m}\rightarrow\phi(\vec{\overline{k}}, \overline{m})\vdash_{T} \phi(\vec{\overline{k}}, \overline{m}) \]\using{\&_{left}}
+\justifies
+\phi(\vec{\overline{k}}, \overline{m})\leftrightarrow \overline{m} = \overline{m}\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})\]\using{\forall_{left}}
+\justifies
+\forall y (\phi(\vec{\overline{k}}, y)\leftrightarrow y = \overline{m})\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})\]\using{cut}
+\justifies
+\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})
+\endprooftree$$
+\vspace{0.5cm}
+\begin{flushleft}
+$(2)$ Con la stessa ipotesi la conclusione $\vdash_{T} (\exists ! y)\phi({\vec{\overline{k}}},y)$ ï¿œ raggiungibile tramite la seguente derivazione che ï¿œ stata spezzata in due alberi per renderla pi\`u leggibile:
+\end{flushleft}
+\vspace{0.5cm}
+{\scriptsize{$$\prooftree
+\[\[
+\[\[\[\vdash_{T} \overline{m} = \overline{m}
+\quad
+\phi(\vec{\overline{k}},\overline{m})\vdash_{T}\phi(\vec{\overline{k}},\overline{m})\using{\rightarrow_{left}}
+\justifies
+\overline{m}=\overline{m}\rightarrow\phi(\vec{\overline{k}},\overline{m})\vdash_{T}\phi(\vec{\overline{k}},\overline{m})\]\using{\&_{left}}
+\justifies
+\phi(\vec{\overline{k}},\overline{m})\leftrightarrow \overline{m} = \overline{m}\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})\]\using{\forall_{left}}
+\justifies
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T} \phi(\vec{\overline{k}}, \overline{m})\]
+\quad
+\[\[\[\phi(\vec{\overline{k}},t)\rightarrow t = \overline{m}\vdash_{T}
+\phi(\vec{\overline{k}},t)\rightarrow t = \overline{m}\using{\&_{left}}
+\justifies
+\phi(\vec{\overline{k}},t)\leftrightarrow t = \overline{m}\vdash_{T}
+\phi(\vec{\overline{k}},t)\rightarrow t = \overline{m}\]\using{\forall_{left}}
+\justifies
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T}
+\phi(\vec{\overline{k}},t)\rightarrow t = \overline{m}\]\using{\forall_{right}}
+\justifies
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T}
+\forall z(\phi(\vec{\overline{k}},z)\rightarrow z = \overline{m})\]\using{\&_{right}}
+\justifies
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T} \phi(\vec{\overline{k}},\overline{m})\& \forall z(\phi(\vec{\overline{k}},z)\rightarrow z = \overline{m})\]\using{\exists_{right}}
+\justifies
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T} \exists y (\phi(\vec{\overline{k}},y)\& \forall z(\phi(\vec{\overline{k}},z)\rightarrow z = y))\]
+\justifies
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T} \exists ! y\phi(\vec{\overline{k}},y)
+\endprooftree$$}}
+\\
+\begin{flushleft}
+Pertanto:
+\vspace{0.2cm}
+\end{flushleft}
+$$\prooftree
+\vdash_{T} \forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})
+\quad
+\forall y (\phi(\vec{\overline{k}},y)\leftrightarrow y = \overline{m})\vdash_{T} \exists ! y\phi(\vec{\overline{k}},y)\using{cut}
+\justifies
+\vdash_{T}\exists ! y\phi(\vec{\overline{k}},y)
+\endprooftree$$
+\hspace{\stretch{1}} $\Box$\\
+
+\begin{prop}
+Sia $T$ una teoria con uguaglianza nel linguaggio $\mathcal{L}_{A}$ tale che $\vdash _{T} 0\neq1$. Allora una relazione complementata $R$ \`e esprimibile in $T$ sse $\chi_{R}$ \`e rappresentabile in $T$.
+\end{prop}
+\vspace{0.2cm}
+\textsc{\textbf{Dim:}} ($\Rightarrow$) Iniziamo con il supporre che $R$ sia esprimibile tramite la formula $\phi(\vec{x})$, ovvero che per ogni $\vec{\overline{k}}$ con $n$ componenti naturali valgano:
+\begin{itemize}
+  \item [(a)] se $R(\vec{k})$ \`e vera, allora $\vdash_{T} \phi(\vec{\overline{k}})$;
+  \item [(b)] se $R(\vec{k})$ \`e falsa, allora $\vdash_{T} \neg \phi(\vec{\overline{k}})$.
+\end{itemize}
+Ricordiamo che la funzione caratteristica $\chi_{R}$ associata alla relazione $R$ ï¿œ definita come segue:
+$$\chi_{R}(\vec{k})=
+\begin{cases} 1 & \text{se $R(\vec{k})$ \'e vera} \\ 0 & \text{se $R(\vec{k})$ \'e falsa}
+\end{cases}$$\\
+Vogliamo dimostrare che $\chi_{R}$ \`e rappresentata dalla formula $$\psi(\vec{x},y) \equiv (\phi(\vec{x}) \& y = \overline{1}) \lor (\neg \phi(\vec{x})\& y=0).$$
+Per fare ci\`o occorre far vedere che la formula $\psi(\vec{x},y)$ soddisfa le due condizioni $(1)$ e $(2)$ date nella definizione 2 per ogni numero naturale $k_{1}, \ldots, k_{n}, m$.\\
+\\
+$(1)$ Vogliamo provare che se $\chi_{R}(\vec{k})=m$ allora $\vdash_{T} \psi(\vec{\overline{k}},\overline{m})$.\\
+Distinguiamo due casi: $m=1$ o $m=0$. Supponiamo $m=1$ (il caso $m=0$ si dimostra in modo analogo).\\
+Per come \'e definita la $\chi_{R}$ sappiamo che $R(\vec{k})$ \`e vera e, per (a), abbiamo come conseguenza che $\vdash_{T} \phi(\vec{\overline{k}})$.\\ 
+Con la seguente derivazione otteniamo proprio quello che dovevamo dimostrare:
+      $$\prooftree
+      \[ \vdash_{T} \phi(\vec{\overline{k}}) \quad \vdash_{T} \overline{1}=\overline{1}
+      \using {\&_{right}}
+       \justifies
+      \vdash_{T} \phi(\vec{\overline{k}}) \& \overline{1}=\overline{1} \]
+       \justifies
+      \vdash_{T} \psi(\vec{\overline{k}},\overline{1})
+      \endprooftree $$
+\\
+$(2)$ Resta da dimostrare che $\vdash_{T} \exists ! y((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0))$. Per cercare di rendere pi\`u chiara la derivazione proviamo a suddividerla in vari pezzi.\\
+Iniziamo con il far vedere che $\phi(\vec{\overline{k}}) \vdash_{T} (\phi(\vec{\overline{k}}) \& \overline{1}=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& \overline{1}=0)$:\\
+      $$ \prooftree
+      \[ \phi(\vec{\overline{k}}) \vdash_{T} \phi(\vec{\overline{k}})
+      \quad
+      \[ \vdash_{T} \overline{1}=\overline{1}
+      \using {ind}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} \overline{1}=\overline{1} \]
+      \using {\&_{right}}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T}\phi(\vec{\overline{k}}) \& \overline{1}=\overline{1} \]
+      \using {\vee_{right}}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} (\phi(\vec{\overline{k}}) \& \overline{1}=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& \overline{1}=0)
+      \endprooftree $$\\
+
+\begin{flushleft}
+Mostriamo quindi che $\phi(\vec{\overline{k}}) \vdash_{T} \exists ! y  ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0))$:\\
+\vspace{0.5cm}
+\end{flushleft}
+\tiny     
+      $$ \prooftree
+      \[ \[
+       \phi(\vec{\overline{k}}) \vdash_{T} (\phi(\vec{\overline{k}}) \& \overline{1}=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& \overline{1}=0)
+      \quad
+     \[ \[ \[
+      \[ \[ z=\overline{1} \vdash_{T} z=\overline{1}
+      \using {\&_{left}}
+      \justifies
+      \phi(\vec{\overline{k}}) \& z=\overline{1} \vdash_{T} z=\overline{1} \]
+      \using {ind}
+     \justifies
+      \phi(\vec{\overline{k}}), \phi(\vec{\overline{k}}) \& z=\overline{1} \vdash_{T} z=\overline{1} \]
+      \quad
+     \[ \[ \phi(\vec{\overline{k}}) \vdash_{T} \phi(\vec{\overline{k}})
+      \using {\neg_{left}}
+      \justifies
+      \phi(\vec{\overline{k}}), \neg \phi(\vec{\overline{k}}) \vdash_{T} z=\overline{1} \]
+      \using {\&_{left}}
+      \justifies
+      \phi(\vec{\overline{k}}), \neg \phi(\vec{\overline{k}}) \& z=0 \vdash_{T} z=\overline{1} \]
+      \using {\vee_{left}}
+      \justifies
+      \phi(\vec{\overline{k}}), (\phi(\vec{\overline{k}}) \& z=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& z=0) \vdash_{T} z=\overline{1} \]
+      \using {\rightarrow_{right}}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} (\phi(\vec{\overline{k}}) \& z=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& z=0) \to z=\overline{1}\]
+      \using {\forall_{right}}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} \forall z((\phi(\vec{\overline{k}}) \& z=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& z=0) \to z=\overline{1})\]
+      \using {\&_{right}}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} ((\phi(\vec{\overline{k}}) \& \overline{1}=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& \overline{1}=0))\&\forall z((\phi(\vec{\overline{k}}) \& z=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& z=0) \to z=\overline{1})\]
+      \using {\exists_{right}}
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} \exists y ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& y=0))\&\forall z((\phi(\vec{\overline{k}}) \& z=\overline{1}) \lor (\neg \phi(\vec{\overline{k}}) \& z=0) \to z=y)\]
+      \justifies
+      \phi(\vec{\overline{k}}) \vdash_{T} \exists ! y  ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0))
+      \endprooftree $$
+\normalsize
+\\
+\begin{flushleft}
+Analogamente si ha $\neg \phi(\vec{\overline{k}}) \vdash_{T} \exists ! y  ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0))$.\end{flushleft} A questo punto possiamo arrivare alla tesi con la seguente derivazione che, utilizzando i risultati appena ottenuti e il fatto che essendo $R$ complementata ed esprimibile si ha $\vdash_{T} \phi(\vec{\overline{k}}) \lor \neg\phi(\vec{\overline{k}})$, otteniamo:\\
+\vspace{0.4cm}
+\tiny
+      $$ \prooftree
+      \vdash_{T} \phi(\vec{\overline{k}}) \lor \neg\phi(\vec{\overline{k}})
+      \quad
+      \[ \phi(\vec{\overline{k}}) \vdash_{T} \exists ! y ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0)) \quad \neg \phi(\vec{\overline{k}}) \vdash_{T} \exists ! y ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0))
+      \using{\vee_{left}}
+      \justifies
+      \phi(\vec{\overline{k}}) \lor \neg\phi(\vec{\overline{k}}) \vdash_{T} \exists ! y ((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0)) \]
+      \justifies
+      \vdash_{T} \exists ! y((\phi(\vec{\overline{k}}) \& y=\overline{1}) \lor (\neg \phi(\vec{\overline{k}})\& y=0))
+      \using {cut}
+      \endprooftree $$
+\normalsize
+\vspace{0.5cm}      
+\begin{flushleft}
+($\Leftarrow$) Supponiamo ora che $\chi_{R}$ sia rappresentata dalla formula $\psi(\vec{x},y)$,\end{flushleft} ovvero supponiamo che valgano (1) e (2) per ogni naturale $k_{1}, \ldots, k_{n},m$. Mostriamo che $R$ \`e esprimibile tramite $\phi(\vec{x})\equiv \psi(\vec{x}, \overline{1})$. Devono quindi essere soddisfatte le condizioni $(a)$ e $(b)$ per ogni naturale $k_{1}, \ldots, k_{n}$.\\
+(a) Supponiamo $R(\vec{k})$ vera. Allora $\chi_{R}(\vec{k})=1$ e, per il punto $(1)$, otteniamo $\vdash_{T} \psi (\vec{\overline{k}}, \overline{1})$.\\
+(b) Sia ora $R(\vec{k})$ falsa. Allora $\chi_{R}(\vec{k})=0$ e, sempre per il punto $(1)$, abbiamo $\vdash_{T} \psi (\vec{\overline{k}}, 0)$.
+Inoltre, per il punto (2), abbiamo la condizione di unicit\`a $\vdash_{T} \exists ! u(\psi(\vec{\overline{k}},u))$ che possiamo riscrivere come $$\vdash_{T} \exists u(\psi(\vec{\overline{k}},u) \& \forall v(\psi(\vec{\overline{k}},v) \to u=v)).$$ Allora, usando questi due risultati e ricordando l'ipotesi $\vdash_{T} 0\neq\overline{1}$, otteniamo la tesi mediante la seguente derivazione che abbiamo suddiviso in due parti per migliorarne la leggibilit\`a:
+\\
+\\
+\scriptsize
+      $$\prooftree
+      \[
+      \[
+      \[
+      \[
+      \[
+      \[    \psi(\vec{\overline{k}},0) \vdash_{T} \psi(\vec{\overline{k}},0) \quad
+      \[    \psi(\vec{\overline{k}},\overline{1}) \vdash_{T} \psi(\vec{\overline{k}},\overline{1}) \quad
+      \[    u=0, u=\overline{1} \vdash_{T} 0= \overline{1} \quad
+      \[    \vdash_{T} 0\neq\overline{1}
+     \using{\neg_{left}}
+      \justifies
+      0=\overline{1} \vdash_{T} \bot \]
+     \using{cut}
+      \justifies
+      u=0, u=\overline{1} \vdash_{T} \bot \]
+     \using{\rightarrow_{left}}
+      \justifies
+      \psi(\vec{\overline{k}},\overline{1}), u=0, \psi(\vec{\overline{k}},\overline{1}) \to u=\overline{1} \vdash_{T} \bot \]
+     \using{\rightarrow_{left}}
+      \justifies
+      \psi(\overline{\vec{k}},\overline{1}) ,\psi(\vec{\overline{k}},0),\psi(\vec{\overline{k}},0) \to u=0, \psi(\vec{\overline{k}},\overline{1}) \to u=\overline{1} \vdash_{T} \bot \]
+      \using{\neg_{right}}
+      \justifies
+      \psi(\vec{\overline{k}},0),\psi(\vec{\overline{k}},0) \to u=0, \psi(\vec{\overline{k}},\overline{1}) \to u=\overline{1} \vdash_{T} \neg \psi(\vec{\overline{k}},\overline{1}) \]
+       \using{\forall_{left}}
+      \justifies
+      \psi(\vec{\overline{k}},0),\psi(\vec{\overline{k}},0) \to u=0, \forall v(\psi(\vec{\overline{k}},v) \to u=v) \vdash_{T} \neg \psi(\vec{\overline{k}},\overline{1}) \]
+      \using{\forall_{left}}
+      \justifies
+      \psi(\vec{\overline{k}},0),\forall v(\psi(\vec{\overline{k}},v) \to u=v), \forall v(\psi(\vec{\overline{k}},v) \to u=v) \vdash_{T} \neg \psi(\vec{\overline{k}},\overline{1}) \]
+      \using{cont.}
+      \justifies
+      \psi(\vec{\overline{k}},0),  \forall v(\psi(\vec{\overline{k}},v) \to u=v), \vdash_{T} \neg \psi(\vec{\overline{k}},\overline{1})\]
+      \using{\&_{left}}
+      \justifies
+      \psi(\vec{\overline{k}},0), \psi(\vec{\overline{k}},u) \& \forall v(\psi(\vec{\overline{k}},v) \to u=v) \vdash_{T} \neg \psi(\vec{\overline{k}},\overline{1})\]
+      \using{\exists_{left}}
+      \justifies
+      \psi(\vec{\overline{k}},0), \exists u(\psi(\vec{\overline{k}},u) \& \forall v(\psi(\vec{\overline{k}},v) \to u=v)) \vdash_{T} \neg   \psi(\vec{\overline{k}},\overline{1})
+      \endprooftree $$
+\\
+\\
+\tiny      
+$$ \prooftree
+      \vdash_{T} \exists u(\psi(\vec{\overline{k}},u) \& \forall v(\psi(\vec{\overline{k}},v) \to u=v)) 
+      \quad
+      \[
+      \vdash_{T} \psi(\vec{\overline{k}},0)
+      \quad
+      \psi(\vec{\overline{k}},0), \exists u(\psi(\vec{\overline{k}},u) \& \forall v(\psi(\vec{\overline{k}},v) \to u=v)) \vdash_{T} \neg      \psi(\vec{\overline{k}},\overline{1})
+      \using{cut}
+      \justifies
+      \exists u(\psi(\vec{\overline{k}},u) \& \forall v(\psi(\vec{\overline{k}},v) \to u=v)) \vdash_{T} \neg   \psi(\vec{\overline{k}},\overline{1})\]
+      \using{cut}
+      \justifies
+      \vdash_{T} \neg   \psi(\vec{\overline{k}},\overline{1})
+\endprooftree $$
+\\
+\normalsize
+\hspace{\stretch{1}} $\Box$\\
+
+
+
+
+
+
+Grazie a questo risultato ora siamo liberi di scegliere se usare l'esprimibilit\`a delle relazioni o la rappresentabilit\`a delle funzioni per dimostrare che il sistema $HA$ \`e in grado di provare meccanicamente tutto ci\`o che noi siamo in grado di fare informalmente. Poich\`e, fin dall'inizio abbiamo "`preferito"' le funzioni, ci\`o che faremo ora sar\`a dimostrare che ogni funzione ricorsiva \`e rappresentabile in $HA$. Per arrivare a questo dobbiamo prima vedere alcuni risultati che useremo poi nella dimostrazione finale. \\
+Visto che da questo momento in poi ci riferiamo al sistema formale $HA$ lo lasceremo sottointeso, quindi per non appesantire la notazione useremo $\vdash$ sottointendendo $\vdash_{HA}$.
+
+\begin{defi}
+Chiamiamo \underline{funzione $\beta$ di G\"odel} la funzione cos\`i definita:
+$$ \beta (x_{1}, x_{2}, x_{3}):=rm(1+(1+x_{3})x_{2}, x_{1})$$
+dove con $rm(\cdot,\cdot)$ indichiamo la funzione che, dati due numeri $x$ e $y$, restisuisce il resto della divisione di $y$ per $x$. 
+\end{defi}
+\underline{Esempi}:
+\begin{enumerate}
+  \item $rm(13,27)=1$, infatti $27=13\cdot2+1$;
+  \item $\beta(395,15,21)=rm(1+(1+21)\cdot15,395)=rm(331,395)=64$ infatti $395=331\cdot1+64$.
+\end{enumerate}
+
+Osserviamo che la funzione $rm(\cdot,\cdot)$ appena introdotta \`e primitiva ricorsiva, infatti la possiamo definire come\footnote{Dove indichiamo con $S$ la funzione successore e con $sg$ la funzione segno.}:
+
+$$
+\left \{ \begin{array} {ll}
+rm(x,0)=0 \\
+rm(x,y+1)=S(rm(x,y))\cdot sg(x- S(rm(x,y)))
+\end{array} \right. 
+$$ \newline
+
+\begin{prop}
+La funzione $\beta(x_{1}, x_{2}, x_{3})$ \`e rappresentabile in $S$ tramite la formula
+$$ Bt(x_{1}, x_{2}, x_{3}, y)\equiv \exists w ((x_{1}=(1+(x_{3}+1)x_{2})w +y )\&(y<1+(x_{3}+1)x_{2})) $$
+\end{prop}
+
+\textsc{\textbf{Dim:}} Dobbiamo far vedere che per $Bt$ valgono le solite due condizioni. Dati $k_{1}, k_{2}, k_{3}, m \in \mathbb{N}$:
+\begin{enumerate}
+  \item Supponiamo $\beta(\vec{k})=m$. Ci\`o vuol dire che $k_{1}= (1+(k_{3}+1)k_{2})k + m$ per qualche $k \in \mathbb{N}$ e $m<1+(k_{3}+1)k_{2}$. Allora per ci\`o che \`e stato visto nel capitolo precedente \footnote{Usiamo il fatto che, dati $n, m \in \mathbb{N}$, se $n=m$ allora $\vdash \overline{n}=\overline{m}$.} e perch\'e la relazione $<$ \`e esprimibile abbiamo: $\vdash \overline{k}_{1}= (\overline{1}+(\overline{k}_{3}+\overline{1})\overline{k}_{2})\overline{k} + \overline{m}$ e $\vdash \overline{m}<\overline{1}+(\overline{k}_{3}+\overline{1})\overline{k}_{2}$. Quindi
+      $$ \prooftree
+      \[
+      \vdash \overline{k}_{1}= (\overline{1}+(\overline{k}_{3}+\overline{1})\overline{k}_{2})\overline{k} + \overline{m} \quad
+      \vdash \overline{m}<\overline{1}+(\overline{k}_{3}+\overline{1})\overline{k}_{2}
+      \using{\&_{left}}
+      \justifies
+      \vdash ( \overline{k}_{1}= (\overline{1}+(\overline{k}_{3}+\overline{1})\overline{k}_{2})\overline{k} + \overline{m}) \& (\overline{m}<\overline{1}+(\overline{k}_{3}+\overline{1})\overline{k}_{2}) \]
+      \using{\exists_{right}}
+      \justifies
+      \vdash \exists w ((\overline{k}_{1}=(1+(\overline{k}_{3}+1)\overline{k}_{2})w +\overline{m} )\& (\overline{m}<1+(\overline{k}_{3}+1)\overline{k}_{2}))
+      \endprooftree $$
+      Percio` $ \vdash Bt(\overline{k}_{1}, \overline{k}_{2}, \overline{k}_{3}, \overline{m})$.
+  \item Per vedere che anche questa condizione \`e soddisfatta basta ricordare un risultato ottenuto in precedenza:
+      %$$\vdash z\neq0 \to \exists u \exists v [x=z\cdot u+v \land v<z \land (\forall u_{1} \forall %v_{1}(x=z\cdot u_{1}+v_{1} \land v_{1}<z) \to u=u_{1} \land v=v_{1} )] $$
+      %cio\`e,
+      $$\vdash z\neq0 \to \exists ! u \exists ! v [(x=z\cdot u+v )\& (v<z)] $$
+      Allora, se consideriamo $k_{1}, k_{2}, k_{3}$, $z=1+(k_{3}+1)k_{2}=S((k_{3}+1)k_{2})$ e $x=k_{1}$ otteniamo ovviamente $z\neq0$ e 
+      $$ \prooftree
+      \vdash z \neq 0 \quad z \neq 0 \vdash \exists ! u \exists ! v [(x=z\cdot u+v) \& (v<z)]
+      \justifies
+      \vdash \exists ! u Bt(k_{1}, k_{2}, k_{3}, u)
+      \endprooftree $$
+\end{enumerate}
+\hspace{\stretch{1}} $\Box$\\
+
+\begin{lem}
+Per ogni sequenza $k_{0},\ldots, k_{n}$ di numeri naturali, esistono $b, c \in \mathbb{N}$ t.c. $\beta(b,c,i)=k_{i}$ per $0\leq i \leq n$.
+\end{lem}
+
+\textsc{\textbf{Dim:}} Sia $q= \max\{n, k_{0},\ldots,k_{n}\}$ e poniamo $c=q!$. \\Consideriamo $u_{i}=1+(i+1)c$ per $0\leq i\leq n$.
+Allora, se $i\neq j$, $u_{i}$ e $u_{j}$ sono coprimi: infatti supponiamo che esista $p$ primo t.c. $p\mid u_{i}$ e $p\mid u_{j}$ con $i<j$ (analogo con $j<i$). Quindi $p\mid u_{j}-u_{i}=(j-i)c$.\\
+Se $p\mid c$, allora abbiamo che $p\mid (i+1)c$ ma anche $p\mid u_{i}=1+(i+1)c$ e quindi $p\mid 1$ che \`e un assurdo.\\
+Se $p\mid j-i$ si ha $0<j-i\leq n\leq q$ e quindi $p\mid q!=c$, cosa che abbiamo appena escluso.\\
+Quindi per ogni $i,j\leq n$ con $i\neq j$, $u_{i}$ e $u_{j}$ sono coprimi ed inoltre, per $0\leq i\leq n$, $k_{i}\leq q\leq q!= c<1+(i+1)c=u_{i}$, quindi $k_{i}<u_{i}$ per ogni $i$. Per il Teorema Cinese del Resto esiste $b<u_{0}u_{1}\cdot\cdot\cdot u_{n}$ t.c. $rm(u_{i}, b)=k_{i}$ e quindi abbiamo che $\beta(b,c,i)=rm(1+(i+1)c,b)=rm(u_{i},b)=k_{i}$.
+\hspace{\stretch{1}} $\Box$\\
+
+
+
+Gli ultimi risultati ci permettono di esprimere in $S$ asserzioni riguardanti sequenze finite di numeri naturali e questo giocher\`a un ruolo cruciale nella dimostrazione del teorema seguente.
+
+\begin{thm}
+Ogni funzione ricorsiva \`e rappresentabile in $S$.
+\end{thm}
+
+\textsc{\textbf{Dim:}} Questa dimostrazione si svolge per induzione sulla complessit\`a strutturale delle funzioni, quindi partiremo con il dimostrare che le funzioni base sono rappresentabili e poi mostreremo che l'essere rappresentabile \`e una propriet\`a chiusa rispetto alle regole che ci permettono di costruire nuove funzioni. \\
+Funzioni base:
+\begin{itemize}
+  \item La funzione zero $Z(x)$ \`e rappresentabile dalla formula $x_{1}=x_{1} \land y=0$. Infatti, dati $k, m \in \mathbb{N}$ :
+      \begin{enumerate}
+        \item Supponiamo $Z(k)=m$. Allora $m=0$ e, per quanto visto, $\vdash \overline{m}=0$. Quindi
+            $$ \prooftree
+            \vdash \overline{k}=\overline{k} \quad \vdash \overline{m}=0
+            \justifies
+            \vdash \overline{k}=\overline{k} \land \overline{m}=0
+            \endprooftree $$
+        \item Basta notare:
+        $$ \prooftree
+        \[ \vdash x_{1}=x_{1} \quad \vdash 0=0 \quad
+        \[ \[ \[ z=0 \vdash z=0
+        \justifies
+        x_{1}=x_{1} \land z=0\vdash z=0 \]
+        \justifies
+        \vdash (x_{1}=x_{1} \land z=0) \to z=0 \]
+        \justifies
+        \vdash \forall z((x_{1}=x_{1} \land z=0) \to z=0) \]
+        \justifies
+        \vdash x_{1}=x_{1} \land 0=0 \land \forall z((x_{1}=x_{1} \land z=0) \to z=0) \]
+        \justifies
+        \vdash \exists y(x_{1}=x_{1} \land y =0 \land \forall z((x_{1}=x_{1} \land z=0) \to z=y) )
+        %GIUSTO?
+        \endprooftree $$
+      \end{enumerate}
+  \item La funzione successore $S(x)=x+1$ \`e rappresentata dalla formula $y=x_{1}'$. Infatti, dati $k, m \in \mathbb{N}$ :
+      \begin{enumerate}
+        \item Supponiamo $S(k)=m$. Allora $m=k+1$ e quindi $\vdash \overline{m}= \overline{k}'$.
+        \item \`E facile vedere che :
+        $$ \prooftree
+        \[ \vdash x_{1}'=x_{1}' \quad
+        \[ \[ z= x_{1}' \vdash z= x_{1}'
+        \justifies
+        \vdash z= x_{1}' \to z= x_{1}' \]
+        \justifies
+        \vdash \forall z (z= x_{1}' \to z= x_{1}') \]
+        \justifies
+        \vdash x_{1}'=x_{1}' \land \forall z (z= x_{1}' \to z= x_{1}') \]
+        \justifies
+        \vdash \exists ! y (y=x_{1}')
+        \endprooftree
+        $$
+      \end{enumerate}
+  \item Analogamente alle precedenti, \`e facile vedere che la funzione \\ $P_{i}^{n}(x_{1},\ldots,x_{n})=x_{i}$ \`e rappresentata dalla formula \\ $x_{1}=x_{1}\land\ldots\land x_{n}=x_{n} \land y=x_{i}$. \\
+\end{itemize}
+Passiamo ora alle regole introdotte per costruire nuove funzioni: \\
+\begin{itemize}
+  \item \textbf{Composizione} \\
+  Sia $f(\vec{x})=g(h_{1}(\vec{x}),\ldots,h_{m}(\vec{x}))$ una funzione ad $n$ argomenti. Allora, per ipotesi induttiva, $g(x_{1},\ldots,x_{m}), h_{1}(x_{1},\ldots,x_{n}),\ldots, h_{m}(x_{1},\ldots,x_{n})$ sono rappresentabilibi in $S$. Siano $\psi(\vec{x},z), \phi_{1}(\vec{x},y_{1}),\ldots,\phi_{m}(\vec{x},y_{m})$ \footnote{Per semplicit\`a notazionale uso il vettore $\vec{x}$, ma, come per le rispettive funzioni, bisogna stare attenti a non far confusione sul numero di argomenti. Quello in $\psi$ \`e un vettore di lunghezza $m$, mentre quelli nelle $\phi$ sono vettori di lunghezza $n$} le formule che le rappresentano. Dimostriamo allora che $f$ \`e rappresentata da:
+  $$\eta(\vec{x},z)\equiv\exists y_{1}\ldots\exists y_{m}(\phi_{1}(\vec{x},y_{1})\land\ldots\land\phi_{m}(\vec{x},y_{m})\land\psi(y_{1},\ldots,y_{m},z)) $$
+  \begin{enumerate}
+    \item Dati $k_{i},r_{j},q \in \mathbb{N}$, con $0\leq i\leq n$ e $0\leq j\leq m$, supponiamo $f(\vec{k})=q$ e $h_{j}(\vec{k})=r_{j}$ per $0\leq j\leq m$. Ci\`o implica $g(\vec{r})=q$. Allora, per ipotesi induttiva, si ha:
+        $$\vdash\phi_{j}(\overline{\vec{k}},\overline{r}_{j}) \ ,\ \vdash \psi(\overline{\vec{r}},\overline{q}), \ con \ 0\leq j\leq m.$$
+        Quindi possiamo subito concludere applicando $m$ volte l'$\land$-formazione e $m$ volte l'$\exists$-formazione.
+    \item L'esistenza, cio\`e $\vdash \exists z \ \eta(\vec{x},z)$, segue facilmente dall'esistenza per le $\phi_{j}, \psi$. Allora non resta che dimostrare l'unicit\`a e cio\`e che $\vdash \eta(\vec{x},u)\land \eta(\vec{x}, v) \to u=v$. Supponiamo $j=1$ per semplicit\`a, ma si pu\`o facilmente generalizzare a $j=m$. Allora, usando l'unicit\`a per le $\phi_{1}, \phi_{2}, \psi$ e saltando qualche piccolo passaggio, si ha:
+        $$ \prooftree
+        \[ \[ \phi_{1}(\vec{x}, b_{1}), \phi_{1}(\vec{x}, c_{1}) \vdash b_{1}=c_{1}
+        \quad
+        \[ b_{1}=c_{1}, \psi(b_{1},u), \psi(c_{1}, v) \vdash \psi(b_{1},u), \psi(b_{1},v)
+        \quad
+        \psi(b_{1},u), \psi(b_{1},v) \vdash u=v
+        \justifies
+        b_{1}=c_{1}, \psi(b_{1},u), \psi(c_{1}, v) \vdash u=v
+        \]
+        \justifies
+        \phi_{1}(\vec{x}, b_{1}), \phi_{1}(\vec{x}, c_{1}), \psi(b_{1},u), \psi(c_{1}, v) \vdash u=v
+        \]
+        \justifies
+        \eta(\vec{x},u) \land \eta(\vec{x},v) \vdash u=v \]
+        \justifies
+        \vdash \eta(\vec{x},u) \land \eta(\vec{x},v) \to u=v
+        \endprooftree $$ \\
+  \end{enumerate}
+  \item \textbf{Ricorsione} \\
+  Date $h$, $g$ consideriamo la funzione $f$ ad $n+1$ argomenti cos\`i definita:
+  $$
+  \left \{ \begin{array} {ll}
+  f(\vec{x},0)= h(\vec{x}) \\
+  f(\vec{x},y+1)=g(\vec{x},y,f(\vec{x},y))
+  \end{array} \right.
+  $$
+  Allora, per ipotesi induttiva, $h$ e $g$ sono rappresentabili. $\phi(\vec{x},x_{n+1})$, $\psi(\vec{x},x_{n+1},x_{n+2},x_{n+3})$ siano, rispettivamente, le formule che le rappresentano. \\
+  Osserviamo che $f(\vec{x},y)=z$ sse esiste una sequenza finita di numeri naturali $b_{0},\ldots,b_{y}$ tali che $b_{0}=h(\vec{x})$,\ldots,$b_{w+1}=f(\vec{x},w+1)=g(\vec{x},w,b_{w})$ per $w+1\leq y$, quindi $b_{y}=z$. Per il Lemma, possiamo riferirci a questa sequenza di numeri tramite la funzione $\beta$ e abbiamo visto che $\beta$ \`e rappresentata in $S$ dalla formula $Bt(x_{1},x_{2},x_{3},y)$. Mostriamo che allora $f$ \`e rappresentabile tramite la formula \\ $\eta(\vec{x},x_{n+1},x_{n+2})$ cos\`i definita:
+  $$\exists u\exists v[\exists w(Bt(u,v,0,w)\land \phi(\vec{x},w)) \land Bt(u,v,x_{n+1},x_{n+2}) \land $$
+  $$\ \ \forall w(w<x_{n+1} \to \exists y\exists z(Bt(u,v,w,y)\land Bt(u,v,w',z)\land \psi(\vec{x},w,y,z)))] $$
+  \begin{enumerate}
+    \item Dati $\vec{k}, p, m \in \mathbb{N}$, supponiamo $f(\vec{k},p)=m$. Vorremmo mostrare che $\vdash \eta(\overline{\vec{k}},\overline{p},\overline{m})$. Distinguiamo due casi: \\
+        \\
+        \textbf{($\mathbf{p=0}$)} Quindi $m=h(\vec{k})$. Consideriamo la sequenza formata solo da $m$. Allora sappiamo, per il Lemma, che esistono $b$, $c$ tali che $\beta(b,c,0)=m$. Ma $\beta$ ed $h$ sono rappresentabili, quindi:
+        $$ \prooftree
+        \vdash Bt(\overline{b},\overline{c},0,\overline{m})
+        \quad
+        \[ \[ \vdash Bt(\overline{b},\overline{c},0,\overline{m})
+        \quad
+        \vdash \phi(\overline{\vec{k}},\overline{m})
+        \justifies
+        \vdash Bt(\overline{b},\overline{c},0,\overline{m}) \land \phi(\overline{\vec{k}},\overline{m}) \]
+        \justifies
+        \vdash \exists w(Bt(\overline{b},\overline{c},0,w) \land \phi(\overline{\vec{k}},w)) \]
+        \justifies
+        \vdash \exists w(Bt(\overline{b},\overline{c},0,w) \land \phi(\overline{\vec{k}},w)) \land Bt(\overline{b},\overline{c},0,\overline{m})
+        \endprooftree $$
+        Inoltre, poich\'e per ogni termine $t$ vale che $\vdash t\geq0$, si ha:
+        $$ \prooftree
+        \[ \[ w<0\vdash \bot \quad \bot \vdash \exists y\exists z(Bt(\overline{b},\overline{c},w,y)\land Bt(\overline{b},\overline{c},w',z)\land \psi(\overline{\vec{k}},w,y,z))
+        \justifies
+         w<0\vdash  \exists y\exists z(Bt(\overline{b},\overline{c},w,y)\land Bt(\overline{b},\overline{c},w',z)\land \psi(\overline{\vec{k}},w,y,z)) \]
+         \justifies
+         \vdash w<0 \to  \exists y\exists z(Bt(\overline{b},\overline{c},w,y)\land Bt(\overline{b},\overline{c},w',z)\land \psi(\overline{\vec{k}},w,y,z)) \]
+         \justifies
+         \vdash \forall w(w<0 \to  \exists y\exists z(Bt(\overline{b},\overline{c},w,y)\land Bt(\overline{b},\overline{c},w',z)\land \psi(\overline{\vec{k}},w,y,z)))
+         \endprooftree $$ \\
+         Ora applicando una volta l'$\land$-formazione e due volte l'$\exists$-formazione otteniamo il risultato voluto. \\
+         \\
+         \textbf{($\mathbf{p>0}$)} Allora $f(\vec{k},p)$ \`e calcolata in $p+1$ passi. Sia $r_{j}=f(\vec{k},j)$. Allora, per il Lemma, sappiamo che data la sequenza $r_{0},\ldots,r_{p}$ esistono $b$, $c$ tali che $\beta(b,c,i)=r_{i}$ per $0\leq i\leq p$. E quindi, per la rappresentabilit\`a di $\beta$, $\vdash Bt(\overline{b},\overline{c},\overline{i},\overline{r}_{i})$. \\
+         In particolare $r_{0}=\beta(b,c,0)$ e $r_{0}=f(\vec{k},0)=h(\vec{k})$, quindi:
+         $$ \prooftree
+         \[ \vdash Bt(\overline{b},\overline{c},0,\overline{r}_{0}) \quad
+         \vdash \phi(\overline{\vec{k}}, \overline{r}_{0})
+         \justifies
+         \vdash Bt(\overline{b},\overline{c},0,\overline{r}_{0}) \land \phi(\overline{\vec{k}}, \overline{r}_{0}) \]
+         \justifies
+         \vdash \exists w Bt(\overline{b},\overline{c},0,w) \land \phi(\overline{\vec{k}}, w)
+         \endprooftree $$
+         Inoltre da $r_{p}=f(\vec{k},p)=m$, poich\'e $r_{p}=\beta(b,c,p)$, si ha:
+         $$ \vdash Bt(\overline{b},\overline{c},\overline{p},\overline{m}) $$
+         Ora, per $0<i\leq p-1$, valgono $\beta(b,c,i)=r_{i}=f(\vec{k},i)$ e $\beta(b,c,i+1)=r_{i+1}=f(\vec{k},i+1)=g(\vec{k},i,r_{i})$. Quindi, usando l'ipotesi induttiva, si ha:
+         $$ \prooftree
+         \[ \vdash Bt(\overline{b},\overline{c},\overline{i},\overline{r}_{i}) \quad
+         \vdash Bt(\overline{b},\overline{c},\overline{i+1},\overline{r}_{i+1}) \quad
+         \vdash \psi(\overline{\vec{k}},\overline{i},\overline{r}_{i},\overline{r}_{i+1})
+         \justifies
+         \vdash Bt(\overline{b},\overline{c},\overline{i},\overline{r}_{i}) \land Bt(\overline{b},\overline{c},\overline{i+1},\overline{r}_{i+1}) \land \psi(\overline{\vec{k}},\overline{i},\overline{r}_{i},\overline{r}_{i+1}) \]
+         \Justifies
+         \vdash \exists y \exists z( Bt(\overline{b},\overline{c},\overline{i},y) \land Bt(\overline{b},\overline{c},\overline{i+1},z) \land \psi(\overline{\vec{k}},\overline{i},y,z))
+         \endprooftree $$
+         per ogni $0<i\leq p-1$. \\
+         Utilizzando il il fatto che per ogni numero naturale $p>0$ ed ogni formula $\phi$ si ha $\vdash\phi(0)\land \phi(\overline{1})\land\ldots\land \phi(\overline{p-1}) \leftrightarrow \forall x(x<\overline{p} \to \phi(x))$, otteniamo:
+         $$ \vdash \forall w(w<p \to \exists y \exists z( Bt(\overline{b},\overline{c},\overline{i},y) \land Bt(\overline{b},\overline{c},\overline{i+1},z) \land \psi(\overline{\vec{k}},\overline{i},y,z))) $$
+         A questo punto basta unire i risultati ottenuti e utilizzando l'$\land$-formazione e l'$\exists$-formazione si arriva al risultato voluto:
+         $$\vdash \eta(\overline{\vec{k}}, \overline{p}, \overline{m})$$ \\
+    \item Dobbiamo dimostrare $\vdash \exists ! x_{n+2} \eta(\overline{\vec{k}},\overline{p},x_{n+2})$. Lo faremo per induzione su $p$ nel metalinguaggio. Notiamo che basta provare l'unicit\`a. \\
+        Per \textbf{($\mathbf{p=0}$)}, allora $f(\vec{k},0)=h(\vec{k})$, quindi l'unicit\`a per $\eta$ segue dall'unicit\`a per $\phi$.
+
+     Per \textbf{($\mathbf{p>0}$)}, assumiamo ora che $\vdash \exists!x_{n+2} \eta(\overline{\vec{k}},\overline{p},x_{n+2})$ e poniamo per semplicit\`a $\alpha=h(\vec{k})$, $\delta=f(\vec{k},p)$, $\gamma=f(\vec{k},p+1)=g(\vec{k},p,\delta)$. Allora
+        \begin{description}
+          \item[(1)] $\vdash \psi(\overline{\vec{k}},\overline{p},\overline{\delta},\overline{\gamma})$
+          \item[(2)] $\vdash \phi(\overline{\vec{k}},\overline{\alpha})$
+          \item[(3)] $\vdash \eta(\overline{\vec{k}},\overline{p},\overline{\delta})$
+          \item[(4)] $\vdash \eta(\overline{\vec{k}},\overline{p+1},\overline{\gamma})$
+          \item[(5)] $\vdash \exists!x_{n+2} \eta(\overline{\vec{k}},\overline{p},x_{n+2})$ \\
+        \end{description}
+        Assumiamo
+        \begin{description}
+        \item[(6)] $\vdash \eta(\overline{\vec{k}},\overline{p+1},x_{n+2})$ \\
+        \end{description}
+
+        Dobbiamo dimostrare che $x_{n+2}=\gamma$.
+        Da $\textbf{(6)}$: \\
+        \begin{description}
+          \item[(a)] $\exists w(Bt(b,c,0,w)\land \phi(\overline{\vec{k}},w))$
+          \item[(b)] $Bt(b,c,\overline{p+1},x_{n+2})$
+          \item[(c)] $\forall w(w<\overline{p+1} \to \exists y\exists z(Bt(u,v,w,y)\land Bt(u,v,w',z)\land \psi(\overline{\vec{k}},w,y,z)))$ \\
+        \end{description}
+        Da $\textbf{(c)}$, utilizzando due volte l'equivalenza vista prima \footnote{Per ogni numero naturale $p>0$ ed ogni formula $\phi$ si ha $\vdash\phi(0)\land \phi(\overline{1})\land\ldots\land \phi(\overline{p-1}) \leftrightarrow \forall x(x<\overline{p} \to \phi(x))$}, si ottiene: \\
+        \begin{description}
+          \item[(d)] $\forall w(w<\overline{p} \to \exists y\exists z(Bt(u,v,w,y)\land Bt(u,v,w',z)\land \psi(\overline{\vec{k}},w,y,z)))$
+          \item[(e)] $Bt(b,c,\overline{p},d) \land Bt(b,c, \overline{p+1},e) \land \psi(\overline{\vec{k}},\overline{p},d,e)$ \\
+        \end{description}
+        Ora, semplicemente dalla definizione di $\eta$ e da $\textbf{(a)}$, $\textbf{(d)}$ ed $\textbf{(e)}$ (dopo aver ``sciolto '' gli $\land$) si ha: \\
+        \begin{description}
+          \item [(f)] $\eta(\overline{\vec{k}},\overline{p},d)$ \\
+        \end{description}
+        che assieme all'ipotesi $\textbf{(5)}$ porta a: \\
+        \begin{description}
+          \item [(g)] $d=\overline{\delta}$ \\
+        \end{description}
+        Ora, con una semplice sostituzione, da $\textbf{(g)}$ ed $\textbf{(e)}$ otteniamo: \\
+        \begin{description}
+          \item [(h)] $\psi(\overline{\vec{k}},\overline{p},\overline{\delta},e)$ \\
+        \end{description}
+        ma, dall'unicit\`a di $\psi$ utilizzando l'ipotesi $\textbf{(1)}$ abbiamo: \\
+        \begin{description}
+          \item [(i)] $\overline{\gamma}=e$ \\
+        \end{description}
+        Con un'altra sostituzione, da $\textbf{(e)}$ e $\textbf{(i)}$ si ha: \\
+        \begin{description}
+          \item [(j)] $Bt(b,c,\overline{p+1},\overline{\gamma})$ \\
+        \end{description}
+        ed infine, da $\textbf{(b)}$,$\textbf{(j)}$ e dall'unicit\`a di $Bt$ otteniamo il risultato voluto: $x_{n+2}=\overline{\gamma}$. \\
+        La dimostrazione \`e semplice come idee, ma lunga e complicata da scrivere come derivazione con il calcolo dei sequenti dato il numero di variabili diverse che bisogna utilizzare. In realt\'a basta stare attenti a quando si usa l'$\exists$-riflessione e ripercorrere le idee sopra viste utilizzando pi\`u che altro contrazione, indebolimento e taglio. \\
+  \end{enumerate}
+
+  \item \textbf{Operatore di Minimo} \\
+  Consideriamo la funzione $f(\vec{x})=\mu[x]g(\vec{x})$ con $g(\vec{x},y)$ rappresentabile tramite la formula $\eta(\vec{x},x_{n+1},x_{n+2})$. Vediamo che $f$ \`e rappresentata da:
+  $$\phi(\vec{x},x_{n+1})=\eta(\vec{x},x_{n+1},0) \land \forall y(y<x_{n+1} \to \neg \eta(\vec{x},y,0))$$
+  \begin{enumerate}
+    \item Siano $\vec{k}, m \in \mathbb{N}$. Supponiamo $f(\vec{k})=m$ e distinguiamo due casi: \\
+        \textbf{($\mathbf{m=0}$)} Allora $g(\vec{k},0)=0$ e dalla rappresentabilit\`a di $g$ si ha
+        $$\vdash \eta(\overline{\vec{k}},0,0)$$
+        Inoltre:
+        $$ \prooftree
+        \[ \[
+        y<0 \vdash \bot \quad \bot \vdash \neg \eta(\overline{\vec{k}},y,0)
+        \justifies
+        y<0 \vdash \neg \eta(\overline{\vec{k}},y,0)
+         \using{cut} \]
+         \justifies
+         \vdash y<0 \to \neg \eta(\overline{\vec{k}},y,0) \]
+         \justifies
+         \vdash \forall y(y<0 \to \neg \eta(\overline{\vec{k}},y,0)) \\
+         \endprooftree $$
+         e con un'$\land$-formazione si conclude. \\
+         \\
+         \textbf{($\mathbf{m>0}$)} Allora $g(\vec{k},m)=0$ e  $g(\vec{k},l)\neq 0$ per $l<m$. Quindi, poich\`e per ipotesi induttiva $g$ \`e rappresentabile, abbiamo:
+        $$\vdash \eta(\overline{\vec{k}}, \overline{m},0)$$
+        $$\vdash \neg \eta(\overline{\vec{k}}, \overline{l},0) \ per \  l<m$$
+        Quindi, utilizzando il fatto che per ogni $p>0$ ed ogni formula $\phi$ vale $\vdash\phi(0)\land \phi(\overline{1})\land\ldots\land \phi(\overline{p-1}) \leftrightarrow \forall x(x<\overline{p} \to \phi(x))$, otteniamo: \\
+        $$ \prooftree
+        \vdash \eta(\overline{\vec{k}}, \overline{m},0) \quad
+        \[
+        \vdash \neg \eta(\overline{\vec{k}},0,0) \quad \ldots \quad \vdash \neg \eta(\overline{\vec{k}},\overline{m-1},0)
+        \Justifies
+         %\proofdotseparation=1.2ex
+         %\proofdotnumber=4
+         %\leadsto
+        \vdash \forall y(y<\overline{m} \to \neg \eta(\overline{\vec{k}},y,0))
+         \]
+        \justifies
+        \vdash \phi(\overline{\vec{k}},\overline{m})
+        \endprooftree $$ \\
+    \item \`E sufficiente provare l'unicit\`a. Supponiamo $\phi(\overline{\vec{k}},\overline{m})$ e, utilizzando il fatto che per ogni $t$, $s$ vale $\vdash t<s \lor t=s \lor s<t$, proviamo che $\vdash \phi(\overline{\vec{k}},u) \to u=\overline{m}$. Osserviamo che: \\
+        $$ \prooftree
+        \[ \overline{m}<u \vdash \overline{m}<u \quad
+        \[ \eta(\overline{\vec{k}},\overline{m},0) \vdash \eta(\overline{\vec{k}},\overline{m},0) \quad \bot \vdash u=\overline{m}
+        \justifies
+        \eta(\overline{\vec{k}},\overline{m},0), \neg \eta(\overline{\vec{k}},\overline{m},0) \vdash u=\overline{m} \]
+        \justifies
+        \overline{m}<u, \eta(\overline{\vec{k}},\overline{m},0),  \overline{m}<u \to \eta(\overline{\vec{k}},\overline{m},0) \vdash u=\overline{m} \]
+        \justifies
+        \overline{m}<u, \eta(\overline{\vec{k}},\overline{m},0), \forall y(y<u \to \eta(\overline{\vec{k}},y,0)) \vdash u=\overline{m}
+        \Justifies
+        \overline{m}<u, \phi(\overline{\vec{k}},\overline{m}), \phi(\overline{\vec{k}},u) \vdash u=\overline{m}
+        \endprooftree $$ \\
+        Analogamente si ha $ u<\overline{m}, \phi(\overline{\vec{k}},\overline{m}), \phi(\overline{\vec{k}},u) \vdash u=\overline{m}$ e pi\`u semplicemente:
+        $$ \prooftree
+        u=\overline{m} \vdash u=\overline{m}
+        \justifies
+        u=\overline{m}, \phi(\overline{\vec{k}},\overline{m}), \phi(\overline{\vec{k}},u) \vdash u=\overline{m}
+        \endprooftree $$ \\
+        Ora, con un'$\lor$-riflessione e un'$\to$-formazione, otteniamo il risultato voluto. \\
+  \end{enumerate}
+\end{itemize}
+
+Abbiamo cos\`i dimostrato che ogni funzione ricorsiva \`e rappresentabile in $S$ e che quindi il nostro sistema \`e sufficientemente forte.
+
+\hspace{\stretch{1}} $\Box$\\
+
+\begin{corol}
+Ogni relazione ricorsiva \`e esprimibile in $S$.
+\end{corol}
+
+\textsc{\textbf{Dim:}} Sia $R(\vec{x})$ una relazione ricorsiva. Allora la sua funzione caratteristica $\chi_{R}$ \`e ricorsiva. Allora, per il teorema appena visto, $\chi_{R}$ \`e rappresentabile e, quindi, per quanto visto ad inizio capitolo, $R$ \`e esprimibile. \\
+
+\hspace{\stretch{1}} $\Box$\\

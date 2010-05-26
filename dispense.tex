@@ -10,6 +10,7 @@
 \usepackage{fontenc}
 \usepackage[all]{xy}
 \usepackage{graphicx}
+\usepackage{prooftree}
 
 \usepackage{hyperref}
 \hypersetup{%
@@ -47,11 +48,13 @@
 \newtheorem{oss}{Osservazione}[chapter]
 \newtheorem{prop}{Proposizione}[chapter]
 \newtheorem{defi}{Definizione}[chapter]
+\newtheorem{lem}{Lemma}[chapter]
 \newtheorem{thm}{Teorema}[chapter]
 \newtheorem{extra}{Esercizio}
 \newtheorem{nota}{Nota}
 \newtheorem{programmi}{Definizione}[section]
 \newtheorem{progabaco}[programmi]{Teorema}
+\newtheorem{corol}{Corollario}[chapter]
 
 
 \newenvironment{mylisting}
@@ -75,6 +78,8 @@
 \include{01_turing_registri}
 \include{02_programmi_ricorsive}
 \include{03_insiemi_re}
+\include{04_ha}
+\include{05_rappresentabilita}
 
 \begin{thebibliography} {}
 \bibitem{Tur} \textsc{Turing}, \textsl{On computable numbers, with an

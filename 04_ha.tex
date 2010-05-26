@@ -483,6 +483,8 @@ Passo base:
 	\[\vdash_{A3} t+0=t\qquad t=r\vdash_{ax} t=r\justifies t=r\vdash t+0=r\using{tran}\]\qquad \vdash_{S2}r=r+0\justifies t=r\vdash t+0=r+0\using{tran}
 	\endprooftree$$}}
 \\
+\vspace{2cm}
+\\
 Passo induttivo:
 \par
 {\scriptsize{$$\prooftree
@@ -517,7 +519,7 @@ Passo induttivo:
 {\scriptsize{$$\prooftree
 	\[\vdash_{A4} t+s(p)=s(t+p)\qquad t+s(p)=s(t+p)\vdash_{U2} s(t+s(p))=s(s(t+p))\justifies\vdash s(t+s(p))=s(s(t+p))\using{cut}\]\justifies \vdash s(s(t+p))=s(t+s(p))\using{sim_{dx}}
 	\endprooftree$$}}
-\vspace{2cm}
+\\
 quindi si ha:
 \par
 {\tiny{$$\prooftree
@@ -548,7 +550,7 @@ quindi si ha:
 {\scriptsize{	$$\prooftree
 	\vdash_{S3} 0+t=t\qquad\[\[\vdash_{S3} 0+r=r\qquad t=r\vdash_{1.2}r=t\justifies t=r\vdash 0+r=t\using{tran}\]\justifies t=r\vdash t=0+r\using{sim_{dx}}\]\justifies t=r\vdash 0+t=0+r\using{tran}
 	\endprooftree$$}}
-	\vspace{3cm}
+	\vspace{1cm}
 \\Passo induttivo:
 \vspace{0.3cm}
 {\scriptsize{$$\prooftree
@@ -572,7 +574,7 @@ quindi si ha:
   {\scriptsize{$$\prooftree
   \vdash_{A4} (t+r)+s(p)=s((t+r)+p)\qquad (t+r)+p=t+(r+p)\vdash_{U2} s((t+r)+p)=s(t+(r+p))\justifies (t+r)+p=t+(r+p)\vdash (t+r)+s(p)=s(t+(r+p))\using{tran}
 	\endprooftree$$}}
-	\vspace{0.5cm}
+	\vspace{3cm}
 \\e (1C):
 \vspace{0.2cm}
   {\tiny{$$\prooftree
@@ -618,7 +620,7 @@ quindi si ha:
 \hspace{\stretch{1}} $\Box$\\
 
 
-\vspace{2cm}
+\newpage
 \begin{prop}
 Per ogni termine $p,\ r,\ t,$ valgono:
 \begin{enumerate}
@@ -636,7 +638,7 @@ Per ogni termine $p,\ r,\ t,$ valgono:
 \item[(2.1)] [\ $\vdash t*(r+p)=(t*r)+(t*p)$\ ]:
 \vspace{.5cm}
 \\Per induzione su $p$.
-\vspace{1cm}
+\vspace{0.5cm}
 \\Passo base:
 \vspace{.2cm}
 \\Dimostriamo prima (2A)
@@ -726,7 +728,7 @@ $$
 \vspace{.6cm}
 
 \begin{defi}
-Chiameremo \underline{defi} ($\mathcal{N}$) i termini $0$,\ $s(0)$,\ $s(s(0))$,\ $s(s(s(0)))$ e cos\`i via e li denoteremo con $\overline{0},\ \overline{1},\ \overline{2},\ \overline{3}$ etc. Pi\`u precisamente $\overline{0}$ \`e $0$ e per ogni naturale $n$, $\overline{n+1}$ \`e $s(\overline{n})$, ossia il numerale $\overline{n}$, con $n$ naturale, sta per $0$ a cui si applica $n$ volte la funzione $s$. E\-qui\-va\-len\-te\-men\-te, i numerali si possono definire induttivamente tramite le regole:
+Chiameremo \underline{numerali} ($\mathcal{N}$) i termini $0$,\ $s(0)$,\ $s(s(0))$,\ $s(s(s(0)))$ e cos\`i via e li denoteremo con $\overline{0},\ \overline{1},\ \overline{2},\ \overline{3}$ etc. Pi\`u precisamente $\overline{0}$ \`e $0$ e per ogni naturale $n$, $\overline{n+1}$ \`e $s(\overline{n})$, ossia il numerale $\overline{n}$, con $n$ naturale, sta per $0$ a cui si applica $n$ volte la funzione $s$. E\-qui\-va\-len\-te\-men\-te, i numerali si possono definire induttivamente tramite le regole:
 \begin{enumerate}
 \item[-]$0$ \`e un numerale
 \item[-]se $u$ \`e un numerale, allora anche $s(u)$ lo \`e.
@@ -736,7 +738,7 @@ Chiameremo \underline{defi} ($\mathcal{N}$) i termini $0$,\ $s(0)$,\ $s(s(0))$,\
 In pratica un numerale \`e la formalizzazione, nel nostro sistema, di un numero naturale; si noti per\`o non rientra nel linguaggio come termine, perch\'e rappresenta una abbreviazione della scrittura corretta pi\`u formale $sss\dots s(0)$.
 
 I numerali vengono introdotti qui per poter enunciare alcune proprietï¿œ in cui vengono coinvolti dei naturali specifici, e bisogna indicarli con i termini corrispondenti.
-
+\newpage
 \begin{prop}
 Per ogni termine $\ p,\ r,\ t$ valgono:
 \begin{enumerate}
@@ -772,7 +774,6 @@ Per ogni termine $\ p,\ r,\ t$ valgono:
 	\vdash_{A4}t+s(0)=s(t+0)\qquad \[\vdash_{A3}t+0=t\qquad t+0=t\vdash_{U2}s(t+0)=s(t)\justifies \vdash s(t+0)=s(t)\using{cut}\]\justifies \vdash t+s(0)=s(t)\using{tran}
 	\endprooftree$$}}
 	\vspace{.2cm}
-	\newpage
 	\item[(3.2)] [ $\vdash t*\overline{1}=t$ ]:
 	\vspace{.2cm}
 {\scriptsize{	$$\prooftree
@@ -1087,7 +1088,6 @@ t=p\vdash_{1.5}t+r=p+r\justifies t=p\vdash (t+r<p+r)\vee(t+r=p+r)\using{\vee_{ri
 
 \vspace{.5cm}
 \end{itemize}
-\newpage
 	\item[(5.8)] [ $t\leq p,p<r\vdash t<r$ ]:
 	\vspace{.2cm}
 	\\Basta applicare le definizioni di $<$ e $\leq$ e ricordare il punto (5.2).
@@ -1152,14 +1152,14 @@ t=p\vdash_{1.5}t+r=p+r\justifies t=p\vdash (t+r<p+r)\vee(t+r=p+r)\using{\vee_{ri
 	{\scriptsize{$$\prooftree
 	\[\[\vdash_{1.7}s(v)+r=s(v+r)\qquad\[s(v)+r=s(v+r),s(v)+r=t\vdash_{U1}s(v+r)=t\qquad v=0,s(v+r)=t\vdash_{5G} t=s(r)\justifies v=0,s(v)+r=s(v+r),s(v)+r=t\vdash t=s(r)\using{cut}\]\justifies v=0,s(v)+r=t\vdash t=s(r)\using{cut}\]\justifies s(v)+r=t,v=0,t\neq s(r)\vdash\bot\using{\neg_{left}}\]\justifies t\neq s(r),s(v)+r=t\vdash v\neq 0\using{\neg_{right}}
 	\endprooftree$$}}
-	\vspace{.2cm}
+        \\
+	\vspace{3cm}
 	\\(5I)
 	\vspace{.2cm}
 	{\tiny{$$\prooftree
 	\[\[\[\[\vdash_{S4}s(w)\neq 0\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w)\neq 0\using{ind}\]\qquad\[\vdash_{1.7} s(w)+t=s(w+t)\qquad\[v\neq 0,w+t=r\vdash_{U2}s(w+t)=s(r)\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w+t)=s(r)\using{\mbox{\&}_{left}}\]\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w)+t=s(r)\using{tran}\]\justifies w\neq 0\mbox{\&} w+t=r\vdash s(w)\neq 0\mbox{\&} s(w)+t=s(r)\using{\mbox{\&}_{right}}\]\justifies w\neq 0\mbox{\&} w+t=r\vdash\exists v(v\neq
  0\mbox{\&} v+t=s(r))\using{\exists_{right}}\]\justifies\exists w(w\neq 0\mbox{\&} w+t=r)\vdash\exists v(v\neq 0\mbox{\&} v+t=s(r))\using{\exists_{left}}\]\justifies t\neq r,t<r,t\neq s(r)\vdash t<s(r)\using{ind+def. < }
 	\endprooftree$$}}
-	\newpage
  (5L)
  \vspace{.2cm}
 {\scriptsize{$$\prooftree
@@ -1275,7 +1275,7 @@ $$
 {\prooftree
 \vdash_{5.12} x < s(\overline{k}) \rightarrow x \leq \overline{k} \quad \[x<s(\overline{k}) \vdash_{ax} x<s(\overline{k})\quad x \leq \overline{k} \vdash_{ax} x \leq \overline{k} \justifies x<s(\overline{k}), x<s(\overline{k})\rightarrow x\leq \overline{k} \vdash x \leq \overline{k} \using{\rightarrow_{left}}\] \justifies x<s(\overline{k}) \vdash x\leq \overline{k} \using{cut}
 \endprooftree}
-$$\newpage
+$$
 E (6B):\\
 \vspace{.2cm}
 $$
@@ -1284,7 +1284,7 @@ x \leq \overline{k} \vdash_{ax} x \leq \overline{k} \qquad x=0\ \vee\ ...\ \vee\
 \justifies x \leq \overline{k}, x\leq\overline{k}\rightarrow x=0\ \vee\ ...\ \vee\ x=\overline{k} \vdash  x=0\ \vee\ ...\ \vee\ x=\overline{k} \using{\rightarrow_{left}}
 \endprooftree}
 $$\\
-\vspace{.5cm}
+\vspace{.2cm}
 Allora si ottiene:
 $$
 \scriptsize{
@@ -1395,3 +1395,5 @@ Definiamo le seguenti:
 \textsc{Dimostrazione}
 Basta applicare le definizioni.
 \hspace{\stretch{1}} $\Box$\\
+
+

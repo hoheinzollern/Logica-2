@@ -1,0 +1,795 @@
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\f}{\frac}
+\newcommand{\E}{\mathbb{E}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ARITMETTIZZAZIONE DELLA SINTASSI                         %
+% Marta Pressato & Maria Chiara Bertolini                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{p1}{Proposizione}[chapter]
+\newtheorem{p2}{Proposizione}[chapter]
+\newtheorem{p3}{Proposizione}[chapter]
+\newtheorem{p4}{Proposizione}[chapter]
+\newtheorem{p5}{Proposizione}[chapter]
+\newtheorem{p6}{Proposizione}[chapter]
+
+\chapter{Aritmetizzazione della Sintassi}
+
+\section{Introduzione}
+Questo capitolo si pone in una fase intermedia nella trattazione dimostrativa del primo teorema di incompletezza di $G\ddot{o}del$. Abbiamo iniziato con la trattazione di un' importante teoria aritmetica assiomatica, quella di Heyting, e abbiamo visto che \`e possibile esprimere tramite formule del suo linguaggio tutto ci\`o che  \`e computabile da una macchina di Turing. Quindi il concetto di macchina \`e assimilabile ad un sistema formale.
+In questa nostra ricerca di limiti della teoria in questione gioca un ruolo essenziale una intuizione geniale di $G\ddot{o}del$:
+studiare la dimostrabilit\`a di HA attraverso HA stessa. Per capire pi\`u facilmente in cosa consiste quest'idea,
+immaginiamo di lavorare con due robot: HA e MHA. HA \`e istruito con la logica ed \`e in grado di rappresentare tutte
+le funzioni primitive ricorsive totali;
+MHA serve per capire cosa HA sa dimostrare e quindi anche quanto ``HA sa di se stesso''.
+Per istruire MHA dobbiamo tenere in considerazione che esso deve capire il linguaggio di HA; lo ``dotiamo'' quindi della logica intuizionistica e supponiamo che le istruzioni che gli possiamo dare siano del tipo: \emph{HA ha i seguenti assiomi e le seguenti regole;
+se HA dimostra $\varphi$ allora $\varphi$ vale su $\mathbb {N}$; se $t=s$ allora HA dimostra che $t=s$.}\\
+Gli oggetti invece di MHA sono termini, formule e derivazioni, ossia prove, tramite sequenti, di $\Gamma\vdash_{HA}\varphi$.
+Accenniamo, non in modo formale, a due predicati che approfondiremo e utilizzeremo in seguito:
+\begin{itemize}
+\item $Der(\pi,\Gamma,\varphi)$ che significa $\pi$ \`e una derivazione di $\Gamma\vdash_{HA}\varphi$ cio\`e MHA, date $\Gamma$ e $\varphi$ sa decidere se $\pi$ \'e effettivamente una prova di $\Gamma\vdash_{HA}\varphi$;
+\item $Thm(\varphi)=\exists\pi Der(\pi,\emptyset,\varphi)$ che significa $\varphi$ \`e un teorema di HA.
+\end{itemize}
+Utilizzando i ``nostri'' due robot, l'idea geniale di $G\ddot{o}del$ equivale a dimostrare che HA e MHA sono la stessa cosa. Infatti attraverso l'aritmetizzazione della sintassi, che ad ogni segno associa un numero n.G. (numero di $G\ddot{o}del$), ogni predicato di MHA diventa un predicato numerico di HA. Inizieremo codificando sequenze finite di numeri naturali, passando poi alla sintassi per concludere con le derivazioni: in tal modo saremo in grado di parlare di ci\`o che HA pu\`o dimostrare dentro HA stesso.
+
+
+
+
+
+\section{Codifica di $G\ddot{o}del$}
+Esistono diversi modi per la codifica di una sequenza di numeri naturali. Precisiamo subito che non \`e nostro interesse trovare quello pi\`u efficiente e quindi non ci interesseremo del grado di complessit\`a di calcolo. Utilizzeremo la codifica chiamata \emph{$G\ddot{o}del$ numbering} che si basa sul teorema di unicit\`a della scomposizione in fattori primi di un numero naturale.
+
+Definiamo una funzione che associa un numero naturale, il numero di $G\ddot{o}del$, ad ogni sequenza finita $(n_1,\ldots,n_{k})$, con $n_1,\ldots,n_{k}\in \mathbb {N}$. Ad ogni sequenza deve corrispondere uno ed un solo numero naturale e quindi tale funzione deve necessariamente essere iniettiva; consideriamo allora:
+ \begin{displaymath}
+\langle \bullet \rangle : \{\bigcup_{k\in\mathbb{N}} \mathbb{N}^k\} \rightarrow \mathbb{N}
+\end{displaymath}
+
+\begin{displaymath}
+\langle n_1,\ldots,n_{k} \rangle = 2^{n_1+1} \cdot 3^{n_2+1}\cdots p_{k}^{n_{k}+1}
+\end{displaymath}
+
+\begin{displaymath}
+\langle \rangle = 1\hspace{1cm}\text{(sequenza vuota).}
+\end{displaymath}
+
+Si noti che in generale il fatto di aggiungere $1$ ad ogni esponente $n_i$ ci permette di riconoscere la presenza di uno zero nella sequenza finita (si pensi all'analogia con la macchina di Turing) e garantisce l'iniettivit\`a della funzione sopra definita. Osserviamo ora che non tutti i numeri naturali $n$ sono il codice di una sequenza finita. Per esempio, $n = 3^5\cdot 11^4$ non lo \`e poich\'e, in tale fattorizzazione, non compaiono tutti i numeri primi minori di $11$. Per riconoscere quando $n$ \`e effettivamente codice di una sequenza finita introduciamo il predicato primitivo ricorsivo $Seq(n)$:
+$$
+Seq(n) := \forall p,q \leq n (Prime(p) \& Prime(q) \& p < q \& q|n \rightarrow p|n) \& n\ne 0,
+$$
+ dove  $Prime$ \`e il predicato (anch'esso primitivo ricorsivo) definito nel Cap. $6$. Questo predicato afferma che se un primo $q$ divide $n$ allora tutti i primi minori di $q$ dividono $n$.
+ Una volta riconosciuta tale propriet\`a di $n$ \`e utile risalire agli elementi che compongono la sequenza originale. A tale scopo ci serviremo delle seguenti funzioni primitive ricorsive:
+\begin{itemize}
+\item[1)] {$exp(n,i)$, restituisce l'i-esimo elemento della sequenza originale, quindi $n_i$, ossia l'esponente meno $1$ dell'i-esimo primo nella fat\-to\-riz\-za\-zio\-ne di $n$: $$exp(n,i) := (\mu x \leq n){ [p_{i}^{x}|n \& \neg (p_i^{x+1}|n)]-1.}$$
+   Facciamo un esempio per rendere pi\'u chiaro come agisce tale predicato. Prendiamo $n=72$ e applichiamo $exp$:
+per come l'abbiamo definito, $epx(72,1)$ calcola il minimo $x$ tale che $2^x$ $(p_1=2)$ divide $72$ ma non $2^{x+1}$ e ad esso toglie uno. Poich\'e, per la nostra convenzione, il primo esponente nella fattorizzazione in primi \`e $n_1+1$, $exp(72,1)$ restituisce semplicemente $n_0=2$ (primo elemento della sequenza). Analogamente si ricava $exp(72,2)=1$.}
+
+\item[2)] $len(n)$, calcola la lunghezza della sequenza originale, ossia il numero dei distinti fattori primi di $n$:
+    $$len(n):= (\mu x -1 \leq n )[\neg (p_x|n)];$$
+    Prendiamo anche in questo caso, per fare un esempio, $72=2^3\cdot3^2$: $len$ calcola il minimo indice $x$ dei primi che non dividono $72$ e ci sottrae uno. Nel nostro caso risulta $p_3=5$ e quindi $x=2$.
+
+\item[3)] $n\star m$, calcola il codice della sequenza ottenuta concatenando due sequenze di numeri codificate da $n$ e $m$: $$n\star m= n\cdot \prod_{i=1}^{len(m)} p_{len(n)+i}^{exp(m,i)+1}.$$
+
+
+Tale predicato utilizza predicati di cui si sono gi\`a fatti esempi: non dovrebbe essere difficile quindi calcolare, per esempio, la concatenazione delle sequenze $n=\langle 2, 1\rangle = 2^3\cdot 3^2 $ e $m=\langle 3, 6\rangle = 2^4\cdot 3^7$. Essa risulta $2^3\cdot 3^2\cdot 5^4 \cdot 7^7$.
+
+\item[4)] $last(n)$, restituisce l'ultimo valore della sequenza codificata da $n$:
+$$last(n) := \left\{
+\begin{array}{ll}
+exp(n,len(n)), & \textrm{se $len(n)> 0$} \\
+0, & \textrm{se $len(n)= 0$}
+\end{array}
+\right.$$
+
+Consideriamo sempre, come esempio, $72=2^3\cdot 3^2$, allora si ha $exp(72, len(72)) = exp(72,2) = 1$ (chiaramente $len(72)>0$).
+Nel caso in cui abbiamo $len(n)=0$ abbiamo solo il caso della sequenza vuota gi\`a vista.
+\end{itemize}
+
+
+
+Passiamo ora alla codifica della sintassi e per fare ci\`o iniziamo assegnando un codice a tutti i simboli del linguaggio come indicato nella tabella:
+
+\vspace{0.5cm}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Simbolo & $\&$ & $\vee$ & $\rightarrow$ & $\exists$ & $\forall$ & $($ & $)$ & $=$ & $0$ & $s$ & $+$ & $\cdot$ & $,$ & $x_i$ \\
+\hline
+Codice  & $3$ & $5$ & $7$ & $9$ & $11$ & $13$ & $15$ & $17$ & $19$ & $21$ & $23$ & $25$ & $27$ & $2 i+29$\\
+\hline
+\end{tabular}
+\vspace{0.5cm}
+
+Con $\ulcorner \bullet \urcorner$ indichiamo il codice corrispondente a $\bullet$, per esempio \\ $\ulcorner \rightarrow \urcorner = 7$.
+
+Definiamo alcuni predicati per variabili e funzioni:
+\begin{eqnarray*}
+Var(x) &:=& \exists i \leq x(x=2i+29), \text{indica che $x$ \`e una variabile;} \\
+Const(x) &:=& x=  \ulcorner 0  \urcorner, \text{indica che $x$ \`e la costante;}\\
+Fun_1(x) &:=& x=  \ulcorner s \urcorner, \text{indica che $x$ \`e la funzione unaria s;}\\
+Fun_2(x) &:=& x=  \ulcorner  + \urcorner \vee  x= \ulcorner \cdot \urcorner, \text{indica che $x$ \`e la funzione binaria $+$ o $\cdot$.}
+\end{eqnarray*}
+
+ \section{Codifica dei termini}
+Procediamo con la codifica della sintassi considerando ora i termini $Trm$; come gi\`a visto:
+\begin{itemize}
+
+\item[-]{$0 \in Trm$}
+\item[-]{$x_i \in Trm$}
+\item[-]{se $t_1, t_2 \in Trm$ allora $f(t_1,t_2) \in Trm$, dove $f\in \{+, \cdot, s\}$}.
+\end{itemize}
+
+
+
+Quindi, per un generico termine, definiamo:
+\begin{displaymath}
+ \ulcorner f(t_1,t_2) \urcorner :=  \langle  \ulcorner f \urcorner,  \ulcorner ( \urcorner,  \ulcorner t_1 \urcorner,  \ulcorner , \urcorner,  \ulcorner t_2 \urcorner ,  \ulcorner ) \urcorner\rangle .
+\end{displaymath}
+
+Esiste poi un predicato, $Term(n)$, che ci dice se $n$ \`e il codice di un termine; dalla definizione che segue notiamo che esso risulta primitivo ricorsivo:
+
+\small{
+\begin{displaymath}
+ Term(n) := \left. \begin{array}{l}  Const(n) \vee Var(n) \vee\\
+(Seq(n) \, \& \, len(n) = 4 \,\& \, Fun_1(exp(n,1)) \,\& \\
+exp(n,2) = \ulcorner ( \urcorner \,\&\, Term(exp(n,3)) \,\&
+exp(n,4) = \ulcorner ) \urcorner) \vee \\
+(Seq(n) \, \& \, len (n)=6 \, \& \, Fun_2(exp(n,1)) \,\&\, exp(n,2)= \ulcorner ( \urcorner  \\
+\,\&\,Term(exp(n,3)) \,\&\, exp(n,4) = \ulcorner , \urcorner \,\&\,Term(exp(n,5)) \,\&\, exp(n,6) = \ulcorner ) \urcorner
+).
+\end{array} \right.
+\end{displaymath}
+}
+
+Cerchiamo di dare l'idea di come agisce tale predicato. Abbiamo visto che un termine \`e o una costante, o una variabile o una funzione $f\in \{+, \cdot, *\}$ applicata ad un termine: $Const(n)$, $Var(n)$ e $(\dots)$ riconoscono rispettivamente questi tre casi. Analizziamo quello tra parentesi, ossia $(\dots)$; in sostanza  deve succedere che
+$n$ \`e una sequenza ``valida'' ($Seq(n)$); la sua lunghezza \`e pari a 4 ($len(n)=4$); il primo elemento della sequenza ($exp(n,1)$) \`e la funzione unaria; il secondo una parentesi aperta ($exp(n,2) = \ulcorner ( \urcorner$); il terzo un termine ($Term(exp(n,3))$) e il quarto una parentesi chiusa ($exp(n,4) = \ulcorner ) \urcorner)$).
+Altrimenti pu\'o anche essere (parte finale): la sequenza \`e valida, la lunghezza \`e pari a 6, il primo elemento \`e la funzione binaria, il secondo una parentesi, il terzo e il quinto due termini, il quarto la virgola e il sesto una parentesi.
+
+
+\section{Codifica delle formule}
+
+In modo analogo operiamo con le formule $Frm$, ricordando che:
+\begin{itemize}
+\item[-]{se $t_1,\dots, t_k \in Trm$ e $R$ \`e una relazione a $k$ argomenti, allora $R(t_1,\dots, t_k) \in Frm$ ($R(t_1,\dots, t_k)$ si dice formula atomica)};
+\item[-]{Frm \`e chiuso per $\&$, $\vee$, $\rightarrow$, $\exists$, $\forall$}.
+\end{itemize}
+
+Siano $t_i$ termini e $\varphi, \psi$ formule, allora $\ulcorner \bullet \urcorner$ opera nel seguente modo:
+
+\begin{eqnarray*}
+\ulcorner (t_1=t_2) \urcorner                     &:=&
+\langle  \ulcorner ( \urcorner,  \ulcorner t_1 \urcorner,  \ulcorner = \urcorner,  \ulcorner t_2 \urcorner ,  \ulcorner ) \urcorner\rangle \\
+\ulcorner (\varphi \& \psi) \urcorner         &:=&  \langle  \ulcorner ( \urcorner,  \ulcorner \varphi \urcorner,
+\ulcorner \& \urcorner,  \ulcorner \psi \urcorner ,  \ulcorner ) \urcorner\rangle \\
+\ulcorner (\varphi \vee \psi) \urcorner           &:=&  \langle  \ulcorner ( \urcorner,  \ulcorner \varphi \urcorner,
+\ulcorner \vee \urcorner,  \ulcorner \psi \urcorner ,  \ulcorner ) \urcorner\rangle\\
+\ulcorner (\varphi \rightarrow \psi) \urcorner  &:=&  \langle  \ulcorner ( \urcorner,  \ulcorner \varphi \urcorner,
+\ulcorner \rightarrow \urcorner,  \ulcorner \psi \urcorner ,  \ulcorner ) \urcorner\rangle\\
+\ulcorner (\forall\,x_i\,\varphi) \urcorner    &:=&  \langle  \ulcorner ( \urcorner,  \ulcorner \forall \urcorner,
+\ulcorner x_i \urcorner,  \ulcorner \varphi \urcorner ,  \ulcorner ) \urcorner\rangle\\
+\ulcorner (\exists\, x_i\, \varphi) \urcorner  &:=&  \langle  \ulcorner ( \urcorner,  \ulcorner \exists \urcorner,  \ulcorner x_i \urcorner,  \ulcorner \varphi \urcorner ,  \ulcorner ) \urcorner\rangle\\
+\end{eqnarray*}
+
+Quindi, per esempio, $\ulcorner( x_1 \vee x_2 )\urcorner = \langle 13, 2+29, 5, 4+29, 15 \rangle =
+     2^{13+1}\cdot 3^{31+1} \cdot 5^{5+1}\cdot 7^{33+1} \cdot 11^{15+1}.$
+
+Come per i termini, esiste un predicato primitivo ricorsivo, $Form(n)$, che ci dice se $n$ \`e il codice di una formula. Esso \`e definito come segue:
+
+
+{\small{
+
+\begin{displaymath}
+Form(n) := \left. \begin{array}{l} Seq(n) \, \& \, len(n)= 5 \,\& \, exp(n,1) = \ulcorner ( \urcorner  \, \& \, exp(n,5)=\ulcorner ) \urcorner \,\&\,\\
+((Term(exp(n,2)) \, \& \, Term(exp(n,4)) \, \& \, exp(n,3) = \ulcorner = \urcorner) \vee\\
+(Form(exp(n,2)) \,\&\, Form(exp(n,4)) \,\&\\
+(exp(n,3) = \ulcorner \& \urcorner \vee exp(n,3) = \ulcorner \vee \urcorner \vee exp(n,3)= \ulcorner \rightarrow \urcorner)) \vee\\
+((exp(n,2) = \ulcorner \forall \urcorner \vee exp(n,2) =
+\ulcorner \exists \urcorner) \,\& \\
+Var(exp(n,3)) \,\&\, Form(exp(n,4)))) .
+\end{array} \right.
+\end{displaymath}}}
+
+Per la coprensione del predicato $Form(n)$ si prenda spunto dalla spiegazione del predicato $Term(n)$.
+
+\section{Codifica delle derivazioni}
+
+A questo punto restano da trattare le derivazioni. Per fare ci\`o abbiamo bisogno di definire  l'operatore di sostituzione e ulteriori predicati.
+Data una formula $\varphi$, un termine $t$ ed una variabile $x_1$ usiamo $\varphi [t/x_1]$ per denotare  $\varphi$ in cui tutte le occorrenze di $x_1$ vengono sostituite con $t$.
+
+Gli operatori di sostituzione per  termini e  formule possono essere definiti  come segue:
+
+\textbf{$r$ \`e un termine}
+\begin{itemize}
+
+\item se $r$ \`e una costante $c$ allora:
+$$
+c[t/x_1] := c
+$$
+\item se $r$ \`e una variabile $x_2$ allora:
+\begin{displaymath}
+ x_2[t/x_1]:= \left \{ \begin{array}{ll}
+x_2, & \textrm{se $x_1 \ne x_2$}\\
+t, & \textrm{se $x_1 = x_2$}
+\end{array}\right.
+\end{displaymath}
+\item se $r$ \`e del tipo $f(t_1,\ldots, t_n)$, con $f \in \{s,+,\cdot \}$ e $t_i$ termini, allora:
+$$
+f(t_1,\ldots, t_n)[t/x_1] := f(t_1[t/x_1],\ldots, t_n[t/x_1]).
+$$
+\end{itemize}
+
+\textbf{$\varphi$ \`e una formula}
+
+\begin{itemize}
+ \item se $\varphi$ \`e una formula atomica e $t_1,t_2$ sono termini, allora:
+$$
+(t_1=t_2)[t/x_1] := (t_1[t/x_1]=t_2[t/x_1])
+$$
+
+\item se $\varphi$ \`e costruita con le formule $\psi$ e $\chi$ utilizzando connettivi (che denoteremo con $\circ$), allora:
+$$
+(\psi \circ \chi)[t/x_1] := (\psi[t/x_1]\circ \chi[t/x_1])
+$$
+
+\item se $\varphi$ \`e costruita con la formula $\psi$ utilizzando i quantificatori, allora:
+
+\begin{eqnarray*}
+ \forall\, x_2\, \psi [t/x_1]  &:=&    \left \{ \begin{array}{ll}
+\forall\, x_2\, \psi [t/x_1], & \textrm{se $x_1 \ne x_2$}\\
+\forall\, x_2\, \psi, & \textrm{se $x_1 = x_2$}
+\end{array}\right.\\
+\exists\, x_2\, \psi [t/x_1]  &:=& \left \{ \begin{array}{ll}
+\exists\, x_2\, \psi [t/x_1], & \textrm{se $x_1 \ne x_2$}\\
+\exists\, x_2\, \psi, & \textrm{se $x_1 = x_2$}.
+\end{array}\right.
+\end{eqnarray*}
+
+\end{itemize}
+
+In quest'ultimo caso, lavorando cio\`e con i quantificatori, \`e necessario prestare attenzione alle variabili che ci interessano nella sostituzione, in particolare se queste compaiono libere o quantificate. Consideriamo, per capire meglio, $\forall x_1\exists x_2 (x_1=2x_2)$: in tale espressione $x_1$ appare quantificata e risulta chiaramente privo di senso volerla sostituire, per esempio, con $x_1=3$. Se tale variabile fosse libera avremmo $\exists x_2 (x_1=2x_2)$ e in questo caso, invece, la precedente sostituzione sarebbe sensata.
+
+Esiste un altro caso in cui la sostituzione precedentemente definita risulta fallimentare. Consideriamo, per esempio, la formula $\exists x_1(x_1=x_2)$.
+Supponiamo di voler sostituire ad $x_2$ il termine $s(x_1)$, allora otteniamo, per quanto appena visto, $\exists x_1(x_1=s(x_1))$.
+Chiaramente la prima espressione ha significato in HA, mentre la seconda risulta assurda.
+Ci\`o \`e dovuto al fatto che si \`e effettuata una sostituzione con il termine $s(x_1)$ contenente la variabile $x_1$ che risultava quantificata.
+
+Per ovviare a questo problema possiamo procedere in due modi. Il primo consiste nell'effettuare una modifica nella definizione di sostituzione: l'idea \`e quella di cambiare il nome delle variabili quantificate in modo che esse non compaiano anche nei termini che si vogliono sostituire. La regola di sostituzione diventa quindi:
+
+\begin{eqnarray*}
+ \forall\, x_2\, \psi [t/x_1]  &:=&    \left \{ \begin{array}{ll}
+\forall\, x_3\, \psi [x_3/x_2] [t/x_1], & \textrm{se $x_1 \ne x_2$ e $x_3$ non compare in $t$}\\
+\forall\, x_2\, \psi, & \textrm{se $x_1 = x_2$}
+\end{array}\right.\\
+\exists\, x_2\, \psi [t/x_1]  &:=& \left \{ \begin{array}{ll}
+\exists\, x_3\, \psi [x_3/x_2] [t/x_1], & \textrm{se $x_1 \ne x_2$ e $x_3$ non compare in $t$}\\
+\exists\, x_2\, \psi, & \textrm{se $x_1 = x_2$}.
+\end{array}\right.
+\end{eqnarray*}
+
+Il secondo, che utilizzeremo, consiste nell'introduzione di due nuovi pre\-di\-ca\-ti che riconoscono quando una variabile compare libera. Ricordiamo che dato un termine $t$, una variabile $x_1$ e una formula $\varphi$ , $x_1$ \`e libera per $t$ in $\varphi$ se:
+\begin{itemize}
+ \item $\varphi$ \`e formula atomica;
+\item $\varphi=\psi\circ \chi$ e $x_1$ \`e libera per $t$ in $\psi$ e $\chi$;
+\item $\varphi=\forall \,x_2\, \psi$ o $\varphi=\exists \,x_2\, \psi$ e $x_2$ non \`e libera per $t$ mentre $x_1$ \`e libera per $t$ in $\psi$.
+\end{itemize}
+
+Il predicato $Fv(l, m)$ riconosce se la variabile (codificata da) $l$ appare libera per il termine (codificato da) $m$, mentre $FreeFor(l,m,n)$ riconosce se la variabile (codificata da) $m$ appare libera per il termine (codificato da) $l$ nella formula (codificata da) $n$.
+
+{\tiny
+\begin{displaymath}
+Fv(l,m) := \left. \begin{array}{l}(Var(l) \,\&\, Term(m) \,\&\, \neg Const(m) \,\&\, \\
+((Var(l)\rightarrow l=m) \vee (Fun_1(exp(m,1))\rightarrow Fv(l,exp(m,3))) \vee \\
+(Fun_2(exp(m,1))\rightarrow (Fv(l,exp(m,3))\vee Fv(l,exp(m,5))))
+)) 
+\end{array} \right.
+\end{displaymath}}
+
+{\tiny
+\begin{displaymath}
+FreeFor(l,m,n):= \left.\begin{array}{l} Term(l) \,\&\, Var(m) \,\&\, Form(n) \,\&\, \\
+(((exp(n,3) = \ulcorner = \urcorner)\rightarrow (Fv(m,exp(2,n))\vee Fv(m,exp(4,n))))\vee \\ 
+((exp(n,3)= \ulcorner \& \urcorner \ \vee exp(n,3)= \ulcorner \vee \urcorner)\rightarrow \\
+(FreeFor(l,m,exp(n,2)) \,\&\, FreeFor(l,m,exp(n,4)))) \vee \\
+((exp(n,2) = \ulcorner \forall \urcorner \vee exp(n,2) = \ulcorner \exists \urcorner)\rightarrow \\
+(\neg Fv(exp(n,3),l) \,\&\, exp(n,3)\ne m \,\&\, FreeFor(l,m,exp(n,4)))))
+\end{array}\right.
+\end{displaymath}}
+
+Definiamo inoltre un predicato $Bound(l,n)$ che riconosce se la variabile (codificata da) $l$ \`e quantificata nella formula (codificata da) $n$.
+{\tiny
+\begin{displaymath}
+ Bound(l,n):= \left.\begin{array}{l} Var(l) \,\&\, Form(n)\,\&\, \\
+ (((exp(n,3) = \ulcorner \& \urcorner \ \vee exp(n,3)= \ulcorner \vee \urcorner) \rightarrow \\
+(Bound(l,exp(n,2))\vee Bound(l,exp(n,4)))) \vee \\
+((exp(n,2)= \ulcorner \forall \urcorner \vee \exp(n,2) = \ulcorner \exists \urcorner) \rightarrow l= exp(n,3)))
+\end{array}\right.
+\end{displaymath}}
+
+
+
+Anche in questo caso notiamo che i predicati sono primitivi ricorsivi.
+
+Fatta tale precisazione, possiamo ora codificare anche l'operatore di sostituzione che abbiamo definito prima, in modo che:
+$$
+Sub(\ulcorner t \urcorner, \ulcorner x_1 \urcorner, \ulcorner \varphi \urcorner) = \ulcorner \varphi[t/x_1] \urcorner,
+$$
+ossia $Sub$ restituisce il n.G. della formula $\varphi$ in cui si \`e sostituito $t$ a $x_1.$
+
+{\tiny
+\begin{displaymath}
+Sub(l,m,n):= \left\{ { \begin{array}{l}
+n, \hspace{1.8cm} \text{se $Const(n)$}\\
+n, \hspace{1.8cm}\text {se $Var(n) \,\&\, n\ne m$} \\
+l, \hspace{1.9cm}\text {se $Var(n) \,\&\, n= m$} \\
+\langle exp(n,1), \ulcorner ( \urcorner, Sub(l,m,exp(n,3)), \ulcorner ) \urcorner \rangle,\\
+\hspace{2.1cm}  \text{se $Term(n) \,\&\, Fun_1(exp(n,1))$}\\
+\langle exp(n,1), \ulcorner ( \urcorner, Sub(l,m,exp(n,3)), Sub(l,m,exp(n,5)),\ulcorner ) \urcorner \rangle,\\
+\hspace{2.1cm}  \text{se $Term(n) \,\&\, Fun_2(exp(n,1))$}\\
+\langle \ulcorner ( \urcorner, Sub(l,m,exp(n,2)), exp(n,3), Sub(l,m,exp(n,4)),\ulcorner ) \urcorner \rangle,\\
+\hspace{2.1cm}  \text{se $Form(n) \,\&\, FreeFor(l,m,n) \,\&\, exp(n,2)\ne \ulcorner \forall\urcorner \,\&\,$}\\
+\hspace{2.1cm} \text{$exp(n,2)\ne \ulcorner \exists \urcorner$}\\
+\langle \ulcorner ( \urcorner, exp(n,2), exp(n,3), Sub(l,m,exp(n,4)),\ulcorner ) \urcorner \rangle,\\
+\hspace{2.1cm}  \text{se $Form(n) \,\&\, FreeFor(l,m,n) \,\&\, exp(n,2) = \ulcorner \forall\urcorner \,\vee\,$}\\
+\hspace{2.1cm} 	\text{$exp(n,2) = \ulcorner \exists \urcorner$}\\
+\end{array}}\right.
+\end{displaymath}}
+
+
+
+A questo punto, possiamo trattare le derivazioni: inizieremo associando ad ogni regola logica un codice e arriveremo a capire dove e perch\'e \`e necessario introdurre i predicati $Der(\pi,\Gamma,\varphi)$, primitivo ricorsivo, e $Thm(\varphi)$, ricorsivamente enumerabile.
+Ricordiamo, prima di iniziare con la codifica della regole, che le prove sono effettuate utilizzando sequenti e quindi \`e necessario esplicitare come essi si devono trattare. Definiamo a tal proposito:
+
+\begin{displaymath}
+\ulcorner \Gamma\vdash_{HA} \varphi \urcorner :=  \langle \langle \ulcorner \psi_1, \urcorner,  \ldots ,  \ulcorner \psi_m \urcorner \rangle ,  \ulcorner \varphi \urcorner \rangle ,
+\end{displaymath}
+dove $\Gamma = \psi_1,\ldots,\psi_m$ e $\varphi$ e $\psi_i$ sono formule.
+
+Inoltre bisogna tenere presente che il nostro sistema $HA$ ha alcuni assiomi e la regola di induzione per svolgere le deduzioni. Tramite sequenti essa diviene:
+\begin{displaymath}
+\frac{\Gamma, \varphi(x_1) \vdash \varphi(s(x_1))}{\Gamma, \varphi(0)\vdash \forall x_2 \varphi(x_2)}.
+\end{displaymath}
+Per quanto riguarda gli assiomi invece, essi vengono chiamati \emph{sequenti iniziali} e il loro codice \`e:
+
+\begin{displaymath}
+[ \Gamma\vdash \varphi ] :=  \langle 0,  \ulcorner \Gamma\vdash \varphi \urcorner  \rangle
+\end{displaymath}
+
+Fatte queste precisazioni possiamo ora definire la codifica di tutte le regole logiche. Osserviamo che ogni connettivo ha due regole che lo caratterizzano in cui esso compare, o nelle ipotesi o nella tesi. Prendiamo per esempio $\rightarrow$: si ha rispettivamente $\rightarrow$ -left e $\rightarrow$ -right. Nella codifica tale distinzione deve emergere ed \`e per questo motivo che tutte le regole left verranno etichettate tramite un $1$ mentre tutte le regole right tramite uno $0$.
+
+\vspace{0.5cm}
+\textbf{\&-right}
+
+$$
+\left [
+\begin{array}{cc}
+\Omega_1 & \Omega_{2} \\
+\vdots & \vdots\\
+\Gamma \vdash \varphi & \Gamma \vdash \psi\\
+\hline
+\multicolumn{2}{c}{\Gamma \vdash \varphi \& \psi}\\
+\end{array}
+\right ]
+:= \langle \langle 0,\ulcorner \& \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega_1\\
+\vdots\\
+\Gamma \vdash \varphi\\
+\end{array}
+\right ],
+\left [
+\begin{array}{c}
+\Omega_2\\
+\vdots\\
+\Gamma \vdash \psi\\
+\end{array}
+\right],
+\ulcorner \Gamma \vdash \varphi \& \psi \urcorner \rangle
+$$
+
+\vspace{0,5cm}
+
+\textbf{\&-left}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi \vdash \Delta\\
+\hline
+\Gamma, \varphi \& \psi \vdash \Delta\\
+\end{array}
+\right ]
+:= \langle \langle 1,\ulcorner \& \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi \vdash \Delta\\
+\end{array}
+\right ],
+\ulcorner \Gamma, \varphi \& \psi \vdash \Delta \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{$\vee$ -right}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \varphi\\
+\hline
+\Gamma \vdash \varphi \vee \psi\\
+\end{array}
+\right ]
+:= \langle \langle 0,\ulcorner \vee \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \varphi\\
+\end{array}
+\right ],
+\ulcorner \Gamma \vdash \varphi \vee \psi \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{$\vee$ -left}
+
+{\tiny
+$$
+\left [
+\begin{array}{cc}
+\Omega_1 & \Omega_{2} \\
+\vdots & \vdots\\
+\Gamma, \varphi \vdash \Delta & \Gamma, \psi \vdash \Delta\\
+\hline
+\multicolumn{2}{c}{\Gamma, \varphi \vee \psi \vdash \Delta}\\
+\end{array}
+\right ]
+:= \langle \langle 1,\ulcorner \vee \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega_1\\
+\vdots\\
+\Gamma,\varphi \vdash \Delta\\
+\end{array}
+\right ],
+\left [
+\begin{array}{c}
+\Omega_2\\
+\vdots\\
+\Gamma, \psi \vdash \Delta\\
+\end{array}
+\right],
+\ulcorner \Gamma, \varphi \vee \psi \vdash \Delta \urcorner \rangle
+$$}
+
+\vspace{0.5cm}
+
+\textbf{$\rightarrow$ -right}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi \vdash \psi\\
+\hline
+\Gamma \vdash \varphi \rightarrow \psi\\
+\end{array}
+\right ]
+:= \langle \langle 0,\ulcorner \rightarrow \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi \vdash \psi\\
+\end{array}
+\right ],
+\ulcorner \Gamma \vdash \varphi \rightarrow \psi \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{$\rightarrow$ -left}
+
+{\tiny
+$$
+\left [
+\begin{array}{cc}
+\Omega_1 & \Omega_{2} \\
+\vdots & \vdots\\
+\Gamma_1, \vdash \varphi & \Gamma_2, \psi \vdash \Delta\\
+\hline
+\multicolumn{2}{c}{\Gamma_1, \Gamma_2, \varphi \rightarrow \psi \vdash \Delta}\\
+\end{array}
+\right ]
+:= \langle \langle 1,\ulcorner \rightarrow \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega_1\\
+\vdots\\
+\Gamma_1 \vdash \varphi\\
+\end{array}
+\right ],
+\left [
+\begin{array}{c}
+\Omega_2\\
+\vdots\\
+\Gamma_2, \psi \vdash \Delta\\
+\end{array}
+\right],
+\ulcorner \Gamma_1, \Gamma_2,  \varphi \rightarrow \psi \vdash \Delta \urcorner \rangle
+$$}
+
+\vspace{0.5cm}
+
+\textbf{$\forall$ -right} ($x_2$ non deve essere libera in $\Gamma$)
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \varphi(x_2)\\
+\hline
+\Gamma  \vdash \forall x_1\,\varphi(x_1)\\
+\end{array}
+\right ]
+:= \langle \langle 0,\ulcorner \forall \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \varphi(x_2)\\
+\end{array}
+\right ],
+\ulcorner \Gamma \vdash \forall x_1\,\varphi(x_1) \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{$\forall$ -left}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi(x_2) \vdash \Delta\\
+\hline
+\Gamma, \forall x_1\,\varphi(x_1) \vdash \Delta\\
+\end{array}
+\right ]
+:= \langle \langle 1,\ulcorner \forall \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi(x_2) \vdash \Delta\\
+\end{array}
+\right ],
+\ulcorner \Gamma, \forall x_1\,\varphi(x_1) \vdash \Delta \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{$\exists$ -right}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \varphi(x_2)\\
+\hline
+\Gamma  \vdash \exists x_1\,\varphi(x_1)\\
+\end{array}
+\right ]
+:= \langle \langle 0,\ulcorner \exists \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \varphi(x_2)\\
+\end{array}
+\right ],
+\ulcorner \Gamma \vdash \exists x_1\,\varphi(x_1) \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{$\exists$ -left} ($x_2$ non deve essere libera in $\Gamma$)
+
+
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi(x_2) \vdash \Delta\\
+\hline
+\Gamma, \exists x_1\,\varphi(x_1) \vdash \Delta\\
+\end{array}
+\right ]
+:= \langle \langle 1,\ulcorner \exists \urcorner \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi(x_2) \vdash \Delta\\
+\end{array}
+\right ],
+\ulcorner \Gamma, \exists x_1\,\varphi(x_1) \vdash \Delta \urcorner \rangle
+$$
+
+
+
+
+Ci manca a questo punto la codifica delle regole strutturali, che caratterizzano le derivazioni tramite sequenti. Anche in questo caso la codifica di ogni regola inizier\`a con una coppia di numeri che la render\`a subito riconoscibile. Ricordiamo che tali regole strutturali sono l'identit\`a, la regola di scambio, l'indebolimento, la contrazione e il taglio e la loro codifica risulta:
+
+
+\vspace{0.5cm}
+\textbf{identit\`a}
+$$
+[ \varphi \vdash \varphi ] := \langle 0, \ulcorner \varphi \vdash \varphi \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{scambio}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\varphi, \psi \vdash \Delta\\
+\hline
+\psi, \varphi \vdash \Delta\\
+\end{array}
+\right ]
+:= \langle \langle 0, 0\rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\varphi, \psi \vdash \Delta\\
+\end{array}
+\right ],
+\ulcorner \psi, \varphi \vdash \Delta \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{indebolimento}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \Delta\\
+\hline
+\Gamma, \Sigma \vdash \Delta\\
+\end{array}
+\right ]
+:= \langle \langle 0, 1 \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma \vdash \Delta\\
+\end{array}
+\right ],
+\ulcorner \Gamma, \Sigma \vdash \Delta \urcorner \rangle
+$$
+
+\vspace{0.5cm}
+
+\textbf{contrazione}
+
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi, \varphi \vdash \Delta\\
+\hline
+\Gamma, \varphi \vdash \Delta\\
+\end{array}
+\right ]
+:= \langle \langle 1, 0 \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi, \varphi \vdash \Delta\\
+\end{array}
+\right ],
+\ulcorner \Gamma, \varphi \vdash \Delta \urcorner \rangle
+$$
+
+\vspace{0,5cm}
+
+\textbf{taglio}
+
+$$
+\left [
+\begin{array}{cc}
+\Omega_1 & \Omega_2 \\
+\vdots & \vdots\\
+\Gamma_1 \vdash \varphi & \Gamma_2, \varphi \vdash \Delta\\
+\hline
+\multicolumn{2}{c}{\Gamma_1, \Gamma_2 \vdash \Delta}\\
+\end{array}
+\right ]
+:= \langle \langle 1, 1 \rangle ,
+\left [
+\begin{array}{c}
+\Omega_1\\
+\vdots\\
+\Gamma_1 \vdash \varphi\\
+\end{array}
+\right ],
+\left [
+\begin{array}{c}
+\Omega_2\\
+\vdots\\
+\Gamma_2, \varphi \vdash \Delta\\
+\end{array}
+\right],
+\ulcorner \Gamma_1, \Gamma_2 \vdash \Delta \urcorner \rangle
+$$
+
+
+
+Per concludere, la codifica della regola di induzione risulta essere:
+
+
+\vspace{0.5cm}
+\textbf{induzione}
+{\tiny
+$$
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi(x_1) \vdash \varphi(s(x_1))\\
+\hline
+\Gamma, \varphi(0) \vdash \forall x_2\,\varphi(x_2)\\
+\end{array}
+\right ]
+:= \langle \langle 1, 2 \rangle ,
+\left [
+\begin{array}{c}
+\Omega\\
+\vdots\\
+\Gamma, \varphi(x_1) \vdash \varphi(s(x_1))\\
+\end{array}
+\right ],
+\ulcorner \Gamma, \varphi(0) \vdash \forall x_2\,\varphi(x_2) \urcorner \rangle
+$$}
+
+\vspace{0.5cm}
+
+A questo punto abbiamo tutti gli elementi per capire meglio il predicato  $Der(\pi,\Gamma,\varphi)$: tramite la codifica appena esplicitata gli argomenti di $Der$ diventano valori effettivi. Possiamo ottenere, infatti, $Der(l, m, n)$, in cui $l$ \`e il codice della derivazione $\pi$ della formula $\varphi$ codificata tramite $n$ a partire dalle ipotesi $\Gamma$ codificate invece tramite $m$.
+Tutto ci\`o significa che $HA$, tramite $Der(l,m,n)$, \`e in grado di decidere se $\pi$ \`e effettivamente una prova in $HA$ stesso.
+
+Tralasciando la definizione formale di $Der(l,m,n)$ ci limitiamo a dare solo un'idea intuitiva del perch\'e essa sia primitiva ricorsiva. $Der$ si costruisce utilizzando esclusivamente tutti i predicati fin qui definiti che, come ab\-bia\-mo visto, sono primitivi ricorsivi.  $Der$ \`e quindi primitiva ricorsiva poich\'e composizione di predicati con tale propriet\`a; risulta inoltre, per come \`e stata definita, decidibile.
+Precisiamo che il predicato $Der$ \`e definibile in modo modulare rispetto agli assiomi, infatti qualunque sia il set di assiomi, $Der$ risulta sempre primitivo ricorsivo.
+
+Consideriamo ora il caso particolare in cui  $\Gamma = \emptyset$ e quindi $Der(l,m,n)=Der(l,\langle \rangle,n)$.
+Utilizzando la precedente, introduciamo il predicato $Thm(n)$ che indica che $n$ \`e (il codice di) un teorema in $HA$:
+$$
+Thm(n) := \exists \, l \, Der(l,\langle \rangle,n) .
+$$
+
+Ricordando infine che, tramite il predicato di Kleene, quantificando esistenzialmente un predicato decidibile, si ottiene un predicato ricorsivamente enumerabile, $Thm(n)$ risulta chiaramente ricorsivamente enumerabile.

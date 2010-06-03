@@ -1,0 +1,394 @@
+%questi li ho aggiunti io
+%\usepackage{prooftree} %per deduzioni %
+\newcommand{\TT}{Thm} %metalinguaggio
+\newcommand{\T}{TH} %linguaggio
+\newcommand{\numg}[1]{\ulcorner{#1}\urcorner}
+\newcommand{\TTnumg}[1]{Thm(\ulcorner{#1}\urcorner)} %metalinguaggio
+\newcommand{\Tnumg}[1]{TH(\ulcorner{#1}\urcorner)}	%linguaggio
+%\hyphenation{de-ri-va-bi-li-tà ri-guar-da-no me-ta-lin-guag-gio o-ri-gi-na-le se-con-do}
+%%
+
+\chapter{La logica della dimostrabilità}
+
+\section{Introduzione}
+
+Quando la \textit{logica modale} \`e applicata allo studio della dimostrabilità essa diventa 
+\textit{logica della dimostrabilità}.
+
+I concetti base della logica modale sono necessità e possibilità,
+$\alpha$ \`e detta possibile se può essere vera,
+\`e detta necessaria se deve essere vera.
+Oppure vale anche che $\alpha$ \`e necessaria se e solo se la sua negazione non \`e possibile,
+ed \`e possibile se e solo se la sua negazione non \`e necessaria.
+
+Il simbolo di necessità in logica modale \`e detto Box, e si indica con il simbolo $\Box$, che si legge
+"`\textit{\`e necessario che...}"'. 
+Invece il simbolo di possibilità in logica modale \`e detto Diamond,
+si indica con il simbolo $\Diamond$ che si legge "`\`e possibile che..."'.
+
+Si osserva che dal punto di vista classico si può definire l'uno usando l'altro o viceversa 
+nel seguente modo:
+$$\Box := \neg \Diamond \neg$$
+$$\Diamond := \neg \Box \neg$$
+e nei testi si usa prendere $\Box$ come primitivo e $\Diamond$ come definito.
+Questo vale solo classicamente, quindi nella trattazione intuizionista con cui ci si propone di affrontare le
+dimostrazioni sono assunti entrambi come concetti primitivi.
+
+Come \`e stato già detto alla base della logica modale vi sono i concetti di \emph{necessit\`a} e \emph{possibilit\`a}; l'interesse semantico verso le proposizioni non \`e limitato a stabilirne le condizioni di verit\`a o falsit\`a, ma cerca di determinare il modo in cui una proposizione pu\`o essere vera o falsa e quali siano i rapporti tra questi diversi modi. Questo modo di essere delle proposizioni, questa modalit\`a, \`e solitamente chiamata \emph{aletica}.
+
+Questo campo di ricerca ha impegnato molti illustri ingegni nel corso della
+storia della logica. Le origini della logica modale risalgono ad Aristotele il
+quale ha elaborato, sulla base della teoria del sillogismo, una teoria del sillogismo modale, la quale, in epoche recenti ha incontrato le critiche sia di logici che di alcuni tra i suoi commentatori.
+Lo studio dei concetti di necessit\`a e possibilit\`a \`e proseguito nel medioevo soprattutto in relazione allo studio teologico della natura divina. In epoca moderna le modalit\`a aletiche sono state un punto fondamentale della riflessione filosofica di un grande pensatore come G. W. Leibniz, il quale ha sviluppato alcune idee che sono state riprese nel secolo scorso da R. Carnap e S. Kripke per dare una caratterizzazione insiemistica delle nozioni di necessit\`a e possibilit\`a. La ricerca svolta sulle modalit\`a aletiche ha aperto la strada allo studio di altri tipi di modalit\`a. Oltre a chiederci se una proposizione \`e necessariamente o contingentemente vera, possiamo chiederci se rimarr\`a sempre vera in futuro o se prima o poi sar\`a vera, un discorso analogo si pu\`o fare per il passato; in questi casi si parla di \emph{modalit\`a temporali}.
+
+Inoltre si deve distinguere tra la verit\`a di una proposizione e il ritenerla vera, tra l'attualit\`a di un comportamento ed il fatto che sia permesso o obbligatorio; dall'esigenza di chiarire concettualmente queste distinzioni sono nate le logiche \emph{epistemiche} e \emph{deontiche} che si occupano delle modalit\`a corrispondenti.
+
+
+In questo capitolo si fa uso della logica modale, non per studiare la nozione di \textit{necessità},
+ma per studiare quella di \textit{dimostrabilità}
+che \`e un concetto centrale in logica ed \`e la nozione fondamentale studiata da G$\ddot{o}$del nei fogli del 1931.
+Fu sua l'idea di trattare il \textit{predicato di dimostrabilità} ($\TT$) come un operatore modale.
+La stessa idea fu ripresa da Kriple e Montague, ma solo nella metà degli anni Settanta si giunse alla corretta
+scelta di assiomi, basata sul teorema di L$\ddot{o}$b. Ed \`e proprio per questo che la logica della 
+dimostrabilità \`e solita essere chiamata GL, per G$\ddot{o}$del e L$\ddot{o}$b.
+
+Fino ad ora si \`e parlato di dimostrabilit\`a di una proposizione in un sistema formale, 
+senza specificare nessun sistema in particolare. 
+Storicamente l'attenzione si \`e concentrata sull'Aritmetica di Peano, o PA in breve. 
+
+I risultati raggiunti in teoria della dimostrazione da G\"odel, Rosser, L$\ddot{o}$b riguardano tutti la dimostrabilit\`a in PA 
+e di conseguenza la logica modale \`e stata inizialmente utilizzata per rendere 
+conto della nozione di dimostrabilit\`a in questo sistema formale.
+In queste pagine si trattano i risultati nel sistema HA, cercando di far notare quali sono i punti in cui le  definizioni
+in HA differiscono da quelli in PA.
+
+\section{Sistema di base per la logica modale e per la logica della dimostrabilità}
+
+\subsection{Logica modale}
+Nella logica modale si hanno i seguenti \textbf{assiomi}:
+\begin{itemize}
+\item gli assiomi del calcolo proposizionale della logica intuizionistica
+\item tutte le istanze del tipo
+$$\vdash\Box(\alpha\rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$$
+che in questo capitolo indicheremo con l'abbreviazione $D1$.
+\end{itemize}
+e si hanno le seguenti \textbf{regole di inferenza}:
+\begin{itemize}
+\item il modus ponens
+
+\item la necessarietà, che dice che se una sentenza $\alpha$ \`e un teorema allora lo \`e anche $\Box\alpha$
+$$\prooftree
+   \vdash \alpha
+   \justifies
+\vdash \Box\alpha
+ \using
+ {nec}
+\endprooftree$$\\
+\end{itemize}
+Si indica il sistema con questi assiomi e con queste regole con la lettera K.
+
+\begin{oss}
+Si noti che il primo assioma \`e valido in HA, in PA diventa:
+"`sono assiomi tutte le tautologie"' e tutto il resto \`e uguale in entrambi i sistemi.
+\end{oss}
+
+\subsection{Logica della dimostrabilità GL}
+Per ottenere il sistema GL si aggiunge al sistema K la Formula di L$\ddot{o}$b, che dice:
+$$\vdash \Box (\Box \alpha \rightarrow \alpha) \rightarrow \Box \alpha.$$
+
+Quindi ricapitolando si ha che, in GL,  fissato un insieme P di simboli 
+(lettere proposizionali), l'insieme delle formule F \`e  definito induttivamente nel seguente modo:
+\begin{itemize}
+\item $P\subseteq F$ e $\bot \in F$
+\item se $\alpha \in F$ allora $\Box\alpha \in F$
+\item se $\alpha, \beta \in F$ allora $\alpha\wedge\beta, \alpha\vee\beta, \alpha\rightarrow\beta \in F$
+\end{itemize}
+e valgono gli assiomi:
+\begin{itemize}
+\item gli assiomi del calcolo proposizionale della logica intuizionistica
+\item $\vdash\Box(\alpha\rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$ (D1)
+\item $\vdash \Box (\Box \alpha \rightarrow \alpha) \rightarrow \Box \alpha$
+\end{itemize}
+e le regole
+\begin{itemize}
+\item il modus ponens
+\item la necessarietà
+\end{itemize}
+
+\begin{oss}
+Si osserva che intuizionisticamente $\wedge,\vee,\rightarrow$ sono indipendenti, e
+con essi si può definire
+$\neg\alpha \equiv \alpha\rightarrow\bot$. 
+Nell'aritmetica PA invece \`e possibile assumere  $\wedge, \neg$ oppure $\bot,\rightarrow $ come primitivi e definire i restanti.
+\end{oss}
+
+\section{Il predicativo $\TT$ in HA}
+
+Nei capitoli precedenti \`e stato introdotto la formula del linguaggio HA $\Tnumg{x}$
+che esprime che la sentenza $x$ \`e dimostrabile in HA e si legge proprio \textbf{"`x \`e dimostrabile"'.}
+Questo concetto  \`e utile per il legame che si vuole attuare tra 
+logica GL e aritmetica HA al fine di dimostrare il secondo teorema di incompletezza. 
+
+\begin{oss}
+In alcuni testi viene definito lo stesso concetto con il nome di $Bew$,
+da beweisbar, che tradotto dal tedesco significa dimostrabile.
+Era il nome dato in origine dallo stesso G$\ddot{o}$del.
+\end{oss}
+
+In HA $\T$ soddisfa le seguenti tre condizioni, anche dette condizioni di derivabilità di
+Hilbert-Bernays-L$\ddot{o}$b, cio\`e per tutte le sentenze $A$ e $B$ di HA vale:
+\begin{itemize}
+\item (HBL1) Se $HA \vdash A$ allora  $HA \vdash \T(\numg{A})$. 
+
+Cio\`e se $A$ \`e dimostrabile allora lo \`e anche la sentenza che dice che $A$ \`e dimostrabile.
+\item  (HBL2) $HA \vdash \Tnumg{A\rightarrow B}\rightarrow (\Tnumg{A}\rightarrow \Tnumg{B})$.
+
+Cio\`e \`e sempre dimostrabile che se un'implicazione
+e il suo antecedente sono dimostrabili, allora lo \`e il suo conseguente.
+\item  (HBL3) $HA \vdash \Tnumg{A}\rightarrow\Tnumg{\Tnumg{A}}$.
+
+Cio\`e se $A$ \`e dimostrabile allora \`e dimostrabile che $A$ \`e dimostrabile.
+\end{itemize}
+
+Queste tre condizioni sono dette di \textit{derivabilità}
+in quanto sono condizioni "`quasi"' sufficienti per dimostrare il secondo teorema di incompletezza.
+Infatti dopo aver dimostrato che valgono e che vale anche il teorema di L$\ddot{o}$b, che ha un carattere di autoriferimento,
+\`e possibile dimostrare il secondo teorema, cio\`e che se una teoria \`e consistente, allora in essa si ha che 
+$$\not\vdash \neg \Tnumg{\bot}$$
+che nel metalinguaggio significa che la teoria non \`e consistente.
+
+
+
+
+\begin{oss}
+Si osserva come già visto nei capitoli precedenti che si usa scrivere "`$\TT$"' che \`e un predicato del metalinguaggio,
+ed esso \`e semirappresentabile nel linguaggio tramite la formula "`$\T$"'.
+\end{oss}
+
+\section{Il legame tra la logica GL e l'aritmetica HA}
+
+Si interpreta il Box come "`\`e dimostrabile che..."' anzich\`e con il significato originale "`\`e necessario che..."' ovvero si interpreta $\Box$ della logica GL come $\T$ in PA.
+
+\begin{esempio}
+Per esempio se assegnamo alle sentenze letterarie $\alpha$ e $\beta$ 
+di GL le sentenze $A$ e $B$ di HA, allora alla sentenza modale
+$$(\Box\alpha \wedge \alpha)\rightarrow \Box\Box \beta$$
+si assegna
+$$ (\Tnumg{A} \wedge A)\rightarrow \Tnumg{\Tnumg {B}}.$$
+\end{esempio}
+
+Al fine di studiare il legame tra GL e HA si sfruttano le seguenti definzioni, che ci permettono di 
+passare da simboli, formule e teoremi della logica modale a simboli, formule e teoremi di HA.
+
+\begin{defi}
+Una \textbf{realizzazione} \`e una mappa $\#: P \rightarrow L_{HA}$.
+Questa assegna a ciascuna sentenza letterale $\alpha$ una sentenza del linguaggio di $HA$ e si scrive $\# \alpha$.
+\end{defi}
+
+\begin{defi}
+La realizzazione si estende su tutte le formule, cio\`e data una formula modale $\alpha$ si dice che $\#\alpha$ \`e la sua \textbf{traduzione}
+indotta dalla realizzazione $\#$ ed \`e definita nel
+seguente modo:
+\begin{itemize}
+\item $\#\alpha := \#\alpha$
+\item $\#\Box\alpha := \Tnumg{\#\alpha} $
+\item $\#\bot := \bot$
+\item $\#(\alpha \wedge \beta) := \#\alpha \wedge \#\beta$
+\item $\#(\alpha \vee \beta) := \#\alpha \vee \#\beta$
+\item $\#(\alpha \rightarrow \beta) := \#\alpha \rightarrow \#\beta$
+\end{itemize}
+\end{defi}
+
+\begin{esempio}
+La definizione \`e molto intuitiva, nonostante ciò \`e utile un piccolo esempio.
+Se fosse $\#\alpha:= 0=0$ allora la traduzione della formula modale
+ $$\Box(\Box\alpha\rightarrow\alpha)$$ 
+diventa 
+$$\Tnumg{\Tnumg{0=0}\rightarrow 0=0}.$$
+\end{esempio}
+
+\section{Teorema di validità dell'aritmetica}
+
+Dopo aver creato il legame tra GL e HA mediante le definizioni di
+realizzazione e traduzione, \`e possibile dimostrare 
+il secondo teorema di incompletezza. 
+Il nostro obiettivo \`e dimostrare che vale il Teorema di Validità dell'aritmetica, cio\`e che
+ciò che vale per GL, qualunque sia la sua traduzione, vale anche in HA.
+In questo modo se il secondo teorema vale in GL vale anche il HA.
+
+Per questo scopo dimostriamo quindi il teorema citato:
+
+\begin{thm}[Teorema di validità dell'aritmetica]
+Vale che se $GL \vdash \alpha$ allora per ogni realizzazione $\#$ si ha che 
+$HA \vdash \#\alpha$, cio\`e 
+$\#\alpha$ \`e dimostrabile in HA.
+\end{thm}
+
+\begin{oss}
+Si osserva che vale anche il viceversa, ma solo classicamente. 
+Il teorema \`e di Solovay, ed \`e detto \textit{della completezza aritmetica}.
+Per HA \`e invece un problema aperto da almeno 35 anni.
+\end{oss}
+
+\begin{proof}
+La dimostrazione del teorema si ha poich\`e le regole di GL e i suoi assiomi funzionano anche se sostituiamo 
+il predicato $\TT$ al posto di $\Box$.
+L'unica difficoltà si ritrova nella dimostrazione della validità 
+dell'assioma di L$\ddot{o}$b.
+Quindi \`e necessario dimostrare le seguenti proposizioni:
+\begin{enumerate}
+\item Il sistema GL ed il sistema K4LR (sarà definito in seguito)
+hanno gli stessi teoremi. Per la dimostrazione del teorema \`e sufficiente dimostrare che
+se $GL\vdash\alpha$ allora $K4LR\vdash\alpha$.
+\item Vale che se $K4LR \vdash \alpha$ allora per ogni $\#$ si ha che 
+$HA \vdash \#\alpha$
+\end{enumerate}
+Da cui si conclude la tesi del teorema, 
+infatti avendo i due sistemi gli stessi teoremi si ha che:
+$$se~GL~\vdash\alpha~allora~K4LR\vdash\alpha~e~allora~\forall\#~vale~HA\vdash\#\alpha$$
+\end{proof}
+
+\begin{defi}
+Il sistema \textbf{K4} \`e dato dal sistema K a cui si aggiunge l'assioma
+\center{$\vdash\Box\alpha \rightarrow \Box\Box\alpha$}
+detto anche assioma 4 (4).
+\end{defi}
+\begin{defi}
+Il sistema\textbf{ K4LR }\`e dato dal sistema K4 a cui si aggiunge la Regola di L$\ddot{o}$b (ecco perch\`e LR, anche detto \textit{Teorema di L$\ddot{o}$b})
+\center{se vale $\vdash\Box\alpha \rightarrow \alpha$ allora vale $\vdash\alpha.$}
+\end{defi}
+
+
+
+\begin{prop} ~
+\begin{enumerate}
+\item Se $GL\vdash\alpha$ allora $K4LR\vdash\alpha$.
+\item Vale che se $K4LR \vdash \alpha$ allora per ogni $\#$ si ha che 
+$HA \vdash \#\alpha$
+\end{enumerate}
+\end{prop}
+
+\begin{proof} ~
+\begin{enumerate}
+\item 
+Per dimostrare che se $\alpha$ \`e teorema per GL allora lo \`e anche per K4LR
+si dimostra che ogni regola o assioma di GL \`e derivabile in K4LR.
+Poich\`e si ha che:
+\begin{itemize}
+\item GL = K + formula di L$\ddot{o}$b (LF)
+\item K4LR = K + $\vdash\Box\alpha \rightarrow \Box\Box\alpha$ + regola di L$\ddot{o}$b (LR)\\
+\end{itemize}
+
+Poich\`e K \`e in comune, basta dimostrare che LF vale  in K4LR.
+Nella seguente dimostrazione per rendere pi\`u leggibile il testo, scriveremo $LF$ anzich\`e riportare ogni volta 
+la scrittura $\vdash \Box(\box\alpha\rightarrow\alpha)\rightarrow\Box\alpha$.
+Dimostriamo che $LF$ vale in $K4LR$
+
+$K4 \vdash  \Box(LF) \rightarrow (\Box\Box(\Box\alpha\rightarrow\alpha)\rightarrow\Box\Box\alpha)$ per D1
+
+$K4 \vdash \Box(\Box\alpha\rightarrow\alpha)\rightarrow\Box\Box(\Box\alpha\rightarrow\alpha)$ per (4).
+
+Da queste due posso dedurre che
+
+$K4 \vdash \Box(LF) \rightarrow ( \Box(\Box\alpha\rightarrow\alpha) \rightarrow \Box\Box\alpha) $
+
+Ma si ha ancora che:
+
+$K4 \vdash \Box(\Box\alpha\rightarrow\alpha)\rightarrow (\Box\Box\alpha \rightarrow \Box\alpha)$ per D1.
+
+da cui  si deduce che
+
+$K4 \vdash \Box(LF) \rightarrow \Box(\Box\alpha\rightarrow\alpha) \rightarrow \Box\alpha$ 
+che \`e proprio
+
+$K4 \vdash \Box(LF) \rightarrow (LF)$
+
+e quindi usando LR
+
+$K4LR \vdash (LF)$
+
+cio\`e si ha una dimostrazione di LF in K4LR.\\
+
+\item Vale che se $K4LR \vdash \alpha$ allora per ogni $\#$ si ha che 
+$HA \vdash \#\alpha$
+
+Questa seconda parte utilizza risultati che saranno dimostrati pi\`u avanti.
+Diamo comunque un'idea generale della dimostrazione.\\
+
+Si deve dimostrare che 
+\begin{itemize}
+\item per ogni assioma $\alpha$ di K4LR, vale che per ogni $\#$ $HA\vdash\#\alpha$
+\item per ogni regola
+$\prooftree
+   \vdash \alpha
+   \justifies
+\vdash \beta
+\endprooftree$
+di K4LR, vale che per ogni $\#$ se vale  $HA\vdash\#\alpha$ allora vale $HA\vdash\#\beta$.
+\end{itemize}
+Da questi due punti, per induzione sulla definzione si ha la tesi.\\
+
+\begin{itemize}
+\item Assiomi:\\
+Se $\alpha$ \`e un assioma di $K4LR$ allora \`e intuizionisticamente valido, allora per ogni $\#$
+si ha che $\#\alpha$ \`e intuizionisticamente valido, e perciò si ha che $HA\vdash\#\alpha$.
+\item Regole:
+\begin{itemize}
+\item Modus Ponens. Se vale in K4LR con sentenze modali, poiché la traduzione $\#$ si distribuisce sui connettivi, 
+bisogna dimostrare che in HA  vale il modus ponens,
+che \`e vero.
+
+\item NEC 
+
+Se $K4LR\vdash\alpha$ allora $K4LR\vdash\Box\alpha$
+
+qualunque sia $\#$ in HA diventa:
+
+Se $HA \vdash \#\alpha$ allora  $HA \vdash \T(\numg{\#\alpha})$
+
+cio\`e \`e necessario dimostrare la veridicità di HBL1. La dimostrazione della sua validità 
+\`e mostrata pi\`u avanti.\\
+
+\item (D1) 
+
+$K4LR\vdash\Box(\alpha\rightarrow \beta) \rightarrow (\Box \alpha \rightarrow \Box \beta)$
+
+che in HA diventa, qualunque sia $\#$:
+
+$HA \vdash \Tnumg{\#\alpha\rightarrow \#\beta}\rightarrow (\Tnumg{\#\alpha}\rightarrow \Tnumg{\#\beta})$
+
+che \`e proprio (HBL2) applicato alle sentenze $\#\alpha$, $\#\beta$. \\
+
+
+\item (4)
+
+$K4LR\vdash\Box\alpha\rightarrow\Box\Box\alpha$
+
+qualunque sia $\#$ in HA diventa:
+
+$HA \vdash \Tnumg{\#\alpha}\rightarrow\Tnumg{\Tnumg{\#\alpha}}$
+
+che \`e proprio HBL3 applicato alla sentenza $\#\alpha$.\\
+
+\item LR 
+
+Per dimostrare la regola di L$\ddot{o}$b, \`e necessario il Teorema di L$\ddot{o}$b che dice proprio la stessa cosa e che 
+\`e mostrato pi\`u avanti.
+\end{itemize}
+\end{itemize}
+\end{enumerate}
+\end{proof}
+
+\begin{oss}
+Con queste premesse \`e quindi possibile dimostrare il secondo teorema di incompletezza 
+il GL e poi dire che \`e valido in HA.
+Si osserva che in seguito troverete la prova della  validità di HBL1,2,3, del Teorema di L$\ddot{o}$b utili alla dimostracione sopra citata.
+
+Lo stesso risultato si può raggiungere sempre dimostrando HBL1,2,3, del Teorema di L$\ddot{o}$b e il 
+Teorema di L$\ddot{o}$b internalizzato. L'uso di quest'ultimo passaggio permette di non dover 
+passare per K4LR. Entrambe le strade scelte permettono di ottenere lo stesso
+risultato, cio\`e passare dalla formula di L$\ddot{o}$b al teorema di L$\ddot{o}$b.
+\end{oss}
+
+
+

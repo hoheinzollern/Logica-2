@@ -1,0 +1,607 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+\providecommand*{\perispomeni}{\char126}
+
+\chapter{Incompletezza}
+
+\begin{abstract}
+Queste note sono divise in quattro momenti: dopo un inquadramento
+storico del problema dei fondamenti della matematica prenderemo in
+considerazione alcuni aspetti del pensiero di David Hilbert esponendo
+in particolare il suo programma fondazionale, quindi parleremo delle
+conseguenze fondazionali dei teoremi di incompleteza di Godel sottolineando
+le difficoltà in cui si imbattè il programma di Hilbert a seguito
+di questi ed infine accenneremo allo stato dell'arte in ambito fondazionale.
+\end{abstract}
+
+\section{Introduzione}
+
+Non è fuori luogo individuare le origini di gran parte della matematica
+contemporanea nel diciannovesimo secolo, un'età di grandi trasformazioni
+qualitative e un'età durante la quale la matematica ha subito cambiamenti
+così profondi che non è esagerato parlare di una vera e propria seconda
+nascita della materia così come nell'età greca c'era stata la prima%
+\footnote{J.Avigad \& E.H.Rech, {}``Clarifyng the nature of infinite'': the
+development of metamathematics and proof theory, pg.5%
+}. Analisi, geometria, algebra e logica matematica vengono completamente
+rivoluzionate.
+
+L'analisi dopo un secolo di travolgenti successi incontra alcune difficoltà
+che inducono a un generale ripensamento. E' la fase della cosiddetta
+rigorizzazione dell\textquoteright{}analisi, nella quale i ferri del
+mestiere, cioè i concetti di funzione, serie, integrale, continuità,
+ecc., vengono affinati (da Cauchy, Fourier, Riemann e tanti altri)
+fino a liberarli dall\textquoteright{}uso degli infinitesimi e infiniti
+attuali, tramite il concetto di limite (l\textquoteright{}analisi
+$\epsilon - \delta$ di Weierstrass). Un passo
+essenziale dell\textquoteright{}impresa, e ultimo in ordine cronologico
+(siamo già nel 1872), è la definizione rigorosa dei numeri reali (razionali
+e irrazionali) ad opera di Weierstrass, Dedekind e Cantor%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.7%
+}.
+
+La geometria nel tentativo di dimostrare la dipendenza del quinto
+postulato della geometria euclidea dagli altri si imbatte nelle geometrie
+non-euclidee. La scoperta di tali geometrie(Gauss, Lobacewskij, Bolyai)
+mette in crisi la nozione di intuizione geometrica e l'idea che gli
+assiomi debbano necessariamente codificare un'aspetto univoco ben
+determinato della nostra concezione \emph{dello spazio}. Simultaneamente,
+con la nascita e l'evolversi della geometria proiettiva, si giunge
+alla definizione di un nuovo livello di indagine: l'intuizione geometrica
+viene così decomposta in dati ancora più semplici, connessi con lo
+studio degli {}``aspetti grafici'' dello spazio. In tale situazione
+si perde la nozione di un referente oggettivo privilegiato, al quale
+riportare tutte le nostre teorizzazioni. Si assiste così ad una progressiva
+divericazione tra geometria fisica - intesa come studio delle proprietà
+dello spazio fisico - e geometria pura%
+\footnote{Cantini, I fondamenti della matematica, pg.17%
+}.
+
+L'algebra sulla scorta di interessanti progressi nelle sue teorie
+classiche assume una forma completamente astratta. Tra le altre cose
+notevoli sono da ricordare gli sviluppi in teoria delle equazioni
+da parte di Galois, la nascita della scuola britannica di algebristi
+(che include personaggi quali Hamilton, Cayley, Boole e Sylvester),
+il lavoro di Grassman sulle algebre che generalizzano i quaternioni
+di Hamilton. Si assiste inoltre ad un netto aumento delle interazioni
+tra l'algebra e le altre aree della matematica: in geometria metodi
+algebrici sostituiscono i tradizionali metodi sintetici, la stessa
+cosa succede in teoria dei numeri grazie a Kummer e Dedekind, Abel
+applica metodi algebrici allo studio di funzioni ellittiche e metodi
+simili si sviluppano in tutta l'analisi grazie a Jacobi, Dirichlet,
+Riemann e Hamilton. Brevemente, tra l'inizio e la fine del diciannovesimo
+secolo l'interesse per l'algebra e il suo posto in matematica cambiano
+enormemente fino al manifestarsi di una vera e propria \emph{algebrizzazione
+della matematica}%
+\footnote{J.Avigad \& E.H.Rech, {}``Clarifyng the nature of infinite'': the
+development of metamathematics and proof theory, pg5.%
+}.
+
+La logica matematica dal canto suo subisce una rigorosa definizione
+dei suoi linguaggi formali e una chiara formulazione dei concetti
+che le sono propri, sia dal punto di vista sintattico che dal punto
+di vista semantico. Viene infatti definito il \emph{linguaggio della
+logica dei predicati del primo ordine}(Frege e Peano), di gran lunga
+più espressivo dei linguaggi della logica classica che permettevano
+uno studio esclusivo della sillogistica escludendo il trattamento
+delle relazioni, vengono formulati i primi \emph{calcoli logici} in
+cui le regole o gli assiomi che caratterizzano l'apparato deduttivo
+sono caratterizzati esplicitamente, inizia lo studio algebrico della
+logica(Boole e De Morgan) che permette una organica carattterizzazione
+semantica delle leggi logiche ed infine viene chiarita in modo appropriato
+la distinzione tra modello e teoria formale passo fondamentale verso
+la nascita della \emph{teoria dei modelli}.
+
+Questa rivoluzione nelle scienze matematiche porta ad un'acceso dibattito
+sulla definizione dell'oggetto proprio degli studi matematici e quindi
+a interrogativi sulla natura della disciplina stessa. La tradizionale
+definizione della matematica quale scienza della grandezza, della
+misura e della quantità infatti non appariva più adeguata. Questo
+dibattito che coinvolge personaggi quali Boole, Kroneker, Dedekind
+e Cantor segna la presenza di due possibili visioni della matematica,
+l'una di natura sintattica l'altra di natura semantica. La matematica
+infatti può essere vista da un lato come la scienza della rappresentazione
+simbolica e del calcolo e dall'altro come la scienza del ragionamento
+concettuale circa strutture caratterizzate astrattamente %
+\footnote{Vedremo che la distinzione tra queste due differenti concezioni della
+matematica e della logica sarà un argomento importante nel commento
+ai teoremi di incompletezza di Godel.%
+}.
+
+Legata a quest'esigenza di caratterizzazione della scienza matematica
+è un'esigenza di unificazione del sapere matematico ormai frazionato
+in una miriade di teorie interdipendenti, questo bisogno sarà soddisfatto
+da quella che è ancora oggi una delle teorie più discusse e interessanti
+di tutta la matematica, la teoria degli insiemi la cui nascita è dovuta
+al matematico tedesco Georg Cantor.
+
+Cantor affrontando uno specifico problema di analisi(sulle serie di
+Fourier), è indotto a misurare aggregati arbitrari di numeri reali
+e ciò lo conduce a tentare un trattamento matematico del concetto
+di infinito. Nel realizzare questo intento in pochi anni egli sviluppa
+una teoria dei numeri ordinali e cardinali transfiniti e dagli aggregati
+di numeri reali giunge alla nozione astratta di insieme.
+
+Dopo alcuni anni di diretta opposizione o al più indifferenza i matematici
+cominciano a vedere di quale nuovo paradiso Cantor avesse aperto le
+porte. La potenza del linguaggio insiemistico conduce così alla nascita
+di nuove teorie (la topologia. l'analisi funzionale, la geometria
+algebrica, la teoria della misura di Lebesgue, ...) e al rinnovamento
+di teorie già affermate (l'algebra astratta, la geometria algebrica,
+l'analisi reale, ...)%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.8%
+}. In questo modo la teoria degli insiemi si afferma quale linguaggio
+e strumento di indagine matematico, cioè come repertorio di concetti
+in funzione dei quali esprimere tutti gli altri concetti matematici.
+
+Il paradiso di Cantor però finirà in breve tempo nel rivelarsi un
+inferno più che un paradiso. Infatti intorno al 1900, prima timidamente
+Cantor poi gli italiani che tra i primi avevano recepito le sue idee
+quindi Russell e altri, si rendono conto di alcuni paradossi insiti
+nella teoria%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.8%
+}. 
+
+Visto il ruolo fondazionale attribuito alla teoria degli insiemi la
+comparsa dei paradossi rende pressante il bisogno di una sicura fondazione
+della matematica. Così la ricerca sui fondamenti, che nell'Ottocento
+era vista sostanzialmente come sistemazione rigorosa di conoscenze
+e risultati non discussi, e quindi parte del progresso e compito esclusivamente
+matematico, nei primi anni del Novecento inizia ad essere considerata
+come mezzo necessario, per quanto poco gradito, per scongiurare una
+ritirata. E' la cosiddetta crisi dei fondamenti%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.8%
+}.
+
+E' un momento delicato, in cui emergono divergenze così profonde sul
+modo di concepire la matematica che, forse per la prima volta, si
+hanno come conseguenza diversi modi di fare matematica%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.9%
+}. Numerose sono le proposte fondazionali che si affacciano sulla scena.
+Gli indirizzi principali sono tre: \emph{(1)Logicismo}, \emph{(2)Formalismo}
+e \emph{(3)Intuizionismo}. Di fatto solo il seconso e il terzo avranno
+ripercussioni sulla pratica matematica, concretizzandosi nella matematica
+formalista da una parte e nella matematica costruttiva dall'altra.
+
+David Hilbert può essere considerato come il padre dell'approccio
+formalista.
+
+
+\section{Hilbert}
+
+David Hilbert nasce a Konisberg nel 1862, compie nella sua città natale
+l'intero curriculum di studi e vi inizia la carriera universitaria
+divenendo dapprima (1886) \emph{Privatdozent }e poi (1892) \emph{Extraordinarius.}
+In quegli anni entra in contatto personale con buona parte dei matematici
+più rappresentativi del suo tempo, per esempio Karl Weierstrass, Richard
+Dedekind e Georg Cantor.
+
+Gli interessi matematici di Hilbert furono vastissimi, di modo che
+è difficile trovare un settore della matematica nel quale egli non
+sia intervenuto con contributi di tale peso ed importanza da indurre
+in essi profonde trasformazioni tematiche e metodiche%
+\footnote{Abrusci, Introduzione, pg.15%
+}. Per citarne alcuni, tra il 1888 e il 1893 risolve quello che era
+conosciuto come il {}``problema fondamentale della teoria degli invarianti'',
+sempre nel 1893 riunifica gli sviluppi in teoria dei numeri dovuti
+a Gauss, Kronecker e Dedekind fornendo una stabile fondazione alla
+teoria algebrica dei numeri, sviluppa una organizzazione assiomatica
+delle geometrie euclidea e non-euclidea ed infine lavora sulle equazioni
+integrali e su importanti problemi in fisica matematica. Hilbert inoltre
+accompagnò sempre questi lavori con approfondite ricerche fondazionali
+che dal 1917 in poi finirono addirittura con il divenire il centro
+principale della sua attività di ricerca.
+
+Il lavoro di Hilbert illustra gran parte dei temi e degli interessi
+della matematica del diciannovesimo secolo: l'enfasi per la rappresentazione
+simbolica e per la caratterizzazzione astratta, l'uso di metodi infinitari
+e non costruttivi e la ricerca di un'unità fondazionale%
+\footnote{J.Avigad \& E.H.Rech, {}``Clarifyng the nature of infinite'': the
+development of metamathematics and proof theory, pg.16%
+}. E proprio la ricerca di quest'unità e di nuovi metodi matematici
+lo renderà uno degli artefici della insiemizzazione della matematica
+e della conseguente rivalutazione della teoria degli insiemi sviluppata
+da Cantor. 
+
+In virtù di tutto ciò egli vide nei paradossi della teoria degli insiemi
+un problema drammatico e di cui era necessaria una chiara e precisa
+soluzione al fine di restituire alla matematica quella certezza e
+inoppugnabilità che a suo giudizio le era propria. La sua risposta
+alla crisi dei fondamenti fu la proposizione di una nuova forma di
+metodo assiomatico\emph{: il metodo assiomatico formale.}
+
+
+\subsection{Metodo assiomatico}
+
+Hilbert nel suo scritto \emph{Pensiero Assiomatico }definisce una
+teoria, sia essa matematica o meno, come una \emph{intelaiatura di
+concetti} e nota poco dopo che quando esaminiamo più in profondità
+una determinata teoria, ogni volta riconosciamo che alla base della
+costruzione dell'intelaiatura dei concetti ci sono poche e ben individuate
+proposizioni e che queste sole bastano a costruire da esse, secondo
+principi logici, l'intera intelaiatura. Hilbert chiarisce che queste
+basi sono i teoremi fondamentali della teoria e che esse stesse poggiano
+su altre proposizioni che sono irriducibili ad altre, cioè non dimostrabili
+in funzione di altre, queste proposizioni sono gli assiomi della teoria%
+\footnote{Hilbert, Fondamenti della matematica, pg.178%
+}.
+
+Per Hilbert quindi assiomatizzare una teoria significa comprenderne
+l'architettura interna e organizzarla in base ad essa ed è proprio
+in virtù di questa concezione dell'assiomatica che egli propone che
+ogni teoria matematica venga formalizzata e assiomatizzata. In questo
+modo una teoria matematica diviene un oggetto astratto che può avere
+più significati, cioè può venire interpretata in più strutture. Questo
+spostamento di piano comporta però che gli assiomi di una teoria non
+possano più essere giustificati in base alla loro evidenza, è necessario
+cioè individuare altri criteri che ci permettano di discriminare una
+buona teoria da una cattiva, questi criteri sono individuati da Hilbert
+nell\emph{'indipendenza e nella non-contraddittorietà} degli assiomi
+della teoria. 
+
+Con il passaggio dall'assiomatica classica all'assiomatica formale
+si assiste perciò ad uno spostamento di interesse, dalla verità di
+un insieme di enunciati contenutistici alla non-contraddittorietà
+di un insieme di enunciati formali. La non-contraddittorietà diviene
+in questo modo ciò che era la verità per la matematica precedente
+alle rivoluzioni teoriche ottocenetesche. 
+
+Per Hilbert inoltre il metodo assiomatico oltre ad essere uno strumento
+di organizzazione e di indagine è uno strumento di salvaguardia della
+matematica, esso infatti a suo giudizio sarebbe in grado di esimerla
+da possibili contraddizioni in modo da renderla certa ed inoppugnabile.
+Ciò lo spinge a voler estendere il metodo assiomatico a tutta la scienza
+in modo da rendere sicuro l'intero sapere scientifico. Con le sue
+parole:
+
+Tutto ciò che può essere oggetto del pensiero scientifico, non appena
+è maturo per la formazione di una teoria, cade sotto il metodo assiomatico
+e per suo tramite sotto la matematica. Progredendo verso livelli sempre
+più profondi di assiomi otteniamo anche illuminazioni sempre più profonde
+sulla natura del pensiero scientifico e diveniamo sempre più consapevoli
+dell'unità del nostro sapere. Nel segno del metodo assiomatico la
+matematica sembra chiamata ad un ruolo guida in tutto ciò che è scienza%
+\footnote{Hilbert, Fondamenti della matematica pg.188%
+}.
+
+In questa fase del suo pensiero(1917-1918) Hilbert inizia a tracciare
+una chiara distinzione tra nozioni semantiche e nozioni sintattiche
+in logica e matematica. In uno scritto di questo periodo infatti nota
+esplicitamente che i linguaggi e le teorie formali possono venire
+interpretati in una struttura matematica ma che i sistemi deduttivi
+possono essere studiati anche autonomamente, indipendentemente da
+una interpretazione semantica%
+\footnote{J.Avigad \& E.H.Rech, {}``Clarifyng the nature of infinite'': the
+development of metamathematics and proof theory, pg.20%
+}. 
+
+Hilbert inizia così a rendersi conto della possibilità di uno sviluppo
+esclusivamente sintattico di una teoria matematica e da questo momento
+in poi come vedremo nel prossimo paragrafo prediligerà metodi proof-teoretici
+nei suoi lavori fondazionali. E' bene notare però che un conto è il
+programma fondazionale di Hilbert un conto è la sua concezione della
+matematica, egli infatti da grande matematico quale era conosceva
+bene il pensiero concettuale proprio della pratica matematica e quindi
+il valore della componente semantica nelle scienze deduttive. L'intento
+di Hilbert non era quello di ridurre la matematica ad una manipolazione
+di segni ma di trattarla in questo modo da uno punto di vista metamatematico
+al fine di dimostrane la coerenza e quindi porre a riparo da ogni
+rischio il pensiero semantico, quello che per lui era la vera matematica.
+Le ragioni del perseguimento da parte di Hilbert di una prospettiva
+proof-teoretica in ambito fondazionale sta quindi nel tentativo di
+tracciare una chiara linea di demarcazione tra questioni matematiche
+e metamatematiche. Il suo errore è stato solo nel considerare l'approccio
+sintattico e quello semantico come equivalenti e quindi il prospettare
+la possibilità di ridurre l'uno all'altro, cioè di modellare completamente
+il pensiero astratto tramite tecniche di manipolazione simbolica.
+
+
+\subsection{Il programma di Hilbert}
+
+Veniamo ora al cuore della ricerca fondazionale hilbertiana. Per Hilbert,
+fondare la matematica significa dimostrarne la coerenza, cioè dimostrare
+la coerenza della totalità delle teorie matematiche e con esse quella
+delle teorie scientifiche che si basano su di esse. A tal fine ogni
+teoria matematica va assiomatizzata secondo il metodo assiomatico
+formale. 
+
+Le dimostrazioni di coerenza delle teorie matematiche devono avvenire
+tramite metodi esclusivamente \emph{proof-teoretici, }senza sfruttare
+tecniche \emph{model-teoretiche }quali l'esibizione di un modello
+per la teoria. Il programma ha quindi una natura puramente \emph{sintattica},
+esso deve svolgersi senza alcun riferimento a considerazioni semantiche.
+E' in questo senso che va letta la discussa affermazione secondo la
+quale la matematica non sarebbe altro che una manipolazione di segni. 
+
+Le tecniche \emph{proof-teoretiche }chiamate in causa si fondano su
+particolari metodi matematici, i cosiddetti \emph{metodi finitisti},
+i quali fanno riferimento ad una matematica ritenuta {}``contenutisticamente
+sicura''' e che non necessita di fondazione. Viene in questo modo
+a costituirsi una nuova disciplina matematica che costruisce i formalismi
+e con mezzi contenutisticamente sicuri dimostra la coerenza delle
+teorie assiomatiche formali, questa disciplina è la metamatematica
+o teoria della dimostrazione.
+
+Ora, cosa questi metodi finitisti siano non è molto chiaro ed è questione
+dibattuta sin dai tempi di Hilbert. Quello che possiamo dire è che
+Hilbert distingue all'interno della matematica tra una {}``matematica
+finitaria'', dotata di concetti intuitivi e di verità evidenti che
+usa l'infinito solo nella sua forma potenziale e procede con mezzi
+concreti e finiti, e una {}``matematica transfinita''%
+\footnote{Abrusci, Introduzione, pg.33%
+}. Nella matematica finitaria è accettato anche il concetto intuitivo
+di numero naturale e in essa è possibile svolgere parte dell'aritmetica.
+
+In ogni caso per Hilbert gli enti simbolici di un formalismo (simboli,
+successioni di simboli, successioni di successioni di simboli, ...)
+vanno pensati come numeri, le proprietà e le relazioni di tali enti
+(quali {}``essere formula'', {}``essere una variabile'', {}``essere
+una dimostrazione'', ...) come proprietà e relazioni di numeri e
+le operazioni su tali enti sono come operazioni su numeri.
+
+Il programma fondazionale hilbertiano si distingue perciò oltre che
+per la sua natura \emph{sintattica} di cui si è parlato sopra per
+la sua natura \emph{autofondativa}, Hilbert intende ciò fondare la
+matematica. intesa come famiglia di teorie assiomatiche formali, con
+la matematica(metodi finitisti). 
+
+Vedremo che il primo ed il secondo teorema di Godel ridimensionano
+le possibilità di realizzazione di un tale programma, facendo riferimento
+proprio ai limiti di un approccio esclusivamente sintattico e all'impossibilità
+di una prospettiva autofondativa.
+
+
+\section{Incompletezza}
+
+Il concetto di completezza e il suo complementare (incompletezza)
+sono concetti molto importanti in logica formale. Sarà quindi bene
+fare alcune precisazioni a riguardo.
+
+Ci sono diversi tipi di completezza, in particolare è bene distinguere
+tra completezza di una logica e completezza di una teoria formale.
+
+\emph{\noun{Definizione 1. }}Una logica si dice completa se esiste
+un calcolo logico capace di dedurre tutte le verità logiche della
+data logica.
+
+Per quanto riguarda le teorie ci sono poi due tipi di completezza,
+una sintattica e una semantica.
+
+\emph{\noun{Definizione 2}}. Una teoria si dice sintatticamente completa
+se per ogni formula $\varphi$ del linguaggio della teoria o $\vdash\varphi$
+o $\vdash\neg\varphi$.
+
+\emph{\noun{Definizione 3. U}}na teoria si dice semanticamente completa
+se per ogni formula $\varphi$ del linguaggio della teoria o $\models\varphi$
+o $\models\neg\varphi$.
+
+Aggiungiamo a queste tre definizioni una quarta, la definizione di
+categoricità, in quanto questa proprietà delle teorie formali può
+essere considerata come una forma di completezza.
+
+\emph{\noun{Definizione 4. }}Una teoria si dice categorica se essa
+ammette un unico modello a meno di isomorfismi.
+
+La completezza di una logica assieme alla sua correttezza stabilisce
+di fatto un'equivalenza tra un approccio sintattico e uno semantico
+nei confronti della logica in esame. Non tutte le logiche sono complete,
+in particolare la logica proposizionale e la logica del primo ordine
+sono complete%
+\footnote{La completezza della logica del primo ordine è stata dimostrata per
+la prima volta proprio dallo stesso Godel nel 19..%
+}, mentre la logica del secondo ordine non lo è%
+\footnote{L'incompletezza di questa logica, teorema di Church, è un corollario
+del secondo teorema di incompletezza di Godel.%
+}.
+
+La completezza sintattica, anche detta completezza deduttiva, stabilisce
+la possibilità di uno sviluppo puramente sintattico di una teoria.
+La completezza semantica stabilisce invece la possibilità di caratterizzazione
+formale di una particolare struttura. Non sempre le due completezze
+sono distinte, se infatti l'apparato deduttivo della teoria è completo
+i concetti di deducibilità e verità in tutti i modelli sono equivalenti
+e quindi le due completezze coimplicantesi, in assenza però di tale
+condizione può darsi il caso che se ne verifichi una senza che si
+verifichi l'altra.
+
+La categoricità è una proprietà di natura puramente semantica, essa
+può essere considerata come una forma di completezza in quanto assicura
+una sorta di completezza descrittiva della struttura che è modello
+della teoria. Questa proprietà è molto forte tanto da implicare la
+completezza semantica e via completezza dell'apparato deduttivo della
+teoria in esame la completezza sintattica.
+
+Il primo teorema di incompletezza di Godel fa riferimento alla completezza
+deduttiva mentre il secondo teorema di incompletezza non rientra in
+nessuno dei casi precedenti. Esso è così definito solo con abuso di
+terminologia, sarebbe infatti più preciso definirlo, come fanno i
+testi tecnici %
+\footnote{Cfr. Boolos \& Jeffrey, Computability and logic%
+}, come teorema di non-provabilità della consistenza.
+
+
+\subsection{Primo teorema di incompletezza}
+
+Il primo teorema di incompletezza di Godel afferma che se l'aritmetica
+formale al primo ordine è coerente allora essa non è deduttivamente
+completa, esitono cioè nella teoria delle \emph{proposizioni indecidibili
+}che il sistema non è in grado nè di dimostrare nè di refutare. 
+
+Per provare il suo teorema Godel elabora uno strumento che permette
+la realizzazione effettiva della visione hilbertiana della metamatematica,
+la cosiddetta\emph{ aritmetizzazione della sintassi}. Essa consiste
+in una codifica delle componenti sintattiche della teoria in modo
+da far corrispondere ad ogni termine, ad ogni formula e ad ogni derivazione
+uno ed un solo numero naturale. Tutta la metalogica può così essere
+espressa aritmeticamente e trattando la teoria di aritmetica essa
+è in grado di esprimere la propria sintassi. In questo modo la metalogica
+e la logica vengono ricondotte allo stesso livello.
+
+E' proprio grazie a questo espediente che Godel è in grado di esibire
+una proposizione indecidibile, essa è la cosiddetta proposizione G
+che in termini informali si può considerare come asserente la propria
+indimostrabilità. Nonostante tale proposizione non sia dimostrabile
+nella teoria essa però è da noi riconosciuta come vera il che significa
+che ci sono delle verità aritmetiche che non sono dimostrabili nell'aritmetica
+formale. Tutto ciò segna un limite nelle capacità deduttive della
+teoria formale e la cosa potrebbe portare a considerare tali limiti
+come propri del metodo assiomatico stesso ma a ben vedere le cose
+non stanno proprio così.
+
+La teoria formale cui si riferisce il teorema di Godel è l'aritmetica
+formale al primo ordine ma essa non è l'unica teoria formale per l'aritmetica,
+l'aritmetica può essere formalizzata anche al secondo ordine e anzi
+solo a quest'ordine è possibile esprimere davvero il principio di
+induzione. Il principio d'induzione infatti fa riferimento alla totalità
+dei sottoinsiemi dei numeri naturali i quali sono una quantità più
+che numerabile mentre lo schema d'assiomi che lo esprime al primo
+ordine fa riferimento solo alla totalità dei sottoinsiemi rappresentabili
+che in quanto quantità numerabile non esauriscono la totalità dei
+sottoinsiemi. Uno dei corollari del teorema di Godel è che la logica
+del secondo ordine è incompleta e una teoria formale la cui logica
+è incompleta non può essere deduttivamente completa quindi l'aritmetica
+del secondo ordine da questo punto di vista subisce una sorte analoga
+a quella del primo. 
+
+L'aritmetica del secondo ordine però a differenza di quella del primo
+ammette una completezza descrittiva della struttura vista la categoricità
+della teoria e come già accennato la cosa implica la completezza semantica.
+Quindi seppur per ogni formula $\varphi$ del linguaggio della teoria
+al secondo ordine non è possibile che $\vdash\varphi$ o $\vdash\neg\varphi$
+succede però che $\models\varphi$ o $\models\neg\varphi$, infatti
+se non si desse il caso che per ogni formula $\varphi$ del linguaggio
+$\models\varphi$ o $\models\neg\varphi$ allora esisterebbero due
+modelli M' e M'' tali che M'$\models\neg\varphi$ e M''$\models\varphi$
+ma ciò va contro la categoricità della teoria%
+\footnote{L'argomento è valido solo classicamente facendo riferimanto alla reductio
+ad absurdum e alla legge logica valida solo classicamente secondo
+la quale $\neg\forall xAx$ $\rightarrow$ $\exists x\neg Ax$.%
+}.
+
+Alla luce di queste considerazioni sembra allora che il primo teorema
+di incompletezza non comporti dei limiti nel metodo assiomatico ma
+solo dei limiti nello sviluppo della matematica da un punto di vista
+sintattico, infatti un matematico può lavorare senza problemi al secondo
+ordine dove i modelli dell'aritmetica formale sono uno solo a meno
+di isomorfismi, e quindi non si hanno problemi di caratterizzabilità
+della struttura, ma un sistema formale non può lavorare ad un tale
+ordine in quanto i sistemi deduttivi del secondo ordine non sono completi.
+
+Il primo dei due aspetti sopra indicati come fondanti il programma
+di Hilbert sembra perciò indebolito dal risultato godeliano che segna
+uno scarto tra l'approcciò proof-teoretico e quello model-teoretico
+e la necessità di distinzione tra il concetto di provabilità in un
+sistema formale e quello di verità in un modello.
+
+
+\subsection{Secondo teorema di incompletezza}
+
+Il secondo teorema di incompletezza di Godel afferma che la consistenza
+dell'aritmetica formale non è dimostrabile all'interno del sistema
+formale stesso e più in generale che ogni teoria formale altrettano
+espressiva non ha mezzi sufficienti per esprimere la propria coerenza.
+Da ciò segue che una dimostrazione di coerenza di un tale sistema
+deve necessariamente fare ricorso a qualche principio non contenuto
+in esso. Quindi se si cerca una dimostrazione finitaria della coerenza
+di tale teoria, si deve estendere l'ambito della matematica finitaria
+oltre ciò che è esprimibile nell'aritmetica formale e questo effettivamente
+è stato fatto da Gerhard Gentzen che trovò nel 1936 una dimostrazione
+di coerenza per l'aritmetica formale che fa uso dell'induzione fino
+ad un particolare numero ordinale transfinito, usualmente chiamato
+epsilon-zero. Se poi dall'aritmetica si passa all'analisi matematica,
+cioè ad una teoria formale per i numeri reali, la dimostrazione di
+coerenza deve attendere il 1970 e richiede l'induzione fino ad un
+ordinale infinitamente più grande di epsilon-zero%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.24%
+}. A questo punto è lecito chiedersi se una tale matematica possa ancora
+ritenersi finitaria e se rientri ancora nell'ambito di una matematica
+contenutisticamente sicura e che non necessiti di fondazione.
+
+A tutto ciò si aggiunge una difficoltà ben più grande riguardante
+questa volta la teoria ZF. Come per le teorie dei numeri sopra viste
+la teoria ZF non è in grado di dimostare la propria coerenza quindi
+per farlo abbiamo bisogno di un principio non dimostrabile in ZF stessa.
+Ora, da un lato è del tutto irragionevole ritenere che la matematica
+finitaria non sia contenuta nella teoria degli insiemi nella quale
+è di fatto contenuta tutta la matematica d'oggi e dall'altro, fatto
+ancora più rilevante, è attualmente del tutto inimmaginabile un principio
+matematico che trascenda la teoria degli insiemi e quindi risulta
+proprio impossibile allo stato attuale fornire una prova di coerenza
+di tale teoria%
+\footnote{Sambin, Alla ricerca della certezza perduta, pg.24%
+}.
+
+Con il secondo teorema di incompletezza di Godel viene così a cadere
+il secondo assunto fondante il programma di Hilbert: la matematica
+non può fondarsi su se stessa, essa è destinata a poggiare su qualcosa
+di cui si può leggittimante dubitare. Concretamente, tramite la teoria
+ZF è possibile provare la coerenza di tutte le teoria matematiche
+tranne ZF stessa.
+
+
+\section{Stato dell'arte}
+
+Passata la grande stagione della logica che va dai primi del Novecento
+alla fine degli anni '40, l'indagine sui fondamenti della matematica
+si è affievolita e tecnicizzata in modo da divenire una vera e propria
+disciplina matematica che fa ampio uso degli strumenti sviluppati
+dalla logica matematica. Il problema dei fondamenti si è così svincolato
+da questioni più generali di filosofia della matematica, quali questioni
+epistemologiche ed ontologiche, ma in alcuni casi non può evitare
+riferimenti ad esse. La natura di questa disciplina quindi fa continuamente
+riferimento da una lato alla logica e dall'altro alla pratica matematica
+avendo però il tipico andamento di una discplina filosofica(tante
+teorie discordanti, dicussioni, conflitti...), tutto ciò la rende
+unica nel suo genere.
+
+Come già accennato solo due delle tre grandi famiglie di proposte
+fondazionali hanno dato vita ad una concreta pratica matematica e
+quindi le prospettive fondazionali più studiate sono quelle riferentisi
+a questi due indirizzi, che sono rispettivamente il formalismo e l'intuizionismo.
+Queste due prospettive sono molto diverse ed a tratti divergenti,
+all'interno di ogni prospettiva inoltre ci sono numerose proposte
+particolari.
+
+L'intuizionismo è caratterizzato dall' adozione di una logica non
+classica, la logica intuizionistica per l'appunto, e dall'uso esclusivo
+di tecniche di dimostrazione costruttive. La semantica della logica
+intuizionista da un punto di vista algebrico può essere vista come
+una generalizzazione della semantica classica dal momento che la struttura
+algebrica cui si riferisce è una generica algebra di Heyting e che
+ogni algebra di Boole è un'algebra di Heyting. Diverse sono le leggi
+logiche classiche non valide intuizionisticamente ad esempio la legge
+di reductio ad absurdum, il terzo esclusoe e la doppia negazione.
+Queste restrizioni rientrano in un quadro coerente e chiaro la qual
+cosa rende la logica intuizionista una logica molto elegante e plausibile.
+L'adozione di metodi costruttivi rende poi la matematica intuizionista
+molto più concreta di quella classica e passibile di numerose e interessanti
+applicazioni in ambito informatico. Tra le discipline logico matematiche
+c'è sicuramente una predilezione per la proof-theory e la teoria della
+calcolabilità.
+
+Il formalismo invece è caratterizzato dall'adozione della logica classica
+e dalla liceità di qualsiasi tecnica dimostrativa plausibile senza
+interesse per la sua effettività. Il formalismo, che è la forma in
+cui si presenta la matematica classica nel panorama contemporaneo,
+ha una natura prevalentemente semantica e i suoi fondamenti sono da
+rintracciare nella teoria degli insiemi e nella teoria dei modelli.
+I concetti e gli strumenti dimostrativi di ogni teoria in questa matematica
+infatti fanno riferimento alla teoria degli insiemi ZF o a qualche
+versione della teoria degli insiemi ad essa equivalente e la coerenza(relativa)
+delle sue teorie è dimostrata tramite tecniche model-teoretiche%
+\footnote{Ad esempio tramite la teoria degli insiemi si costruisce un modello
+dell'aritmetica e con esso si costruiscono i reali passando per interi
+e razionali arrivando così a dimostrare la coerenza dell'analisi.%
+}. Il formalismo ha portato ad uno sviluppo senza precedenti della
+matematica classica ed alla creazione di teorie notevolmente eleganti
+soprattutto grazie allo sviluppo di tecniche algebriche sempre più
+raffinate. 
+
+Per dare un giudizio generale sui due approcci fondazionali si potrebbe
+dire che l'intuizionismo ha fondamenta più salde ma è più debole(accetta
+meno cose), mentre il formalismo ha fondamenta più fragili ma è più
+forte(accetta più cose). In fin dei conti tutto dipende dall'accettare
+di abitare una grande casa sospesa su un filo che non si sa dove poggia
+o prendere calce e mattoni e mettersi a costruire una casetta su un
+terreno sicuro e tranquillo.

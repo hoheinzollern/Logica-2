@@ -1,0 +1,916 @@
+
+\chapter{Primo Teorema di Incompletezza}
+	\hyphenation{lo-gi-ca a-rit-me-ti-ca rap-pre-sen-ta-bi-le ri-cor-si-va-men-te in-de-ci-di-bi-le e-sis-te in-tro-du-cia-mo e-qui-va-len-za ab-bia-mo}
+
+\section{Risultati precedenti su decidibilit\`a effettiva
+e decidibilit\`a ricorsiva}
+
+	Pu\`o essere utile, per avere una panoramica concettuale
+	completa, anteporre alla dimostrazione del primo teorema di
+	incompletezza, risultato che nel framework del corso acquisisce carattere
+	conclusivo, un breve riassunto dei risultati fin qui ottenuti.
+	
+	Una funzione $f$ dai numeri naturali ai numeri naturali si dice
+	\textit{\emph{effettivamente} \emph{calcolabile}}
+	se esiste una procedura
+	effettiva che permette di calcolare $f(x_1,\,\dots,x_n)$ per ogni
+	$n$-upla $(x_1,\,\dots,x_n)$. 	
+	Ogni funzione ricorsiva totale \`e effettivamente calcolabile. Il viceversa,
+	cio\`e che ogni funzione effettivamente calcolabile
+	\`e ricorsiva totale, \`e noto
+	come \textit{\emph{tesi di Church}}.
+	
+	Un insieme di numeri naturali \`e detto \emph{\textit{effettivamente
+	decidibile}} se esiste una procedura effettiva che, per ogni
+	numero, se applicata ad esso, in una quantit\`a
+	finita di tempo, risponde correttamente
+	alla domanda se tale numero appartenga \textit{o meno} all'insieme.
+	Questa propriet\`a \`e equivalente alla propriet\`a per la funzione caratteristica
+	dell'insieme di essere effettivamente calcolabile.
+	Un insieme \`e detto \emph{\textit{ricorsivo}} se la sua funzione
+	caratteristica \`e ricorsiva totale.
+	Un insieme ricorsivo \`e effettivamente calcolabile, il viceversa segue dalla
+	tesi di Church.
+	
+	Una relazione \`e \textit{\emph{effettivamente decidibile}} se l'insieme
+	delle $n$-uple che la soddisfano lo \`e. \`E \textit{\emph{ricorsiva}}
+	se l'insieme delle $n$-uple che la soddisfano lo \`e. Una relazione
+	ricorsiva \`e effettivamente decidibile, il viceversa segue dalla tesi di
+	Church.
+	
+	Una funzione $f$ da un sottoinsieme dei 
+	numeri naturali ai numeri naturali si dice
+	\textit{\emph{effettivamente semicalcolabile}}
+	se esiste una procedura effettiva che permette di calcolare
+	$f(x_1,\,\dots,x_n)$ per ogni $n$-upla $(x_1,\,\dots,x_n)$ su cui
+	$f$ \`e definita.
+	Ogni funzione ricorsiva parziale \`e effettivamente semicalcolabile.
+	Il viceversa, 	cio\`e che ogni funzione effettivamente semicalcolabile
+	\`e ricorsiva parziale, segue dalla tesi di Church.
+	
+	Un insieme \`e detto \textit{\emph{effettivamente semidecidibile}}
+	se esiste una
+	procedura effettiva che, per ogni numero, se applicata ad esso, se il numero
+	appratiene all'insieme dar\`a risposta affermativa in un intervallo finito di
+	tempo, se non vi appartiene, non dar\`a risposta.
+	Questa propriet\`a \`e equivalente alla fatto che esiste una funzione
+	semicalcolabile di valore costante $1$ il cui dominio \`e l'insieme stesso.
+	Questa funzione \`e detta \textit{\emph{semicaratteristica}}.
+	Un insieme \`e detto \emph{\textit{ricorsivamente enumerabile}} se
+	la sua funzione semicaratteristica \`e ricorsiva.
+	Un insieme ricorsivamente enumerabile \`e effettivamente semidecidibile,
+	il viceversa segue dalla tesi di Church.
+	
+	Una relazione \`e \textit{\emph{effettivamente semidecidibile}}
+	se l'insieme
+	delle $n$-uple che la soddisfano lo \`e. \`E
+	\textit{\emph{ricorsivamente enumerabile}}
+	se l'insieme delle $n$-uple che la soddisfano lo \`e. Una relazione
+	ricorsivamente enumerabile \`e effettivamente semidecidibile,
+	il viceversa segue dalla tesi di Church.
+
+\section{Risultati precedenti su rappresentabilit\`a
+e ricorsivit\`a}
+	Sia $T$ una teoria con uguaglianza nel linguaggio $\mathcal{L}_A$
+	dell'aritmetica. Una funzione $f$ si dice \emph{\textit{rappresentabile}}
+	in $T$ se esiste una formula $\varphi(x_1,\,\dots,x_n,\,y)$ di $T$
+	tale che:\\
+	
+	\begin{quote}
+	Se $f(k_1,\,\dots,\,k_n)=m$ allora $\vdash_T\forall y(\varphi(
+	\overline{k_1},\,\dots,\,\overline{k_n},\,y)\leftrightarrow y=\overline{m})$.
+	\end{quote}
+	Una relazione $R$ si dice \emph{esprimibile} in T se
+	esiste una formula $\varphi(x_1,\,\dots,x_n)$ di $T$
+	tale che:\\
+	
+	\begin{quote}
+	Se $R(k_1,\,\dots,\,k_n)$ \`e vera allora $\vdash_T\varphi(\overline{k_1},\,
+	\dots,\,\overline{k_n})$,\\
+	Se $R(k_1,\,\dots,\,k_n)$ \`e falsa allora $\vdash_T\neg\varphi(\overline{k_1},\,
+	\dots,\,\overline{k_n})$.\\
+	\end{quote}
+	Ogni funzione ricorsiva totale \`e rappresentabile in $T$. Ogni relazione
+	ricorsiva (complementata) \`e esprimibile in $T$.
+	
+	Una relazione $R$ si dice \textit{\emph{semirappresentabile}} in $T$
+	se esiste una formula $\varphi(x_1,\,\dots,\,x_n)$ tale che:
+	
+	$$
+	R(k_1,\,\dots,\,k_n) \mbox{\:\`e vera sse\:} \vdash_T\varphi(\overline{k_1},\dots,\,
+	\overline{k_n})
+	$$
+	Una relazione \`e semirappresentabile se e solo se \`e ricorsivamente enumerabile.
+	
+	\textit{La rappresentabilit\`a e l'esprimibilit\`a ci permettono di parlare
+	di funzioni e relazioni all'interno del sistema formale stesso}.
+	
+\section{Decidibilit\`a}
+	
+	\begin{defi}
+		Un insieme di simboli, o espressioni, o oggetti pi\`u complicati \`e detto
+		\emph{ricorsivo} sse l'insieme dei numeri di codifica
+		dei suoi elementi \`e ricorsivo.
+	\end{defi}
+	
+	\begin{defi}
+		Un linguaggio si dice \emph{ricorsivo} se
+		l'insieme dei numeri di codifica dei suoi simboli \`e ricorsivo.
+	\end{defi}
+
+	\begin{defi}
+		Si dice \emph{teoria} un insieme di enunciati\footnote{Con enunciato
+		si intende formula della teoria senza variabili libre.} che contiene
+		tutti gli enunciati del suo linguaggio che sono dimostrabili a partire
+		da essa.
+	\end{defi}
+	
+	\begin{defi}
+		Una teoria $T$ si dice \emph{assiomatizzabile} se esiste un
+		un insieme decidibile $\Gamma$ di enunciati  tale che $T$ consiste
+		di tutte e soli gli enunciati dimostrabili da $\Gamma$. Si dice
+		\emph{ricorsivamente assiomatizzabile} se $\Gamma$ \`e ricorsivo.
+		Per la tesi di Church le due definizioni sono equivalenti e noi le
+		confonderemo.
+	\end{defi}
+	
+	\begin{defi}
+		Una teoria si dice \emph{decidibile} se \`e un insieme ricorsivo.
+	\end{defi}
+	
+	\begin{defi}
+		Una teoria $T$ si dice \emph{\textit{sintatticamente consistente}} o
+		\emph{\textit{coerente}}
+		se non esiste un enunciato $\varphi$ in $T$ tale che $\vdash_{T}\varphi$
+		e $\vdash_{T}\neg\varphi$; equivalentemente, per la regola \textit{ex falso},
+		se non dimostra ogni formula del suo linguaggio.
+	\end{defi}
+		
+	\begin{defi}
+		Un enunciato $\varphi$ nel linguaggio $\mathcal{L}_T$ di una teoria $T$
+		si dice \emph{refutabile} se $\vdash_T\neg\varphi$.
+	\end{defi}
+	
+	\begin{defi}
+		Un enunciato $\varphi$ nel linguaggio $\mathcal{L}_T$ di una teoria $T$
+		si dice \emph{indecidibile} se non \`e dimostrabile n\'e refutabile.
+	\end{defi}
+	
+	\begin{defi}
+		una teoria $T$ si dice \emph{\textit{completa}} se per ogni enunciato 
+		$\varphi$ del suo linguaggio vale $\vdash_{T}\varphi$ oppure
+		$\vdash_{T}\neg\varphi$.
+	\end{defi} 
+	
+	\begin{defi}
+		Una teoria si dice \textit{\emph{incompleta}} se ammette un enunciato
+		indecidibile.
+	\end{defi}
+
+\subsection{Premessa}
+	Nei prossimi tre paragrafi forniremo quattro versioni della dimostrazione
+	del teorema di incompletezza di G\"odel.
+	
+	Le prime tre sono classiche. La prima di queste:
+	
+	\begin{itemize}
+	\item segue l'approccio di Boolos;
+	\item \`e classica\footnote{Quando la dimostrazione \`e
+	classica, scriveremo $PA$ anzich\'e $HA$, riferendoci all'
+	``aritmetica di Peano''.};
+	\item \`e molto elegante;
+	\item non suppone l'$\omega$-consistenza;
+	\item usa il diagonalization lemma;
+	\item non produce esplicitamente un enunciato indecidibile.
+	\end{itemize}
+	La seconda:
+	\begin{itemize}
+	\item segue l'approccio di G\"odel;
+	\item \`e classica;
+	\item \`e pi\`u macchinosa;
+	\item suppone l'$\omega$-consistenza;
+	\item non usa il diagonalization lemma;
+	\item produce esplicitamente un enunciato indecidibile.
+	\end{itemize}
+	La terza:
+	\begin{itemize}
+	\item segue l'approccio di Rosser, raffinamento del risultato di G\"odel;
+	\item \`e classica;
+	\item \`e pi\`u macchinosa;
+	\item rilassa l'ipotesi di $\omega$-consistenza;
+	\item non usa il diagonalization lemma;
+	\item produce esplicitamente un enunciato indecidibile.
+	\end{itemize}
+	La quarta:
+	\begin{itemize}
+	\item segue l'approccio di Sambin e Maietti;
+	\item \`e intuizionista;
+	\item \`e elegante;
+	\item non necessita dell'ipotesi di $\omega$-consistenza in quanto
+	in $HA$ si dimostra l'existence property;
+	\item usa il diagonalization lemma;
+	\item produce esplicitamente un enunciato indecidibile.
+	\end{itemize}
+
+\section{Primo teorema di incompletezza-prima versione}
+
+	I teoremi di incompletezza di G\"odel esprimono i limiti di un qualunque
+	sistema formale che sia abbastanza forte da permetterci di ``riprodurre''
+	al suo interno la teoria dei numeri. In realt\`a il lavoro iniziale di G\"odel
+	faceva riferimento a un sistema specifico, quello descritto da B. Russell e
+	A. N. Whitehead nei \textit{Principia ma\-the\-ma\-ti\-ca}, ma il principio
+	\`e in generale applicabile anche a tutti gli altri sistemi formali dotati di
+	certe propriet\`a, come, nella nostra trattazione, $PA$.\\
+	Prima di procedere stabiliamo che con teoria, impiantata su un qualche
+	linguaggio, intendiamo un insieme che contiene tutte le formule senza
+	variabili libere di quel linguaggio, tali che siano in essa dimostrate.
+		
+	La codifica di $MPA$ in $PA$, ottenuta attraverso l'aritmetizzazione,
+	render\`a possibile definire in $PA$ formule autoreferenziali ed in
+	particolare una formula che nega la propria dimostrabilit\`a. Il primo
+	teorema di incompletezza prender\`a il via da queste considerazioni e,
+	supposta la consistenza di $PA$, mostrer\`a l'esistenza di una formula
+	indecidibile\footnote{E dunque l'incompletezza di $PA$.}.
+
+	\begin{prop}
+	Sia $T$ una teoria assiomatizzabile. Se $T$ \`e completa, $T$ \`e decidibile.
+	\end{prop}
+	
+	\textsc{Dimostrazione.}\\
+	Dobbiamo mostrare che l'insieme $T^*$ dei codici dei teoremi di $T$
+	\`e ricorsivo. Che sia ricorsivamente enumerabile lo sappiamo dai
+	capitoli precedenti, pertanto dobbiamo solo mostrare che anche il
+	suo complemento \`e ricorsivamente enumerabile. Il complemento di
+	$T^*$ \`e l'unione dell'insieme $X$ dei numeri che non sono codici
+	di formule e dell'insieme $Y$ dei codici di formule la cui negazione
+	sta in $T$, per completezza. Ma $X$ \`e ricorsivo visto che lo \`e
+	il suo complemento, e $Y$ \`e ricorsivamente enumerabile: la sua
+	funzione semicaratteristica si ottiene facilmente componendo la
+	funzione primitiva ricorsiva $neg$ con la funzione semicaratteristica
+	di $T*$, operazione che lasciamo al lettore. Dunque per il teorema
+	di Kleene possiamo concludere.
+	\begin{flushright}$\Box$\end{flushright}
+
+\subsection{Diagonalizzazione di una formula}
+	L'apparato formale necessario alla dimostrazione dei teoremi di
+	G\"odel \`e finalmente completo. L'obiettivo delle prossime
+	righe sar\`a quello di implementare e di studiare il problema
+	dell'autoreferenza in $PA$. Cominciamo dalla nozione di
+	diagonalizzazione:
+
+	\begin{defi}Data una qualunque formula $\varphi$, la sua
+	diagonalizzazione \`e la formula $\exists x(x=\overline
+	{\gdnum{\varphi}} \& \varphi)$.
+	\end{defi}
+	In particolare, se $\varphi(x)$ \`e una formula dotata di una
+	sola variabile libera $x$, notiamo l'equivalenza logica $\exists
+	x(x=\overline{\gdnum{\varphi}} \& \varphi)\leftrightarrow\varphi
+	(\overline{\gdnum{\varphi}})$, che possiamo leggere come: "il
+	numerale del G\"odeliano di $\varphi$ la verifica".
+
+	\begin{prop}
+	\label{pro:funPriRic}
+	Esiste una funzione primitiva ricorsiva $$diag:\mathbb{N}\rightarrow\mathbb{N}$$
+	tale che, per ogni formula $\varphi$, $diag(\gdnum{\varphi})=\gdnum{\exists
+	x(x=\overline{\gdnum{\varphi}} \& \varphi)}$.
+	\end{prop}
+	
+	\textsc{Dimostrazione.}\\
+	La funzione
+	
+	\begin{eqnarray*}
+	num: \mathbb{N} & \longrightarrow & \mathbb{N}\\
+	n &\mapsto& \gdnum{\overline{n}}
+	\end{eqnarray*}
+	\`e definita dallo schema di ricorsione
+	
+	$$
+	\left\{\begin{array}{l}
+	num(0)=19\\
+	num(n+1)=\gdnum{s} \star \gdnum{(} \star num(n) \star\gdnum{)}
+	\end{array}\right.
+	$$
+	ed \`e dunque primitiva ricorsiva. Applicata a un numero qualunque,
+	restituisce il codice del numerale che rappresenta quel numero.
+	Grazie ad essa possiamo definire
+	
+	$$
+	diag(n):=\gdnum{\exists x(x=}\star num(n)\star\gdnum{\&}\star n\star\gdnum{)}.
+	$$
+	Cos\`i costruita, la funzione $diag$ \`e primitiva ricorsiva,
+	essendo composizione di funzioni primitive ricorsive. Non resta
+	che verificare la condizione definitoria. Data $\varphi$ formula,
+	si PA
+	
+	\begin{eqnarray*}
+	diag(\gdnum{\varphi})=\gdnum{\exists x(x=}\star num(\gdnum{\varphi})
+	\star\gdnum{\&}\star \gdnum{\varphi}\star\gdnum{)}=\\
+	=\gdnum{\exists x(x=}\star \gdnum{\overline{\gdnum{\varphi}}})\star
+	\gdnum{\&}\star \gdnum{\varphi}\star\gdnum{)}=\\
+	=\gdnum{\exists x(x=\overline{\gdnum{\varphi}}\&\varphi)}
+	\end{eqnarray*}
+	e dunque la tesi.\begin{flushright}$\Box$\end{flushright}
+	
+	In altri termini, la funzione $diag$ appena definita \`e primitiva ricorsiva
+	(quindi totale) ed associa, in particolare, al codice di una formula il codice
+	della corrispondente diagonalizzazione.
+	
+\subsection{Dimostrazione del primo teorema di incompletezza di G\"odel}
+%lemma diagonale
+%indefinibilità di theta
+%indecidibilità essenziale
+%primo teorema di incompletezza
+	
+	Forti dei risultati a cui siamo arrivati, procediamo verso la prova del
+	primo teorema di incompletezza di G\"odel, dal quale ci separano soltanto
+	qualche lemma e un teorema. Il primo passo consiste nella dimostrazione del:
+	
+	\begin{prop}[Lemma diagonale]
+	\label{lem:diagLemma}
+	Sia $T$ una teoria abbastanza forte da esprimere l'aritmetica, e sia
+	$L$ il linguaggio sul quale essa \`e impiantata. Per ogni formula
+	$\psi(x)$ di $L$ esiste una formula $\delta_\psi$ tale che
+	
+	$$
+	\vdash_{T} \delta_\psi \leftrightarrow \psi(\overline{\ulcorner
+	\delta_\psi \urcorner})
+	$$
+	\end{prop}
+	Dove con  ``teoria abbastanza forte da esprimere l'aritmetica'' si intende
+	una teoria che possa rappresentare i naturali, l'uguaglianza e l'ordine dei
+	naturali, la somma e il prodotto. Il requisito viene dettato dalla necessit\`a
+	di effettuare l'aritmetizzazione per conseguire l'autoriferimento, il che
+	risulter\`a chiaro dalla dimostrazione. Evidentemente $PA$ risulta essere
+	una teoria abbastanza forte. Prima di dimostrare il lemma, osserviamo che
+	lo possiamo leggere come: ``per qualunque propriet\`a si possa descrivere
+	attraverso una formula del linguaggio $L$, esiste un'altra formula nello
+	stesso linguaggio che viene dimostrata dalla teoria se e solo se il suo
+	codice gode della propriet\`a in questione''.
+	
+	\textsc{Dimostrazione.}\\ 
+	Dimostriamo il lemma esibendo la $\delta_\psi$ per una generica formula $\psi(x)$.\\
+	Sappiamo che la funzione $diag:\mathbb{N}\rightarrow\mathbb{N}$, che applicata
+	al codice di una formula restituisce il codice della relativa diagonalizzazione,
+	\`e primitiva ricorsiva. Quindi  \`e totale e soprattutto \`e rappresentabile.
+	Ricordiamo che questo significa che esiste una formula $\varphi_{diag}$ tale che
+	se $diag(n)=m$ allora $\vdash_{T} \forall y(\varphi_{diag}(\overline{n},y)
+	\leftrightarrow y=\overline{m})$.\\
+	Definiamo:
+	
+	$$
+	\chi(x)\equiv\exists y(\varphi_{diag}(x,y)\&\psi(y))
+	$$
+	nella quale notiamo la dipendenza da $\psi$, e chiamiamo il suo numero di G\"odel:
+	
+	$$
+	a\equiv\ulcorner\chi(x)\urcorner
+	$$
+	quindi costruiamo la $\delta_\psi$ di interesse come diagonalizzazione di $\chi(x):$
+	
+	$$
+	\delta_\psi \equiv \exists x(x=\overline{a} \& \chi(x))
+	$$
+	e diamo un nome al suo G\"odeliano:
+	
+	$$
+	d\equiv \ulcorner\delta_\psi \urcorner
+	$$
+	Dal momento che in generale $\exists x(x = t \& A(x))$
+	equivale ad $A(t)$, notiamo che nello specifico vale l'equivalenza
+	
+	$$
+	\vdash_{T} \delta_\psi \leftrightarrow \chi(\overline{a})
+	$$
+	Da questo e dalla definizione di $\chi(x)$, se riusciamo a
+	mostrare che $$\vdash_{T} \exists y(\varphi_{diag}(\overline{a},y)
+	\&\psi(y)) \leftrightarrow \psi(\overline{d})
+	$$
+	possiamo concludere.
+
+	Dato che $\delta_\psi$ \`e la diagonalizzazione di $\chi(x)$ si PA che
+	$diag(a)=d$ e dunque, per rappresentabilit\`a:
+	
+	$$
+	\vdash_{T} \forall y(\varphi_{diag}(\overline{a},y)\leftrightarrow y=\overline{d})
+	$$
+	Ma allora, ricordandosi che in generale se vale $A \leftrightarrow B$
+	vale anche $(A \& C) \leftrightarrow (B \& C)$, abbiamo che
+	
+	$$
+	\vdash_{T} \forall y((\varphi_{diag}(\overline{a},y)\&\psi(y))\leftrightarrow
+	(y=\overline{d}\&\psi(y)))
+	$$
+	Per cui, visto che se vale una formula quantificata universalmente allora
+	anche l'esistenziale vale di sicuro, possiamo affermare che
+	
+	$$
+	\vdash_{T} \exists y((\varphi_{diag}(\overline{a},y)\&\psi(y))\leftrightarrow
+	(y=\overline{d}\&\psi(y)))
+	$$
+	Dalla quale si arriva a
+	
+	$$
+	\vdash_{T} \exists y(y=\overline{d}\&\psi(y)) \leftrightarrow \psi(\overline{d})
+	$$
+	Dunque la tesi.
+	\begin{flushright}$\Box$\end{flushright}
+
+	La dimostrazione appena conclusa fornisce un procedimento esplicito
+	per costruire $\delta_{\psi}$ a partire dalla formula $\psi$ data.\\  
+	Diamo ora la nozione di definibilit\`a di un insieme di naturali.
+	
+	\begin{defi} Un insieme $S$ di naturali \`e definibile in una
+	teoria consistente $T$ se esiste una formula $D(x)$ tale che
+	per ogni naturale $n$ vale $\vdash_{T}D(\overline{n})$ se $n$
+	sta in $S$ e $\vdash_{T}\neg D(\overline{n})$ se $n$ non sta in $S$.
+	\end{defi}
+	
+	Osserviamo che:
+	
+	\begin{prop}
+	Sia $S$ un insieme ricorsivo (o decidibile), allora S \`e
+	definibile.
+	\end{prop}
+	
+	\textsc{Dimostrazione.}\\
+	Se $S$ \`e decidibile allora la sua funzione caratteristica $\chi_S$ \`e
+	calcolabile totale, quindi rappresentabile da un predicato a due posti
+	$\varPhi(x,y)$. Allora \`e immediato verificare che possiamo definire $S$
+	con il predicato $D(x)\equiv \varPhi(x, \overline{1}) $.
+	\begin{flushright}$\Box$\end{flushright}
+	
+	Ora abbiamo il vocabolario per dimostrare che:
+	
+	\begin{prop}
+	Sia $T$ una teoria consistente abbastanza forte da esprimere l'aritmetica,
+	l'insieme dei numeri di G\"odel dei teoremi di $T$ non \`e definibile in $T$.
+	\end{prop}
+	
+	\textsc{Dimostrazione.}\\
+	Sia $\Theta$ l'insieme dei codici dei teoremi di $T$. Supponiamo che il predicato
+	$\theta(y)$ definisca $\Theta$. Per il lemma diagonale sappiamo che esiste una
+	formula chiusa $G$ tale che
+	
+	$$
+	\vdash_{T} G \leftrightarrow \neg\theta(\overline{\ulcorner G \urcorner})
+	$$
+	Quindi se $\vdash_{T} G$ allora $\overline{\ulcorner G \urcorner}$ sta in
+	$\Theta$ e $\vdash_{T} \theta(\overline{\ulcorner G \urcorner})$\\
+	ma se $\vdash_{T} G$ allora anche $\vdash_{T} \neg\theta(\overline
+	{\ulcorner G \urcorner})$,
+	contro la consistenza.\\
+	Se $\not\vdash_{T} G$ allora $\overline{\ulcorner G \urcorner}$ non sta
+	in $\Theta$ e $\vdash_{T} \neg\theta(\overline{\ulcorner G \urcorner})$\\
+	ma se $\vdash_{T} \neg\theta(\overline{\ulcorner G \urcorner})$ allora
+	anche $\vdash_{T} G$, il che \`e una contraddizione.\\
+	L'errore sta nell'aver assunto $\Theta$ definibile, dunque la tesi.
+	\begin{flushright}$\Box$\end{flushright}
+	
+	\begin{thm}[Indecidibilit\`a essenziale]
+	Nessuna teoria T, consistente e abbastanza forte da esprimere l'aritmetica,
+	\`e decidibile.
+	\end{thm}
+	
+	\textsc{Dimostrazione.}\\
+	Dal lemma precedente l'insieme $\Theta$ dei codici dei teoremi di $T$ non
+	\`e definibile in $T$. Ma ogni insieme ricorsivo \`e definibile in $T$,
+	quindi $\Theta$ non \`e ricorsivo, ovvero $T$ non \`e decidibile.
+	\begin{flushright}$\Box$\end{flushright}
+	
+	\begin{thm}[Primo teorema di incompletezza]
+	Non esiste nessuna teoria T, abbastanza forte da esprimere l'aritmetica,
+	che sia assiomatizzabile, completa e sintatticamente consistente.
+	\end{thm}
+	
+	\textsc{Dimostrazione.}\\
+	Ogni teoria assiomatizzabile e completa \`e decidibile, ma ogni teoria consistente
+	in grado di esprimere l'aritmetica \`e indecidibile.
+	\begin{flushright}$\Box$\end{flushright}
+	
+\section{Primo teorema di incompletezza-seconda e terza versione.}
+		
+\subsection{Enunciati indecidibili}
+	
+	Sia $T$ una teoria del prim'ordine con gli stessi simboli di $PA$.
+	
+	\begin{defi}
+	$T$ si dice $\omega$-consistente sse, per ogni formula $\varphi(x)$ di $T$,
+	se $\vdash_T\varphi(\overline{n})$ per ogni numero naturale $n$, allora
+	$\not\vdash\exists x\neg\varphi(x)$.
+	\end{defi}
+	
+	\begin{thm}
+	Se $T$ \`e $\omega$-consistente, allora $T$ \`e consistente.
+	\end{thm}
+	\textsc{Dimostrazione.} Supponiamo $T$ $\omega$-consistente.
+	Sia $\varphi(x)$ una formula tale che $\vdash_T
+	\varphi(x)$, segue che $\vdash_T\varphi(\overline{n})$ per ogni
+	numero naturale $n$. Per $\omega$-consistenza segue che
+	$\not\vdash_T\exists x\neg\varphi(x)$. Dunque $K$
+	\`e consistente, altrimenti per la regola \textit{ex falso} ogni formula
+	sarebbe dimostrabile.\begin{flushright}$\Box$\end{flushright}
+	
+	Introduciamo le seguenti relazioni
+	
+	$$
+	W_1(u,\,y):=Form(u)\& Fv(u,\,\gdnum{x_1})\& Proof(y,\,Sub(
+	\gdnum{\overline{u}},\,\gdnum{x_1},\,u))
+	$$
+	che dice: $u$ \`e il numero di codifica di una formula $\varphi(x_1)$
+	che contiene la variabile libera $x_1$
+	e $y$ \`e il numero di codifica di una dimostrazione di $\varphi(\overline{u})$;
+	
+	$$
+	W_2(u,\,y):=Form(u)\& Fv(u,\,\gdnum{x_1})\& Proof(y,\,Sub(
+	\gdnum{\overline{u}},\,\gdnum{x_1},\,\gdnum{\neg}\ast u))
+	$$
+	che dice: $u$ \`e il numero di codifica di una formula $\varphi(x_1)$
+	che contiene la variabile libera $x_1$
+	e $y$ \`e il numero di codifica di una dimostrazione di
+	$\neg\varphi(\overline{u})$.
+	
+	$W_1(u,\,y)$ \`e primitiva ricorsiva, dunque \`e esprimibile in $PA$ per mezzo
+	di una formula $\mathcal{W}_1(x_1,\,x_2)$ con $x_1$ e $x_2$ variabili libere.
+	Consideriamo la formula:
+	
+	$$
+	g_{PA}(x_1)\equiv\forall x_2\neg\mathcal{W}_1(x_1,\,x_2)
+	$$
+	sia $m=\gdnum{g_{PA}}$, consideriamo l'enunciato:
+	
+	$$
+	G_{PA}\equiv\forall x_2\neg\mathcal{W}_1(\overline{m},\,x_2)
+	$$
+	detto \emph{enunciato di G\"odel}. Si ha che
+	(I) $W_1(m,\,y)$ vale se e solo se $y$ \`e il numero di codifica
+	di una dimostrazione in $PA$ di $G_{PA}$.
+	
+	\begin{thm}[Teorema di G\"odel per $PA$, 1931]
+	Se $PA$ \`e consistente, allora $G_{PA}$ non \`e
+	dimostrabile in PA. Se PA \`e $\omega$-consistente,
+	allora $G_{PA}$ non \`e refutabile in PA. In
+	particolare, se PA \`e $\omega$-consistente, $G_{PA}$
+	\`e indecidibile.
+	\end{thm}
+	
+	\textsc{Dimostrazione.}\\
+	Supponiamo $PA$ consistente e $G_{PA}$ dimostrabile in $PA$.\\
+	Sia $k$ il numero di codifica di una dimostrazione in $PA$.\\
+	Per (I) abbiamo
+		$$W_1(m,\,k)$$
+	per esprimibilit\`a segue che
+		$$\vdash_{PA} \mathcal{W}_1(\overline{m},\,\overline{k}).$$
+	Ma poich\'e 
+		$$\vdash_{PA}G_{PA}$$
+	per pura logica segue che
+		$$\vdash_{PA}\neg\mathcal{W}_1(\overline{m},\,\overline{k}).$$
+	Da cui segue che 
+		$$\vdash_{PA}\mathcal{W}_1(\overline{m},\,\overline{k})$$
+	e
+		$$\vdash_{PA}\neg\mathcal{W}_1(\overline{m},\,\overline{k})$$
+	e ci\`o \`e contro la consistenza di $PA$.
+	
+	Supponiamo $PA$ $\omega$-consistente e $G_{PA}$ refutabile.\\
+	Per consistenza segue che
+		$$\not\vdash_{PA} G_{PA}.$$
+	Da cui segue che per ogni numero naturale $n$, $n$ non \`e il numero di codifica di
+	una dimostrazione in $PA$ di $G_{PA}$.\\
+	Per (I) segue che per ogni $n$, $W_1(m,\,n)$ \`e falsa.\\
+	Per rappresentabilit\`a segue che per ogni $n$
+		$$\vdash_{PA}\neg\mathcal{W}_1(\overline{m},\,\overline{n}).$$
+	Per $\omega$-consistenza segue che
+		$$\not\vdash_{PA}\exists x_2\neg\neg \mathcal{W}_1(\overline{m},\,x_2)$$
+	da cui segue che
+	$$\not\vdash_{PA}\exists x_2\mathcal{W}_1(\overline{m},x_2).$$
+	Ci\`o \`e contro la refutabilit\`a di $G_{PA}$.
+	\begin{flushright}$\Box$\end{flushright}
+	
+	$W_2(u,\,y)$ \`e primitiva ricorsiva, dunque \`e esprimibile in $PA$ per mezzo
+	di una formula $\mathcal{W}_2(x_1,\,x_2)$ con $x_1$ e $x_2$ variabili libere.
+	Consideriamo la formula:
+	
+	$$
+	r_{PA}(x_1)\equiv
+	\forall x_2(\mathcal{W}_1(x_1,\,x_2)\rightarrow
+	\exists x_3(x_3\leq x_2\& \mathcal{W}_2(x_1,\,x_3)))
+	$$
+	sia $n=\gdnum{r_{PA}}$, consideriamo l'enunciato:
+	$$
+	R_{PA}\equiv
+	\forall x_2(\mathcal{W}_1(\overline{n},\,x_2)\rightarrow
+	\exists x_3(x_3\leq x_2\& \mathcal{W}_2(\overline{n},\,x_3)))
+	$$
+	detto \emph{enunciato di Rosser}. Si ha che
+	(II) $W_1(n,\,y)$ vale se e solo se $y$ \`e il numero di codifica
+	di una dimostrazione in $PA$ di $R_{PA}$ e (III)
+	$W_2(n,\,y)$ vale se e solo se $y$ \`e il numero di codifica
+	di una dimostrazione in $PA$ di $\neg R_{PA}$.
+	
+	\begin{thm}[Teorema di G\"odel-Rosser, 1936]
+	Se $PA$ \`e consistente, allora $R_{PA}$ \`e indecidibile.
+	\end{thm}
+	\textsc{Dimostrazione.} Supponiamo $PA$ consistente e $R_{PA}$ dimostrabile.\\
+	Sia $k$ il numero di codifica di una dimostrazione in $PA$.\\
+	Per (II) segue 
+		$$W_1(n,\,k).$$
+	Per esprimibilit\`a segue che
+		$$\vdash_{PA}\mathcal{W}_1(\overline{n},\,\overline{k}).$$
+	Ma per dimostrabilit\`a di $R_{PA}$ e per pura logica segue che
+		$$\vdash_{PA}\mathcal{W}_1(\overline{n},\,\overline{k})
+		\rightarrow\exists x_3(x_3\leq\overline{k}\&\mathcal{W}_2
+		(\overline{n},\,x_3)).$$
+	Per pura logica segue che
+		$$\vdash_{PA}\exists x_3(x_3\leq\overline{k}\&\mathcal{W}_2
+		(\overline{n},\,x_3)).$$
+	Ora, dalle ipotesi segue che
+		$$\not\vdash\neg R_{PA}.$$
+	Per (III) segue che $W_2(n,\,y)$ \`e falsa per ogni
+	numero naturale $y$.\\
+	Per esprimibilit\`a segue che $\vdash_{PA}
+	\neg\mathcal{W}_2(\overline{n},\,\overline{j})$ per ogni numero naturale
+	$j$.\\
+	Da cui segue che 
+		$$\vdash_{PA}
+		\neg\mathcal{W}_2(\overline{n},\,0)\&
+		\neg\mathcal{W}_2(\overline{n},\,\overline{1})\&
+		\dots\&
+		\neg\mathcal{W}_2(\overline{n},\,\overline{k}).$$
+	Per proposizioni precedenti su $HA$ e dunque $PA$\footnote{In quanto
+	ci\`o che vale in logica intuizionista, vale in logica classica.}
+	segue che
+		$$\vdash_{PA}\forall x_3(x_3\leq\overline{k}
+		\rightarrow\neg\mathcal{W}_2(\overline{n},\,x_3)).$$
+	Per pura logica segue che
+		$$\vdash_{PA}\neg\exists x_3(x_3\leq\overline{k}
+		\&\mathcal{W}_2(\overline{n},\,x_3)).$$
+	Ma questa \`e la negazione di una formula derivata precedentemente.
+	Ci\`o contraddice la consistenza di $PA$.
+	
+	Supponiamo $R_{PA}$ refutabile.\\
+	Sia $r$ il numero di codifica di una
+	dimostrazione di $\neg R_{PA}$.\\
+	Per (III) vale $W_2(n,\,r)$.\\
+	Per rappresentabilit\`a segue che 
+		$$\vdash_{PA}\mathcal{W}_2(\overline{n},\,\overline{r}).$$
+	Per consistenza di $PA$ segue che che 
+		$$\not\vdash_{PA}R_{PA}.$$
+	Per (II) segue che $W_1(n,\,y)$ \`e falsa per ogni
+	numero naturale $y$.\\
+	Da cui segue che $\vdash_{PA}\neg\mathcal{W}_1
+	(\overline{n},\,\overline{j})$ per ogni numero naturale $j$.\\
+	In particolare
+		$$\vdash_{PA}\neg\mathcal{W}_1(\overline{n},\,0)\&
+		\neg\mathcal{W}_1(\overline{n},\,\overline{1})\&\dots
+		\&\neg\mathcal{W}_1(\overline{n},\,\overline{r}).$$
+	Per proposizioni precedenti su $HA$ segue che:
+	
+	\begin{quote}
+	a) $\vdash_{PA} x_2\leq\overline{r}\rightarrow\neg\mathcal{W}_1
+	(\overline{v},\,x_2)$.
+	\end{quote}
+	D'altra parte, consideriamo la seguente deduzione
+	
+	$$
+	\begin{array}{ll}
+	\vdash_{PA}\overline{r}\leq x_2						 								& \mbox{ipotesi}\\
+	\vdash_{PA}\mathcal{W}_2(\overline{n},\,\overline{r})								& \mbox{gi\`a dimostrato prima}\\
+	\vdash_{PA}\overline{r}\leq x_2\&\mathcal{W}_2(\overline{n},\,\overline{r})		& \mbox{1, 2, pura logica}\\
+	\vdash_{PA}\exists x_3(x_3\leq x_2\&\mathcal{W}_2(\overline{n},\,x_3))			& \mbox{3, pura logica}
+	\end{array}
+	$$
+	Per $1-4$ e per pura logica segue che:
+	
+	\begin{quote}
+	b) $\vdash_{PA}\overline{r}\leq x_2\rightarrow
+	\exists x_3(x_3\leq x_2\&\mathcal{W}_2(\overline{n},\,x_3)).$
+	\end{quote}
+	Per proposizioni precedenti su $HA$ segue che:
+	
+	\begin{quote}
+	c) $\vdash_{PA} x_2\leq\overline{r}\vee\overline{r}\leq x_2.$
+	\end{quote}
+	Per $a-c$ e per pura logica segue che:
+	
+	$$
+	\vdash_{PA}\neg\mathcal{W}_1(\overline{n},\,x_2)\vee\exists x_3
+	(x_3\leq x_2\&\mathcal{W}_2(\overline{n},\,x_3)).
+	$$
+	Per pura logica segue che:
+	
+	$$
+	\vdash_{PA}\forall x_2(\mathcal{W}_1(\overline{n},\,x_2)\rightarrow\exists x_3
+	(x_3\leq x_2\&\mathcal{W}_2(\overline{n},\,x_3))).
+	$$
+	Da cui segue che
+		$$\vdash_{PA} G_{PA}.$$
+	Per refutabilit\`a ci\`o contraddice la consistenza di
+	$PA$.\begin{flushright}$\Box$\end{flushright}
+	
+	Se si rende $PA$ pi\`u forte, ad esempio aggiungendovi $G_{PA}$ e
+	ottenendo $PA_1$, $PA_1$ ammette ancora un
+	enunciato indecidibile. Infatti
+	qualunque funzione ricorsiva, essendo rappresentabile in $PA$, \`e
+	rappresentabile in $PA_1$ e, ovviamente, la relazione $W_{1,PA_1}$,
+	scritta per $PA_1$, sar\`a primitiva ricorsiva. Ma questo \`e
+	tutto ci\`o di cui abbiamo
+	bisogno per ottenere il risultato di G\"odel.
+	
+	Pi\`u in generale, poich\'e per giungere ai teoremi
+	di G\"odel e G\"odel-Rosser abbiamo
+	usato la rappresentabilit\`a delle funzioni in $PA$ e la primitiva
+	ricorsivit\`a di $Proof$, cio\`e di $Der$, ogni estensione $T$ di $PA$ che
+	soddisfa a queste propriet\`a ammetter\`a un enunciato indecidibile.
+	
+	Poich\'e per ottenere $Der$ in $T$ primitivo ricorsivo \'e sufficiente
+	che $T$ sia ricorsivamente assiomatizzabile segue che:
+	
+	\begin{thm}
+	Ogni estensione consistente e ricorsivamente assiomatizzabile di $PA$
+	ammette un enunciato indecidibile.
+	\end{thm}
+	
+\subsection{Dimostrabilit\`a e verit\`a}
+	
+	Poich\'e $\mathcal{W}_1$ esprime $W_1$ in $PA$,
+	l'interpretazione standard di $G_{PA}:=\forall x_2\neg
+	\mathcal{W}_1(\overline{m},\,x_2)$ afferma che $W_1(m,\,x_2)$ \`e falsa per
+	ogni numero naturale $x_2$. Per (I) $\not\vdash_{PA}G_{PA}$.
+	Cio\`e \textit{$G_{PA}$ afferma la propria indimostrabilit\`a in
+	$PA$}. Per il teorema di G\"odel, se $PA$ \`e consistente,
+	$G_{PA}$ \`e indimostrabile. Da questo segue che $G_{PA}$ \textit{\`e vera per
+	l'interpretazione standard ma non \`e dimostrabile}. Un ragionamento analogo
+	si pu\`o fare per $R_{PA}$.
+	
+\section{Primo teorema di incompletezza-quarta versione}
+	
+	\`E fondamentale la seguente propriet\`a di $HA$:
+	
+	\begin{thm}[\textbf{existence property}]
+	Data una qualsiasi formula $\phi(x)$ dotata di un'unica variabile libera $x$,
+	se vale $\vdash_{HA}\exists x\phi(x)$ allora esiste un numero naturale
+	$n$ tale che $\vdash_{HA}\phi(\overline{n})$.
+	\end{thm}
+	La dimostrazione, che tralasciamo per difficolt\`a e lunghezza,
+	\`e basata sull'analisi delle possibili prove.
+
+	Introduciamo un nuovo
+	simbolo: per ogni formula $\varphi$ definiamo
+	$\Box\varphi\equiv TH(\overline{\gdnum{\varphi}})$.
+	Esprime il fatto che $\varphi$ \`e dimostrabile in $HA$.
+	Per diagonalization lemma, precedentemente dimostrato,
+	posto $\psi(x)=\neg TH(x)$, otteniamo:
+
+	\begin{prop}
+	\label{auto}
+	Esiste una formula $G$ tale che $\vdash_{HA} G \leftrightarrow\neg\Box G$.
+	$G$ \`e detta \textit{enunciato di G\"odel}.
+	\end{prop}
+	
+	\begin{thm} Il predicato $\Box$ soddisfa le seguenti condizioni:
+	
+	\begin{itemize}
+ 	\item[\small{HBL.1}:] se $\vdash_{HA}A$ allora $\vdash_{HA}\Box A$;
+ 	\item[\small{HBL.2}:] $\vdash_{HA} \Box A\rightarrow \Box(\Box A)$;
+ 	\item[\small{HBL.3}:] $\vdash_{HA} \Box(A\rightarrow B)
+ 	\rightarrow (\Box A\rightarrow \Box B)$;
+	\end{itemize}
+	dette \textit{condizioni HBL di derivabilit\`a}, con HBL che
+	sta per Hilbert-Bernays-L\"ob.
+	\end{thm}
+
+	Da HBL.1 segue:
+	
+	\begin{prop}
+	\label{hg1}Se $\vdash_{HA} G$ allora $\vdash_{HA}\Box G$.
+	\end{prop}
+
+	\begin{oss}
+	\label{oss:HBL}
+	La condizione $HBL.1$ pu\`o essere rafforzata, valendo anche l'implicazione inversa:
+	\begin{eqnarray}
+	\vdash_{HA}\Box A\:\:\:\:\Rightarrow\:\:\:\:\vdash_{HA} A.\nonumber
+	\end{eqnarray}
+	Si supponga infatti che $\vdash_{HA}\Box A$, ossia $\vdash_{HA}\exists
+	yPR(\overline{y},\overline{\gdnum{A}})$.
+	Per ``existence property''  esiste un numero naturale $n$ tale
+	che $\vdash_{HA} PR(\overline{n},\overline{\gdnum{A}})$.
+	Ci\`o significa che $n$ codifica la prova di $A$, pertanto a
+	partire da $n$ si pu\`o costruire la derivazione di $A$ in $HA$.
+	Si conclude che $\vdash_{HA} A$.
+	\end{oss}
+
+	\begin{thm}
+	\label{teo:nonG}
+	Se $HA$ \`e consistente allora $\not\vdash_{HA} G$.
+	\end{thm}
+
+	\textsc{Dimostrazione.}\\
+	Supponiamo $\vdash_{HA} G$. Per proposizione \ref{hg1}
+	segue che $\vdash_{HA}\Box G$.
+	D'altra parte per proposizione \ref{auto} segue che
+	$\vdash_{HA}\neg\Box G$. Ci\`o \`e 
+	contro l'ipotesi di consistenza di $HA$.
+	\begin{flushright}$\Box$\end{flushright}
+
+	\begin{prop}
+	\label{lem:hbl3bis}
+	Date $\phi$ e $\psi$ formule, si ha
+	$$
+	\begin{array}{ll}
+	1. & \vdash_{HA}\phi\rightarrow\psi
+	\Rightarrow\vdash_{HA}\Box\phi\rightarrow\Box\psi;\\
+	2. & \vdash_{HA} \Box\phi\&\Box\psi\rightarrow\Box(\phi\&\psi);\\
+	3. & \vdash_{HA} \neg \Box \bot \rightarrow G.
+	\footnote{Ricordiamo che $\bot$ \`e
+	definita nel linguaggio di $HA$
+	come $(0=1)$. Dagli assiomi di $HA$ segue che soddisfa gli
+	assiomi standard del falso.}
+	\end{array}
+	$$
+	\end{prop}
+	
+	\textsc{Dimostrazione.}\\
+	
+	Punto 1.\\
+	Per HBL.1 seghe che se
+	
+	$$\vdash_{HA} \phi \rightarrow \psi$$
+	allora 
+	
+	$$\vdash_{HA} \Box(\phi\rightarrow\psi)$$
+	per HBL.3 segue la tesi.
+	
+	Punto 2.\\
+	Poich\'e vale 
+	$$\vdash_{HA} \phi \rightarrow (\psi \rightarrow \phi\&\psi)$$
+	ed \`e possibile derivare in logica intuizionistica la seguente regola
+	$$\prooftree
+	\Gamma\vdash A \rightarrow B \justifies \Gamma,A\vdash B\using{\rightarrow ri}
+	\endprooftree$$
+	segue che:
+	$$\prooftree
+	\[\[\[\[\[
+	\vdash_{HA} \phi \rightarrow (\psi \rightarrow \phi\&\psi)\justifies
+ 	 \vdash_{HA} \Box\phi\rightarrow\Box(\psi\rightarrow\phi\&\psi)\using{\text{proposizione \ref{lem:hbl3bis}}}\] \justifies
+      \Box\phi\vdash_{HA}\Box(\psi\rightarrow\phi\&\psi)\using{\rightarrow ri}\] \justifies
+       \Box\phi\vdash_{HA}\Box\psi\rightarrow\Box(\phi\&\psi)\using{\text{\tiny HBL.3}}\]\justifies
+        \Box\phi,\Box\psi\vdash_{HA}\Box(\phi\&\psi)\using{\rightarrow ri}\]\justifies
+         \Box\phi\&\Box\psi\vdash_{HA}\Box(\phi\&\psi)\using{\& left}\]\justifies
+          \vdash_{HA}\Box\phi\&\Box\psi\rightarrow\Box(\phi\&\psi)\using{\rightarrow right}
+	\endprooftree$$
+	
+	Punto 3.\\
+	Per proposizione \ref{auto} e per contronominale si ha
+
+	$$\vdash_{HA} \neg\neg\Box G \leftrightarrow \neg G$$
+	Poich\'e in generale vale
+
+	$$\vdash_{HA} \Box G \rightarrow \neg\neg\Box G$$
+	segue che
+	
+	$$\vdash_{HA}\Box G \rightarrow \neg G$$
+	Per HBL1 segue che
+	
+	$$\vdash_{HA}\Box(\Box G \rightarrow\neg G)$$
+	per HBL3 segue che
+
+	$$\vdash_{HA}\Box\Box G \rightarrow \Box\neg G$$
+	per HBL2 segue che
+	$$\vdash_{HA} \Box G \rightarrow \Box\Box G$$
+	che insieme all'ultimo risultato comporta che
+
+	$$\vdash_{HA} \Box G \rightarrow \Box\neg G$$
+	dal cui segue che
+
+	$$\vdash_{HA} \Box G \rightarrow (\Box\neg G \& \Box G)$$
+	per proposizione \ref{lem:hbl3bis} segue che
+	
+	$$\vdash_{HA} \Box G \rightarrow \Box(\neg G \& G)$$
+	da cui segue che
+	
+	$$\vdash_{HA} \Box G \rightarrow \Box\bot$$
+	per contronominale segue che
+	
+	$$\vdash_{HA} \neg\Box\bot \rightarrow \neg\Box G$$
+	per proposizione \ref{auto} e per composizione segue che:
+
+	$$\vdash_{HA} \neg\Box\bot \rightarrow G.$$
+	Ci\`o \`e quanto volevamo dimostrare.
+	\begin{flushright}$\Box$\end{flushright}
+
+	Siamo pronti per dimostrare:
+
+	\begin{thm}[Primo teorema di incompletezza per $HA$]
+	\label{teo:inc1}
+	Se HA \`e consistente allora $\vdash_{HA}\Box\bot$ \`e indecidibile.
+	\end{thm}
+	
+	\textsc{dimostrazione}\\
+ 	Assumiamo $\vdash_{HA}\Box\bot$. Per osservazione
+ 	\ref{oss:HBL} vale $\vdash_{HA}\bot$.
+	Poich\`e nel sistema c\`e l'assioma $\vdash_{HA}\neg\bot$,
+	segue che che HA \`e inconsistente, contro l'ipotesi.
+ 	Supponiamo $\vdash_{HA}\neg\Box\bot$.
+	Per proposizione \ref{lem:hbl3bis} $\vdash_{HA}\neg\Box\bot\rightarrow G$,
+	segue che $\vdash_{HA} G$. Ci\`o \`e contro teorema \ref{teo:nonG}.
+	\begin{flushright}$\Box$\end{flushright}

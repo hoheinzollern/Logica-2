@@ -496,9 +496,15 @@ Possiamo tuttavia "`correggere"' il teorema precedente limitandolo agli insiemi 
     f(x)=\left\{ \begin{array}{cc}
       a_0 & se\ T_n(e,\pi_{1}(x),\pi_{2}(x))\ \grave e\ FALSO \\
       \pi_{1}(x) & se\ T_n(e,\pi_{1}(x),\pi_{2}(x))\ \grave e\ VERO \end{array}\right.
+  $$\\
+
+  Notiamo che $f$ è ricorsiva in quanto possiamo scriverla come:
+
+  $$
+    f(x) = a_0 (1-\chi_{T_n}(e,\pi_{1}(x),\pi_{2}(x))) + \pi_{1}(x) \chi_{T_n}(e,\pi_{1}(x),\pi_{2}(x))
   $$
 
-  Notiamo che:
+  Inoltre:
   \begin{itemize}
     \item la funzione $f$ è totale in quanto il predicato $T_n$ è decidibile e in entrambi i casi (sia che sia vero o falso) viene restituito un valore
     \item i valori che la funzione $f$ ritorna (quindi la sua immagine) sono elementi che appartengono all'insieme $A$, infatti:

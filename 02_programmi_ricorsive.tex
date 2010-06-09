@@ -790,29 +790,29 @@ Possiamo usare ora la proposizone~\ref{TotCalcNonNum} per dimostrare il seguente
 è primitiva ricorsiva.
 \end{thm}
 
-\begin{proof} Dobbiamo innanzitutto costruire una lista \emph{effettiva} di
-tutte le funzioni primitive ricorsive (per semplicità, supponiamole ad
-un argomento).  Un modo semplice per farlo è considerare l'insieme
-delle funzioni primitive ricorsive $\mathcal{PR}$ ed un formalismo,
-ovvero un insieme finito di simboli con il quale sia possibile
-descrivere tutte le possibili derivazioni associate alle funzioni di
-$\mathcal{PR}$. Un siffatto alfabeto può essere ad esempio:
-$$\Sigma = \lbrace a, b, c, \cdots ,z , 0, 1, 2, \cdots , 9, (, ) \rbrace$$
-Ogni derivazione associata ad una funzione in $\mathcal{PR}$ \`e quindi
-descrivibile con una opportuna sequenza finita di simboli $\Sigma^{*}$. \`E
-inoltre facile definire una procedura che verifichi se una data stringa $\sigma
-\in \Sigma^{*}$ corrisponde a una derivazione legittima per una funzione in
-$\mathcal{PR}$. \`E pertanto possibile enumerare tutte le derivazioni legittime
-per funzioni primitive ricorsive esaminando le stringhe in $\Sigma^{*}$ ordine
-de lunghezza e a parit\`a di lunghezza ordinandole in modo alfabetico.
+\begin{proof}
+Dobbiamo innanzitutto costruire una lista \emph{effettiva} di tutte le
+funzioni primitive ricorsive (per semplicit\`a, supponiamole ad un
+argomento).
 
-Abbiamo cos\`i ottenuto una enumerazione effettiva per tutte le funzioni
-dell'insieme $\mathcal{PR}$.
-
-Ma per quanto detto nella proposizone~\ref{TotCalcNonNum} sappiamo che le
-funzioni totali non sono enumerabili effettivamente quindi questo implica che
-esiste una funzione totale calcolabile che non appartiene l'enumerazione che
-abbiamo appena definito e che quindi non appartiene all'insieme $\mathcal{PR}$.
+Cerchiamo di scrivere informalmente un algoritmo che ci permetta di
+listare tutte queste funzioni (in seguito vedremo come si pu\`o fare
+in modo rigoroso).  Una tale enumerazione si pu\`o ottenere nello
+stesso modo in cui si ottiene una lista di teoremi a partire dagli
+assiomi di una teoria. Si prende prima una funzione base, poi si
+``contano'' tutte le funzioni ottenute da questa mediante una sola
+applicazione di composizione e/o ricorsione. Poi si prende la seconda
+funzione e tutte le funzioni derivate mediante una applicazione delle
+due regole da quest'ultima e/o dalle funzioni gi\`a ottenute al passo
+precedente, e cos\`i via. In questa maniera non si tralascia alcuna
+funzione e ad ogni passo la lista \`e finita. Abbiamo cos\`i ottenuto
+una enumerazione effettiva per tutte le funzioni dell'insieme
+$\mathcal{PR}$.\\ Ma per quanto detto nella
+proposizone~\ref{TotCalcNonNum} sappiamo che le funzioni totali non
+sono enumerabili effettivamente quindi questo implica che esiste una
+funzione totale calcolabile che non appartiene l'enumerazione che
+abbiamo appena definito e che quindi non appartiene all'insieme
+$\mathcal{PR}$.
 \end{proof}
 
 A questo punto ci chiediamo: cosa ci manca per avere tutte le funzioni
